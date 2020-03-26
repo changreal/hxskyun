@@ -15,5 +15,16 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
 })
+  router.beforeEach((to, from, next)=>{
+    if(to.matched.some(record => record.meta.requireLogin)){
+      if(sessionStorage.getItem('user')){
+        next();
+      }else{
+        next({path: '/'})
+      }
+    }else{
+      next();
+    }
+  })

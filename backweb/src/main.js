@@ -18,13 +18,21 @@ new Vue({
   template: '<App/>',
 })
   router.beforeEach((to, from, next)=>{
-    if(to.matched.some(record => record.meta.requireLogin)){
-      if(sessionStorage.getItem('user')){
+    if (to.matched.some(record => record.meta.requireLogin)){  // 判断该路由是否需要登录权限
+      if (sessionStorage.getItem('user')) {  // 判断当前用户的登录信息loginInfo是否存在
         next();
-      }else{
-        next({path: '/'})
+      } else {
+        next({
+          path: '/'
+        });
       }
-    }else{
+    } else if(to.path == '/index'){
+      if(!sessionStorage.getItem('user')){
+        next({
+          path: '/'
+        });
+      }
+    } else {
       next();
     }
   })

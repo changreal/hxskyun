@@ -8,7 +8,7 @@
              class="demo-ruleForm fp-page">
       <h3 class="title">忘记密码</h3>
       <el-form-item prop="user">
-        <el-input v-model.number="ruleForm2.age" placeholder="用户名"></el-input>
+        <el-input v-model.number="ruleForm2.user" placeholder="用户名"></el-input>
       </el-form-item>
       <el-form-item prop="pass">
         <el-input type="password" v-model="ruleForm2.pass" auto-complete="off" placeholder="密码"></el-input>

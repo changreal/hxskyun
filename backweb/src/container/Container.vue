@@ -10,38 +10,21 @@
         </div>
         <div>
           <!-- 我是样例菜单 -->
-          <el-menu default-active="1-4-1"
+          <el-menu default-active="defaultActive"
+                   router
                    class="el-menu-vertical-demo"
-                   @open="handleOpen"
+                   active-text-color="#409EFF"
                    :collapse="isCollapse">
-            <el-submenu index="1">
-              <template slot="title">
-                <i class="el-icon-setting"></i>
-                <span slot="title">个人中心</span>
+            <template v-for="route in $router.options.routes" v-if="route.children && route.children.length">
+              <template v-for="item in route.children">
+                <el-menu-item
+                  :key= "route.path + '/' +item.path"
+                  :index= "item.path">
+                  <i class="el-menu-item"></i>
+                  <span slot="title">{{item.name}}</span>
+                </el-menu-item>
               </template>
-              <el-menu-item-group>
-                <el-menu-item index="1-1">个人信息</el-menu-item>
-                <el-menu-item index="1-2">安全设置</el-menu-item>
-                <el-menu-item index="1-3">消息通知</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-menu-item index="2">
-              <i class="el-icon-menu"></i>
-              <span slot="title">菜单管理</span>
-            </el-menu-item>
-            <el-menu-item index="3">
-              <i class="el-icon-box"></i>
-              <span slot="title">按钮管理</span>
-            </el-menu-item>
-            <el-menu-item index="4">
-              <i class="el-icon-user"></i>
-              <span slot="title">角色管理</span>
-            </el-menu-item>
-            <el-menu-item index="5">
-              <i class="el-icon-school"></i>
-              <span slot="title">用户管理</span>
-            </el-menu-item>
-
+            </template>
           </el-menu>
         </div>
       </el-aside>
@@ -49,7 +32,6 @@
       <el-container>
         <el-header class="app-header"
                    style="margin-left: auto">
-
           <div class="app-header-userinfo">
             <el-dropdown trigger="hover"
                          :hide-on-click="false">
@@ -64,7 +46,14 @@
               </el-dropdown-menu>
             </el-dropdown>
           </div>
-
+          <el-menu default-active="/"
+                   router
+                   class="el-menu-demo tab-page"
+                   mode="horizontal"
+                   @select="handleSelect"
+                   active-text-color="#409EFF">
+            <el-menu-item index="/">{{$router.currentRoute.name}}</el-menu-item>
+          </el-menu>
         </el-header>
         <div style="width: 60px; cursor: pointer;"
              @click.prevent="toggleSideBar">
@@ -73,14 +62,11 @@
         </div>
         <el-main class="app-body">
           <template>
-            <StandardEdit>{{title}}</StandardEdit>
             <router-view/>
           </template>
         </el-main>
-
       </el-container>
     </el-container>
-    <
   </div>
 </template>
 
@@ -91,7 +77,7 @@
     data() {
       return {
         username: 'Teacher',
-        isCollapse: false
+        isCollapse: false,
       }
     },
     components: {

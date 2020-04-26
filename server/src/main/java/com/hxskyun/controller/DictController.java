@@ -6,6 +6,7 @@ import com.hxskyun.service.IDictService;
 
 import com.hxskyun.utils.Result;
 import com.hxskyun.utils.ResultCodeEnum;
+import org.apache.ibatis.annotations.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,10 +21,22 @@ public class DictController {
     private IDictService dictService;
 
 
-    @PostMapping
-    public Result insert(@RequestBody Dict record){
-        dictService.insert(record);
+    @PostMapping("/type")
+    public Result insertDictType(@RequestBody Dict record){
+        dictService.insertDictType(record);
         return Result.success();
+    }
+
+    @PostMapping("/detail")
+    public Result insertDictDetail(@RequestBody Dict record){
+        dictService.insertDictDetail(record);
+        return Result.success();
+    }
+
+    @DeleteMapping("/{Id}")
+    public Result delete(@PathVariable Integer Id){
+        dictService.deleteByPrimaryKey(Id);
+        return Result.success("删除成功");
     }
 
 }

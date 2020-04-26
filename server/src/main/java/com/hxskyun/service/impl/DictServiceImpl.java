@@ -21,18 +21,27 @@ public class DictServiceImpl implements IDictService {
     @Resource
     private DictMapper dictMapper;
 
-
     @Override
-    public int insert(Dict record) {
+    public int insertDictType(Dict record) {
         record.setCreationDate(new Date());
-
-        dictMapper.insert(record);
-        return 0;
+        int i=0;
+        dictMapper.insertDictType(record);
+        i=record.getDictId();
+        return i;
     }
 
+    @Override
+    public int insertDictDetail(Dict record) {
+        record.setCreationDate(new Date());
+        int i = 0;
+        dictMapper.insertDictDetail(record);
+        i = record.getDictId();
+        return i;
+    }
 
     @Override
     public int deleteByPrimaryKey(Integer dictId) {
+        dictMapper.selectByPrimaryKey(dictId);
         return 0;
     }
 

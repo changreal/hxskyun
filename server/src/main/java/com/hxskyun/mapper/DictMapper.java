@@ -14,22 +14,29 @@ import java.util.Map;
 public interface DictMapper {
 
     /**
-     * 插入
+     * 插入type
      *
      * @param record
      * @return
      */
-    int insert(Dict record);
+    int insertDictDetail(Dict record);
 
+    /**
+     * 插入detail
+     *
+     * @param record
+     * @return
+     */
+    int insertDictType(Dict record);
 
 
     /**
      * 删除
      *
-     * @param dictId
+     * @param record
      * @return
      */
-    int deleteByPrimaryKey(Integer dictId);
+    int deleteByPrimaryKey(Dict record);
 
     /**
      * 更新

@@ -7,8 +7,9 @@ import com.hxskyun.domain.Dict;
 
 public interface IDictService {
 
-    public int insert(Dict record);
+    public int insertDictType(Dict record);
 
+    public int insertDictDetail(Dict record);
     /**
      * 删除
      *

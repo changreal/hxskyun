@@ -16,17 +16,21 @@
     </resultMap>
 
 
-    <insert id="insert" parameterType="com.hxskyun.domain.Dict">
-    insert into dictionarytype(Id,Name,ItemKey,CreationDate,Creator)
-     values (DEFAULT,#{type},#{itemKey},#{creationDate},#{creator});
+    <insert id="insertDictDetail" parameterType="com.hxskyun.domain.Dict" useGeneratedKeys="true" keyProperty="dictId">
     insert into dictionarydetail(Id,ItemKey,ItemValue,IsDefault,SortNum,CreationDate,Creator)
     values (DEFAULT,#{itemKey},#{itemValue},#{isDefault},#{sortNum},#{creationDate},#{creator});
+    </insert>
+
+    <insert id="insertDictType" parameterType="com.hxskyun.domain.Dict" useGeneratedKeys="true" keyProperty="dictId">
+    insert into dictionarytype(Id,Name,ItemKey,CreationDate,Creator)
+     values (DEFAULT,#{type},#{itemKey},#{creationDate},#{creator});
     </insert>
 
 
     <delete id="deleteByPrimaryKey">
         delete from dictionarydetail where Id=#{dictId};
-        delete from dictionarytype where Id=#{dictId};
+        delete from dictionarytype
+        where ItemKey=(select ItemKey from dictionarydetail where Id=#{dictId});
     </delete>
 
     <update id="updateByPrimaryKey">

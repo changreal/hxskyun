@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxskyun.mapper.DictMapper">
+
+    <resultMap id="DictMap" type="com.hxskyun.domain.Dict">
+        <id column="Id" property="dictId"></id>
+        <result column="ItemKey" property="itemKey"></result>
+        <result column="ItemValue" property="itemValue"></result>
+        <result column="IsDefault" property="isDefault"></result>
+        <result column="Name" property="type"></result>
+        <result column="SortNum" property="sortNum"></result>
+        <result column="CreationDate" property="creationDate"></result>
+        <result column="Creator" property="creator"></result>
+        <result column="ModificationDate" property="modificationDate"></result>
+        <result column="Modifier" property="modifier"></result>
+    </resultMap>
+
+
+    <insert id="insertDictDetail" parameterType="com.hxskyun.domain.Dict" useGeneratedKeys="true" keyProperty="dictId">
+    insert into dictionarydetail(Id,ItemKey,ItemValue,IsDefault,SortNum,CreationDate,Creator)
+    values (DEFAULT,#{itemKey},#{itemValue},#{isDefault},#{sortNum},#{creationDate},#{creator});
+    </insert>
+
+    <insert id="insertDictType" parameterType="com.hxskyun.domain.Dict" useGeneratedKeys="true" keyProperty="dictId">
+    insert into dictionarytype(Id,Name,ItemKey,CreationDate,Creator)
+     values (DEFAULT,#{type},#{itemKey},#{creationDate},#{creator});
+    </insert>
+
+
+    <delete id="deleteByPrimaryKey">
+        delete from dictionarydetail where Id=#{dictId};
+        delete from dictionarytype
+        where ItemKey=(select ItemKey from dictionarydetail where Id=#{dictId});
+    </delete>
+
+    <update id="updateByPrimaryKey">
+        update dictionarytype
+        <set>
+            <if test="type!=null">Name=#{type},
+            </if>
+            <if test="itemKey!=null">ItemKey=#{itemKey},
+            </if>
+            <if test="modificationDate!=null">ModificationDate=#{modificationDate},
+            </if>
+            <if test="modifier!=null">Modifier=#{modifier},
+            </if>
+        </set>
+        where Id=#{dictId};
+        update dictionarydetail
+        <set>
+            <if test="itemKey!=null">ItemKey=#{itemKey},
+            </if>
+            <if test="itemValue!=null">ItemKey=#{itemValue},
+            </if>
+            <if test="isDefault!=null">IsDefault=#{isDefault},
+            </if>
+            <if test="sortNum!=null">SortNum=#{sortNum},
+            </if>
+            <if test="modificationDate!=null">ModificationDate=#{modificationDate},
+            </if>
+            <if test="modifier!=null">Modifier=#{modifier},
+            </if>
+        </set>
+        where Id=#{dictId};
+    </update>
+
+    <select id="selectByPrimaryKey" resultType="com.hxskyun.domain.Dict">
+    select
+    d.Id,
+    d.ItemKey,
+    d.ItemValue,
+    t.`Name`,
+    d.SortNum,
+    d.IsDefault,
+    d.CreationDate,
+    d.Creator,
+    d.ModificationDate,
+    d.Modifier
+    from   dictionarydetail as d
+    left join dictionarytype as t on d.ItemKey=t.ItemKey
+    where d.Id=#{dictId}
+    </select>
+
+
+</mapper>

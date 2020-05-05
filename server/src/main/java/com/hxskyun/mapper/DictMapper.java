@@ -31,22 +31,46 @@ public interface DictMapper {
 
 
     /**
-     * 删除
+     * 删除详细表
      *
-     * @param record
+     * @param DictId
      * @return
      */
-    int deleteByPrimaryKey(Dict record);
+    int deleteDetailByPrimaryKey(Integer DictId);
 
     /**
-     * 更新
+     * 删除类型表和对于详细表
+     *
+     * @param DictId
+     * @return
+     */
+    int deleteTypeByPrimaryKey(Integer DictId);
+
+    /**
+     * 更新详细表
      *
      * @param record
      * @return
      */
-    int updateByPrimaryKey(Dict record);
+    int updateDetailByPrimaryKey(Dict record);
+
+    /**
+     * 更新类型表同时更新其对于的详细表
+     *
+     * @param record
+     * @return
+     */
+    int updateTypeByPrimaryKey(Dict record);
 
 
+
+    /**
+     * 查询详细表
+     *
+     * @param dictId
+     * @return
+     */
+    Dict selectDetailByPrimaryKey(Integer dictId);
 
     /**
      * 查询
@@ -54,6 +78,7 @@ public interface DictMapper {
      * @param dictId
      * @return
      */
-    Dict selectByPrimaryKey(Integer dictId);
+    Dict selectTypeByPrimaryKey(Integer dictId);
+
 
 }

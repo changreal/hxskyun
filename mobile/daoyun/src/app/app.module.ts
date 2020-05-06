@@ -10,16 +10,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginPage } from './pages/login/login.page';
 import { LoginPageModule } from './pages/login/login.module';
-import {HttpClientModule} from "@angular/common/http"
+// 引入http和jsonp模块
+import {HttpClientModule,HttpClientJsonpModule } from "@angular/common/http"
+// 引用服务
+import { CommonService } from "./shared/services/common.service";
+
 @NgModule({
   declarations: [AppComponent,
   ],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(), 
+    AppRoutingModule,
+    HttpClientModule,
+    HttpClientJsonpModule
+  ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    CommonService
   ],
   bootstrap: [AppComponent]
 })

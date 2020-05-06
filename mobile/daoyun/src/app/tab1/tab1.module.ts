@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
+// 引入服务
+// import { CommonService } from "../shared/services/common.service";
 
 @NgModule({
   imports: [

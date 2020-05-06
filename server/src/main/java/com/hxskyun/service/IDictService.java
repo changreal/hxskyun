@@ -62,4 +62,5 @@ public interface IDictService {
     Dict selectTypeByPrimaryKey(Integer dictId);
 
 
+
 }

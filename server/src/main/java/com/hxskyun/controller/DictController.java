@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/dictionary")
 public class DictController {
     @Autowired
@@ -68,4 +69,10 @@ public class DictController {
     public Result selectType(@PathVariable Integer Id) {
         return Result.success().setMsg("根据id查询类型表成功").setData(dictService.selectTypeByPrimaryKey(Id));
     }
+
+//    @GetMapping("/alltype")
+//    public Result selectAllType() {
+//        return Result.success().setMsg("根据id查询类型表成功").setData(dictService.selectTypeByPrimaryKey());
+//    }
+
 }

@@ -1,4 +1,5 @@
 package com.hxskyun.utils;
+
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;

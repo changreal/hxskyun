@@ -40,20 +40,43 @@ public class DictServiceImpl implements IDictService {
     }
 
     @Override
-    public int deleteByPrimaryKey(Integer dictId) {
-        dictMapper.selectByPrimaryKey(dictId);
+    public int deleteDetailByPrimaryKey(Integer dictId) {
+        dictMapper.deleteDetailByPrimaryKey(dictId);
         return 0;
     }
 
     @Override
-    public int updateByPrimaryKey(Dict record) {
+    public int deleteTypeByPrimaryKey(Integer dictId) {
+        dictMapper.deleteTypeByPrimaryKey(dictId);
         return 0;
     }
 
+    @Override
+    public int updateDetailByPrimaryKey(Dict record) {
+        record.setModificationDate(new Date());
+        dictMapper.updateDetailByPrimaryKey(record);
+        return 0;
+    }
 
     @Override
-    public Dict selectByPrimaryKey(Integer dictId) {
-        return null;
+    public int updateTypeByPrimaryKey(Dict record) {
+        record.setModificationDate(new Date());
+        dictMapper.updateTypeByPrimaryKey(record);
+        return 0;
+    }
+
+    @Override
+    public Dict selectDetailByPrimaryKey(Integer dictId) {
+        Dict dict=dictMapper.selectDetailByPrimaryKey(dictId);
+        dict.setDictId(dictId);
+        return dict;
+    }
+
+    @Override
+    public Dict selectTypeByPrimaryKey(Integer dictId) {
+        Dict dict=dictMapper.selectTypeByPrimaryKey(dictId);
+        dict.setDictId(dictId);
+        return dict;
     }
 
 

@@ -6,20 +6,26 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/styles/index.scss'
+import axois from 'axios'
+import '@/styles/index.scss'
+import Api from './api/index.js'
 
+Vue.prototype.$api = Api;
+Vue.prototype.$axios=axois;
 Vue.use(ElementUI)
 Vue.config.productionTip = false
-
+Vue.prototype.$_router=router;
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   components: { App },
   template: '<App/>',
+  render: h => h(App),
 })
   router.beforeEach((to, from, next)=>{
     if (to.matched.some(record => record.meta.requireLogin)){  // 判断该路由是否需要登录权限
-      if (sessionStorage.getItem('user')) {  // 判断当前用户的登录信息loginInfo是否存在
+      if (localStorage.getItem('user')) {  // 判断当前用户的登录信息loginInfo是否存在
         next();
       } else {
         next({
@@ -27,7 +33,7 @@ new Vue({
         });
       }
     } else if(to.path == '/index'){
-      if(!sessionStorage.getItem('user')){
+      if(!localStorage.getItem('user')){
         next({
           path: '/'
         });

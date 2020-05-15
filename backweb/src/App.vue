@@ -4,7 +4,10 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  created() {
+     //localStorage.setItem('routeInf',JSON.stringify(this.$_router.options.routes))
+  }
 }
 </script>
 

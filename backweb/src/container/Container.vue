@@ -15,9 +15,9 @@
                    class="el-menu-vertical-demo"
                    active-text-color="#409EFF"
                    :collapse="isCollapse">
-            <template v-for="route in $router.options.routes" v-if="route.children && route.children.length">
+            <template v-for="route in routeInf" v-if="route.children && route.children.length">
               <template v-for="item in route.children">
-                <el-menu-item
+                <el-menu-item  v-show="item.isShow"
                   :key= "route.path + '/' +item.path"
                   :index= "item.path">
                   <i class="el-menu-item"></i>
@@ -52,7 +52,7 @@
                    mode="horizontal"
                    @select="handleSelect"
                    active-text-color="#409EFF">
-            <el-menu-item index="/">{{$router.currentRoute.name}}</el-menu-item>
+            <el-menu-item index="/">{{$_router.currentRoute.name}}</el-menu-item>
           </el-menu>
         </el-header>
         <div style="width: 60px; cursor: pointer;"
@@ -78,6 +78,7 @@
       return {
         username: 'Teacher',
         isCollapse: false,
+        routeInf:[],
       }
     },
     components: {
@@ -90,7 +91,7 @@
       logout: function () {
         this.$confirm('确认退出?', '提示', {})
           .then(() => {
-            sessionStorage.removeItem('user');
+           localStorage.removeItem('user');
             this.$router.push('/login');
           })
           .catch(() => { });
@@ -105,8 +106,17 @@
         console.log(key, keyPath);
       },
     },
+    created() {
+      let jsonRoute=JSON.parse(localStorage.getItem('routeInf'));
+      let j=0;
+      for(let index in jsonRoute){
+        this.routeInf[j]=jsonRoute[index];
+        j++;
+      }
+    },
+
     mounted: function () {
-      let user = sessionStorage.getItem('user');
+      let user = localStorage.getItem('user');
       if (user) {
         this.username = user;
       }

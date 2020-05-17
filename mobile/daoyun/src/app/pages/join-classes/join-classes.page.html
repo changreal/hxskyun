@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>我加入的班课</ion-title>
+     <!-- 加入按钮 -->
+    <ion-buttons slot="end" size='large'>
+      <!-- <ion-button color="primary" fill="outline" >
+        加入班课
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button> -->
+      <ion-button (click)="presentPopover($event)">
+        <ion-icon  ios="ellipsis-horizontal" md="ellipsis-horizontal" slot="icon-only"  ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content padding>
+  <!-- 搜索 -->
+  <app-header></app-header>
+
+  <!-- 用户列表 -->
+
+  <ion-list>
+    <!-- 列表头 -->
+    <!-- <ion-list-header lines='full' padding>
+      <ion-label></ion-label>
+      <ion-button></ion-button>
+    </ion-list-header> -->
+
+
+    <!-- 成员信息部分 -->
+    <ion-item button detail  *ngFor="let course of courses" routerLink="/join-classes/members" >
+      <!-- 头像部分 -->
+      <ion-thumbnail slot="start">
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-thumbnail>
+
+      <!-- 内容部分 -->
+      <ion-label>
+        <!-- 文字部分 -->
+        <ion-text color="primary">
+          <h3>{{course.subject}}</h3>
+        </ion-text>
+        <ion-text>
+          <p>{{course.userName}}&nbsp;&nbsp;&nbsp;<span>{{course.class}}</span></p>
+        </ion-text>
+
+        <!-- 按钮部分 -->
+        <div>
+          <ion-buttons slot="secondary" >
+            <ion-button slot="end" size="small">
+              <ion-icon name="hand-right-outline" slot="start"></ion-icon>
+              签到
+            </ion-button>
+          </ion-buttons>
+        </div>
+      </ion-label>
+      <!-- 内容部分结束 -->
+
+    </ion-item>
+
+
+
+  </ion-list>
+
+
+</ion-content>

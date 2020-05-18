@@ -50,7 +50,6 @@ export class CommonService {
     
    }
 
-
   /** get请求promise异步 */
   ajaxGet(url: string, myparams?:any):Promise<AjaxResult> {
     

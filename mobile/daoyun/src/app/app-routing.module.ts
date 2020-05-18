@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
+import { LoginPageModule } from './pages/login/login.module';
 // import { LoginPageModule } from './pages/login/login.module';
 // import { LoginPage } from './pages/login/login.page';
 // import { PagesModule } from './pages/pages.module';
@@ -29,35 +30,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/search/search.module').then( m => m.SearchPageModule)
   },
 
-  // {
-  //   path: '',
-  //   loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
-  // },
-  // {
-  //   path: 'welcome',
-  //   loadChildren: () => import('./pages/welcome/welcome.module').then( m => m.WelcomePageModule)
-  // },
-  // {
-  //   path: '',
-  //   loadChildren: () => import('./layout/default/default.module').then( m => m.DefaultPageModule)
-  // },
-
-
 
   
-
-  // {
-  //   path: '',
-  //   loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
-  // },
-  // {
-  //   path: 'welcome',
-  //   loadChildren: () => import('./pages/welcome/welcome.module').then( m => m.WelcomePageModule)
-  // },
-  // {
-  //   path: '',
-  //   loadChildren: () => import('./layout/default/default.module').then( m => m.DefaultPageModule)
-  // },
   
 
   
@@ -67,7 +41,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
     LayoutModule,
     SharedModule,
-   
+   LoginPageModule
   ],
   exports: [RouterModule]
 })

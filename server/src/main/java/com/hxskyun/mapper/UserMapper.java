@@ -13,6 +13,8 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
+    User checkUser(User loginUser);
+
     int deleteByPrimaryKey(Long userId);
 
     int insert(User record);
@@ -27,13 +29,13 @@ public interface UserMapper {
 
     User selectByName(String name);
 
-    User selectByTel(Long tel);
+    User selectByTel(Long phone);
 
     List<User> selectAll();
 
     User selectByToken(String token);
 
-    void deleteByTel(Long tel);
+    void deleteByTel(Long phone);
 
     void deleteByName(String name);
 }

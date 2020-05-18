@@ -12,7 +12,7 @@ public interface IUserRoleService {
 
     public List<UserRole> findByUserName(String name);
 
-    public List<UserRole> findByUserTel(Long tel);
+    public List<UserRole> findByUserTel(Long phone);
 
     public List<UserRole> findByRoleName(String rolename);
 
@@ -26,7 +26,7 @@ public interface IUserRoleService {
 //
 //    public Role findRoleByUserId(Long userid);
 //
-//    public Role FindRoleByUsertel(Long tel);
+//    public Role FindRoleByUsertel(Long phone);
     public List<User> findUserByRoleName(String rolename);
 
     public List<User> findUserByRoleId(Integer id);
@@ -35,5 +35,5 @@ public interface IUserRoleService {
 
     public List<Role> findRoleByUserId(Long userid);
 
-    public List<Role> FindRoleByUsertel(Long tel);
+    public List<Role> FindRoleByUsertel(Long phone);
 }

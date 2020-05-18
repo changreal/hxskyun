@@ -4,6 +4,7 @@ import com.hxskyun.domain.Passport;
 import com.hxskyun.domain.Permission;
 import com.hxskyun.domain.Role;
 import com.hxskyun.domain.User;
+import com.hxskyun.exception.FriendException;
 import com.hxskyun.mapper.UserMapper;
 import com.hxskyun.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,28 @@ public class UserServiceImpl implements IUserService {
     private PasswordHelper passwordHelper;
 
 
+
+    @Override
+    public User checkUser(User loginUser) {
+
+
+        if(loginUser.getName() == null || loginUser.getName().equals(""))
+        {
+            throw new FriendException("用户名不能为空");
+        }
+        if(loginUser.getPassword() == null || loginUser.getPassword().equals(""))
+        {
+            throw new FriendException("密码不能为空");
+        }
+
+        User userDetail = userMapper.checkUser(loginUser);
+        if(userDetail == null)
+        {
+            throw new FriendException("用户名或密码错误");
+        }
+        return userDetail;
+    }
+
     @Override
     public List<User> findAll() {
         return userMapper.selectAll();
@@ -57,9 +80,9 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User findByTel(Long tel) {
+    public User findByTel(Long phone) {
 
-        return userMapper.selectByTel(tel);
+        return userMapper.selectByTel(phone);
     }
 
     @Override
@@ -91,8 +114,8 @@ public class UserServiceImpl implements IUserService {
 
     @Transactional
     @Override
-    public void deleteUserByTel(Long tel) {
-        userMapper.deleteByTel(tel);
+    public void deleteUserByTel(Long phone) {
+        userMapper.deleteByTel(phone);
     }
 
     @Transactional
@@ -108,8 +131,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public String GetPasswordByTel(Long tel) {
-        Passport passport = passportService.findByTel(tel);
+    public String GetPasswordByTel(Long phone) {
+        Passport passport = passportService.findByTel(phone);
         return passport.getPassword();
     }
 

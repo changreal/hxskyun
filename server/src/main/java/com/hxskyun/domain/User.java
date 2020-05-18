@@ -16,13 +16,17 @@ public class User {
 
     private String email;
 
-    private Long tel;
+    private int age;
+
+    private Long phone;
 
     private String school;
 
     private String classes;
 
     private String schoolNumber;
+
+    private Date birthDate;
 
     private Date creationdate;
 
@@ -45,7 +49,9 @@ public class User {
                 ", name='" + name + '\'' +
                 ", sex='" + sex + '\'' +
                 ", email='" + email + '\'' +
-                ", tel=" + tel +
+                ", age=" + age +
+                ", phone=" + phone +
+                ", birthDate=" + birthDate +
                 ", school='" + school + '\'' +
                 ", classes='" + classes + '\'' +
                 ", schoolNumber='" + schoolNumber + '\'' +
@@ -114,11 +120,11 @@ public class User {
     }
 
     public Long getTel() {
-        return tel;
+        return phone;
     }
 
-    public void setTel(Long tel) {
-        this.tel = tel;
+    public void setTel(Long phone) {
+        this.phone = phone;
     }
 
     public String getSchool() {
@@ -175,5 +181,21 @@ public class User {
 
     public void setModificationdate(Date modificationdate) {
         this.modificationdate = modificationdate;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 }

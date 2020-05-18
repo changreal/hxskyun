@@ -1,15 +1,15 @@
 package com.hxskyun.controller;
 
 
-import com.exception.CustomizedException;
+
+import com.hxskyun.exception.FriendException;
 import com.hxskyun.service.IUserService;
+import com.hxskyun.token.JWTUtils;
+import com.hxskyun.token.JedisUtils;
 import com.hxskyun.utils.Result;
 import com.hxskyun.domain.*;
-import com.service.UserService;
-import com.utils.ServerResponse;
-import com.utils.User;
-import com.utils.token.JWTUtils;
-import com.utils.token.JedisUtils;
+
+import com.hxskyun.utils.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,8 +34,8 @@ public class LoginController {
             JedisUtils.setToken(String.valueOf(userDetail.getUserId()),token,7);
         }
         catch(Exception e){
-            throw new CustomizedException("生成令牌失败");
+            return Result.failure(ResultCodeEnum.LoginError);
         }
-        return new ServerResponse(0, userDetail, token,"登录成功");
+        return  Result.success().setCode(ResultCodeEnum.Login.getCode()).setMsg("登陆成功");
     }
 }

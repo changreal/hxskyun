@@ -5,8 +5,7 @@ import com.hxskyun.domain.Dict;
 import com.hxskyun.service.IDictService;
 
 import com.hxskyun.utils.Result;
-import com.hxskyun.utils.ResultCodeEnum;
-import org.apache.ibatis.annotations.Results;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

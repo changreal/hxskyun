@@ -6,6 +6,8 @@ package com.hxskyun.utils;
 public enum ResultCodeEnum {
 
     OK("200", "处理成功"),
+    Login("100","登陆成功"),
+    LoginError("105","登陆失败"),
     CREATED("201", "创建成功"),
     DELETED("204", "删除成功"),
     BAD_REQUEST("400", "请求参数有误"),

@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LayoutModule } from './layout/layout.module';
@@ -41,6 +42,23 @@ const routes: Routes = [
   //   loadChildren: () => import('./layout/default/default.module').then( m => m.DefaultPageModule)
   // },
 
+
+
+  
+
+  // {
+  //   path: '',
+  //   loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+  // },
+  // {
+  //   path: 'welcome',
+  //   loadChildren: () => import('./pages/welcome/welcome.module').then( m => m.WelcomePageModule)
+  // },
+  // {
+  //   path: '',
+  //   loadChildren: () => import('./layout/default/default.module').then( m => m.DefaultPageModule)
+  // },
+  
 
   
 ];

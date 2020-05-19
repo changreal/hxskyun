@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController } from '@ionic/angular';
+import { NavController, NavParams, AlertController, ToastController, ModalController, LoadingController ,} from '@ionic/angular';
 import { NgForm } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.service';
 
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -10,12 +14,31 @@ import { NgForm } from '@angular/forms';
 export class LoginPage implements OnInit {
   username: string = ''
   password: string = ''
-  constructor(private alertController: AlertController,private toastController: ToastController) { }
+  loading:any
+  public dataList:any
+  public peopleInfo:any = {
+    username: this.username,
+    password: this.password
+  }
+  
+  constructor(private alertController: AlertController,private toastController: ToastController,
+    public modalCtrl :ModalController,public loadingController: LoadingController,public http:HttpClient,
+    private localStorageService: MylocalstorageService,public router:Router
+    ) { }
+
+  // async dismiss() {
+  //   this.modalCtrl.dismiss({
+  //     'dismissed': true
+  //   });
+  // }
 
   ngOnInit() {
   }
+  
  async onLogin(form:NgForm){
-    console.log(this.username)
+    console.log(this.username+this.password)
+    let url="https://imoocqa.gugujiankong.com/api/account/login"+"?mobile="+this.username+"&password="+this.password
+    console.log("url"+url)
     if(this.username === ''){
       let toast = await this.toastController.create({
         message : '请输入您的手机号码或者邮箱',
@@ -31,15 +54,47 @@ export class LoginPage implements OnInit {
       alert.present();
 
     }else{
-      // 验证登录账号与密码，不对的话给出错误提示 
-   
-      if(1){
-      } else{
-        // 登录成功
-       
-      }
+      // 验证登录账号与密码，不对的话给出错误提示
+      this.presentLoading("登录中。。。。")
+      this.http.get(url).subscribe((res)=>{
+        if (1 == 1){
+          // this.localStorageService.setStore('UserId',res["UserId"]);
+          this.localStorageService.set('UserId','1')
+          this.loading.dismiss()
+          // this.dismiss();
+          this.router.navigateByUrl('/tabs');
+          console.log("succ  in ")
+        }else{
+          // this.loading.dismiss();
+          this.presentToast(res["StatusContent"])
+          console.log("faile in ")
+          this.dataList=res
+          console.log(this.dataList["Status"])
+
+        }
+          
+        console.log(res)
+      })
+
+
   
 
     }
+}
+
+async presentLoading(mes:string) {
+   this.loading = await this.loadingController.create({
+    message: mes,
+    duration: 2000
+  });
+  await this.loading.present();
+  console.log('Loading dismissed!');
+}
+async presentToast(mes:string) {
+  const toast = await this.toastController.create({
+    message: mes,
+    duration: 2000
+  });
+  toast.present();
 }
 }

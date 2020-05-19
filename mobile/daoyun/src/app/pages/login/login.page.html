@@ -1,7 +1,13 @@
 <ion-header>
 
   <ion-toolbar>
-    <ion-title text-left>登录</ion-title>
+    <ion-title class='ion-text-center'>登录</ion-title>
+    <ion-buttons>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color='primary' showWhen="ios">取消</span>
+        <!-- <ion-icon name="close-outline" showWhen="android"></ion-icon> -->
+      </button>
+    </ion-buttons>
   </ion-toolbar>
 
 </ion-header>

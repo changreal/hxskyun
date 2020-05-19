@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
-// import { LoginPageModule } from './pages/login/login.module';
-// import { LoginPage } from './pages/login/login.page';
-// import { PagesModule } from './pages/pages.module';
+import { LoginPageModule } from './pages/login/login.module';
 
 const routes: Routes = [
   {
@@ -26,26 +24,15 @@ const routes: Routes = [
   {
     path: 'search',
     loadChildren: () => import('./pages/search/search.module').then( m => m.SearchPageModule)
-  },  {
+  },
+  {
     path: 'create-classes',
     loadChildren: () => import('./pages/create-classes/create-classes.module').then( m => m.CreateClassesPageModule)
   },
-
-
-  // {
-  //   path: '',
-  //   loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
-  // },
-  // {
-  //   path: 'welcome',
-  //   loadChildren: () => import('./pages/welcome/welcome.module').then( m => m.WelcomePageModule)
-  // },
-  // {
-  //   path: '',
-  //   loadChildren: () => import('./layout/default/default.module').then( m => m.DefaultPageModule)
-  // },
-
-
+  {
+    path:'mine',
+    loadChildren:()=>import('./pages/mine/mine.module').then(m=>m.MinePageModule)
+  }
   
 ];
 @NgModule({
@@ -53,6 +40,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
     LayoutModule,
     SharedModule,
+    LoginPageModule
    
   ],
   exports: [RouterModule]

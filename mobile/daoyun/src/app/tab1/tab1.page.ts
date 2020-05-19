@@ -7,6 +7,7 @@ import { Observable } from "rxjs";
 
 // 获取动态路由的值或者获取传入的参数
 import { ActivatedRoute } from "@angular/router";
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class Tab1Page {
   }
   
   constructor(public common:CommonService,
-              public route:ActivatedRoute) {
+              public route:ActivatedRoute,public http:HttpClient) {
 
     // get传值方式获取参数
     this.route.queryParams.subscribe((data)=>{
@@ -77,5 +78,10 @@ export class Tab1Page {
     
   }
 
-
+  onLogin(){
+    let url="https://imoocqa.gugujiankong.com/api/feeds/get"
+    this.http.get(url).subscribe((re)=>{
+      console.log(re);
+    })
+  }
 }

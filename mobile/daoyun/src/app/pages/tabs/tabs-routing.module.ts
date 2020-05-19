@@ -8,11 +8,12 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'create-classes',
         children: [
           {
             path: '',
-            loadChildren: () => import('../../tab1/tab1.module').then(m => m.Tab1PageModule)
+            loadChildren: () => import('../create-classes/create-classes.module').then(m => m.CreateClassesPageModule)
+            // loadChildren: () => import('../../tab1/tab1.module').then(m => m.Tab1PageModule)
           }
         ]
       },

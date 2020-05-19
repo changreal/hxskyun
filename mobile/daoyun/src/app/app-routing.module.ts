@@ -26,7 +26,11 @@ const routes: Routes = [
   {
     path: 'search',
     loadChildren: () => import('./pages/search/search.module').then( m => m.SearchPageModule)
+  },  {
+    path: 'create-classes',
+    loadChildren: () => import('./pages/create-classes/create-classes.module').then( m => m.CreateClassesPageModule)
   },
+
 
   // {
   //   path: '',

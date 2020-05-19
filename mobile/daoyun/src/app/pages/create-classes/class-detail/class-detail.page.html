@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>课程名称</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/create-classes/members"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <!-- 班课头信息 -->
+    <ion-item lines='full'>
+      <ion-note slot="end" class="ion-no-margin">
+        <ion-button  expand="block" fill="clear" shape="round" [routerLink]="['/create-classes/class-detail/edit-class']" >
+          <ion-icon name="create-outline"  color="primary" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-note>
+      <ion-thumbnail slot="start">
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-thumbnail>
+      <ion-label>
+        <h3>班级名</h3>
+        <h4>课程名称</h4>
+        <p>老师名</p>
+        <p>
+          <span>2019-2020-2</span> <span>学校课表班课</span>
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+
+  <ion-list class="ion-padding">
+
+    <!-- 内容部分 -->
+    <ion-item>
+      <ion-label>学习要求</ion-label>
+      <ion-input placeholder="Placeholder"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">学校院系</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+
+    <!-- 退出班课按钮 -->
+    <ion-button slot="start" expand="block" fill='outline' shape='round' class="ion-margin-top" color="danger">
+      结束班课
+    </ion-button>
+
+  </ion-list>
+
+
+
+
+</ion-content>

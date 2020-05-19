@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/join-classes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>签到</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-item lines='none'  class="ion-margin" >
+      <ion-label class="ion-padding-vertical"  color="primary">
+        <!-- <ion-button  expand="block" fill="clear" size='large' shape="round"> -->
+          <ion-avatar class="ion-padding-vertical sign-in-avatar ion-text-center"   >
+            <ion-icon name="checkbox-outline" size='large'></ion-icon>
+            <h5>签到</h5>
+          </ion-avatar>
+        <!-- </ion-button> -->
+      </ion-label>
+    </ion-item>
+
+    
+  <!-- 签到列表 -->
+  <ion-list lines='full'>
+
+    <!-- 列表头 -->
+    <ion-list-header lines='full' class="ion-padding-horizontal">
+      <ion-label>历史签到记录</ion-label>
+      <ion-label class="ion-text-right" color="warning">75%</ion-label>
+    </ion-list-header>
+
+    <!-- 内容部分 -->
+    <ion-item>
+      <ion-label >
+        <h4><time>2020-02-29 星期六</time>&nbsp;签到 </h4>
+        <p><time>11:57</time> <span class="exp ion-float-right">已签到</span> </p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label >
+        <h4><time>2020-02-29 星期六</time>&nbsp;签到 </h4>
+        <p><time>11:57</time> <span class="exp ion-float-right">缺勤</span> </p>
+      </ion-label>
+    </ion-item>
+
+
+  </ion-list>
+
+
+</ion-content>

@@ -7,18 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MembersPage implements OnInit {
 
-  members:any[]=[
-    {
-      userId: '190388888',
-      userName:'张三',
-      exp: '48',
-    },
-    {
-      userName:'李四',
-      userId: '190388880',
-      exp: '48',
-    },
-  ];
   constructor() { }
 
   ngOnInit() {

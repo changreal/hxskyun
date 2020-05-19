@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/join-classes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>编辑班课基本信息</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-horizontal">
+
+    <ion-item lines='none'  class="ion-margin-top" >
+      <ion-label  class="ion-padding-vertical ion-text-center"  color="primary" >
+        <!-- <ion-button  expand="block" fill="clear" size='large' shape="round"> -->
+          <ion-avatar class="ion-padding-vertical create-class-avatar "   >
+            <ion-icon name="add-outline" size='large'></ion-icon>
+          </ion-avatar>
+          <h5>班课图片</h5>
+        <!-- </ion-button> -->
+      </ion-label>
+    </ion-item>
+
+    
+  <!-- 签到列表 -->
+  <ion-list lines='full'>
+
+
+    <!-- 内容部分 -->
+
+    
+    <ion-item>
+      <ion-label>班级</ion-label>
+      <ion-input placeholder="Placeholder"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label>课程</ion-label>
+      <ion-input placeholder="Placeholder"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">学期</ion-label>
+      <ion-select>
+        <ion-select-option value="" selected>2019-2020-1</ion-select-option>
+        <ion-select-option value="nes">2019-2020-2</ion-select-option>
+        <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
+        <ion-select-option value="ps">PlayStation</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>学习要求</ion-label>
+      <ion-input placeholder="Placeholder"></ion-input>
+    </ion-item>
+
+
+  </ion-list>
+
+  <ion-button  expand="block" fill="outline" shape="round">
+    保存
+  </ion-button>
+
+
+
+</ion-content>

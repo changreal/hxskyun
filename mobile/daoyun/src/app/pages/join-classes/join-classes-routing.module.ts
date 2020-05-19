@@ -27,6 +27,14 @@ const routes: Routes = [
     path: 'join-class',
     loadChildren: () => import('./join-class/join-class.module').then( m => m.JoinClassPageModule)
   },
+  {
+    path: 'join',
+    loadChildren: () => import('./join/join.module').then( m => m.JoinPageModule)
+  },
+  {
+    path: 'sign-in',
+    loadChildren: () => import('./sign-in/sign-in.module').then( m => m.SignInPageModule)
+  },
   
 
 ]

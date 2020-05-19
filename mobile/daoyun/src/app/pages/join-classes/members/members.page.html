@@ -21,7 +21,7 @@
       <ion-toolbar>
         <ion-row class="ion-align-items-center"> 
           <ion-col size='7'>
-            <ion-button  mode='md' shape='round'  color="primary" fill="solid" >
+            <ion-button  mode='md' shape='round'  color="primary" fill="solid" [routerLink]="['/join-classes/sign-in']"  >
               <ion-icon  name="star" size='small'></ion-icon>
                <ion-label>&nbsp;点击签到&nbsp;</ion-label>
             </ion-button>
@@ -46,12 +46,12 @@
     <!-- 列表头 -->
     <ion-list-header lines='full' class="ion-padding-horizontal">
       <ion-label>成员总数</ion-label>
-      <ion-label class="ion-text-right"> 155人</ion-label>
+      <ion-label class="ion-text-right"> 148人</ion-label>
     </ion-list-header>
 
     <!-- 成员信息部分 -->
 
-    <ion-item button detail  class="member-item" *ngFor="let member of members">
+    <ion-item button  class="member-item" *ngFor="let member of members">
       <!-- 头像部分 -->
       <ion-thumbnail slot="start" class="mythumbnail">
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
@@ -69,5 +69,4 @@
 
 
   
-
 </ion-content>

@@ -29,13 +29,13 @@ public interface UserMapper {
 
     User selectByName(String name);
 
-    User selectByTel(Long phone);
+    User selectByTel(String phone);
 
     List<User> selectAll();
 
     User selectByToken(String token);
 
-    void deleteByTel(Long phone);
+    void deleteByTel(String phone);
 
     void deleteByName(String name);
 }

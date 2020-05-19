@@ -7,14 +7,14 @@ public class JedisUtils {
     private static Jedis jedis;
     //初始化
     private static void init() {
-        jedis = new Jedis("localhost");
+        jedis = new Jedis("175.24.16.48",6379);
     }
     //在redis中设置键值对存储
     public static void setToken(String id, String token, int day) {
         int second = day * 60 * 60 * 24;
         JedisUtils.init();
-        jedis.set(String.valueOf(id), token); //根据id存储token
-        jedis.expire(String.valueOf(id), second);  //设置token持续时间
+        jedis.set(id, token); //根据id存储token
+        jedis.expire(id, second);  //设置token持续时间
     }
 
     public static String getToken(String id) {

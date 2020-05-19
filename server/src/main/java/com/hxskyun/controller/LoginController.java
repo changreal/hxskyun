@@ -36,6 +36,6 @@ public class LoginController {
         catch(Exception e){
             return Result.failure(ResultCodeEnum.LoginError);
         }
-        return  Result.success().setCode(ResultCodeEnum.Login.getCode()).setMsg("登陆成功");
+        return  Result.success().setCode(ResultCodeEnum.Login.getCode()).setMsg("登陆成功").setData(token);
     }
 }

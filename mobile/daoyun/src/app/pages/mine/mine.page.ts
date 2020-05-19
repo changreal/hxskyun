@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController, AlertController } from '@ionic/angular';
 import { LoginPage } from '../login/login.page';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.service';
+import { UserInfoPage } from './user-info/user-info.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mine',
@@ -15,7 +17,8 @@ export class MinePage implements OnInit {
   headface: string
   userinfo: string[]
 
-  constructor(public modalController: ModalController,private localStorageService: MylocalstorageService) { }
+  constructor(public modalController: ModalController,private localStorageService: MylocalstorageService,
+    public navCtrl: NavController,public router:Router,public alertController: AlertController) { }
 
   ngOnInit() {
   }
@@ -42,6 +45,22 @@ export class MinePage implements OnInit {
         this.logined = false
       }
     }
-  
+   // 注销
+   logout() {
+    this.localStorageService.remove('UserId');
+    this.router.navigateByUrl('/login');
+  }
+  //
+ async checkVersion(){
+  const alert = await this.alertController.create({
+    header: '升级信息',
+    message: '你已安装了最新版本',
+    buttons: ['ok']
+  });
 
+  await alert.present();
+}
+
+
+  
 }

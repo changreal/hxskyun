@@ -17,7 +17,7 @@
 </div>
 <div *ngIf="logined">
   <ion-list class="top-list" >
-    <ion-item button detail  (click)="gotoUserPage()">
+    <ion-item button detail  routerLink="/mine/user-info" >
       <ion-avatar item-start>
         <img src="{{headface}}" />
       </ion-avatar>
@@ -83,27 +83,35 @@
   </ion-list>
 
   <ion-list>
-    <ion-item detail>
+    <ion-item detail routerLink="/mine/share-friends">
       <ion-label>分享给朋友</ion-label>
     </ion-item>
     <ion-item>
       <ion-label>联系客服</ion-label>  
       <ion-note slot="end"><a href="tel:10086">拨打电话10086</a></ion-note>
     </ion-item>
-    <ion-item detail>
-      <ion-label>版本号</ion-label>
-      <ion-note slot="end">检查更新</ion-note>
-    </ion-item>
-    <ion-item detail routerLink="/aboutUs">
+   
+    <ion-item detail routerLink="/mine/edit-account">
       <ion-label>账号安全</ion-label>
     </ion-item>
-    <ion-item detail routerLink="/aboutUs">
+    <ion-item detail routerLink="/mine/about-us">
       <ion-label>关于我们</ion-label>
     </ion-item>    
+    <ion-item  (click)="checkVersion()">
+      <ion-label>
+        <ion-text  >
+          <h2>版本号</h2>
+        </ion-text>
+        <ion-text >
+          <p>V1.0</p>
+        </ion-text>
+      </ion-label>
+      <ion-note slot="end">检查更新</ion-note>
+    </ion-item>
   </ion-list>
 
   <div style="text-align: center;">
-    <ion-button expand="full" color="danger" (click)="onLogin()">退出当前账号</ion-button>
+    <ion-button expand="full" color="danger" (click)="logout()">退出当前账号</ion-button>
 </div>
 
 </div>

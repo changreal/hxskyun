@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/mine"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">用户信息</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list >
+      <ion-item button detail  routerLink="/mine/headfaces">
+        <ion-avatar item-start>
+          <img src="{{headface}}" />
+        </ion-avatar>
+        <ion-label>修改头像</ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-list >
+      <ion-item>
+        <ion-label>姓名:</ion-label>  
+        <ion-input  type="text" item-end></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>昵称:</ion-label>  
+        <ion-input type="text" >zxl</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>出生年份:</ion-label>  
+        <ion-input type="text" >2000</ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-list >
+      <ion-item button detail  (click)="chooseSchool">
+        <ion-label>
+          <ion-text color="primary">
+            <h2>你所在的学校及院系</h2>
+          </ion-text>
+          <ion-text>
+            <p>福州大学 数计学院</p>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-list-header>
+        选择性别
+      </ion-list-header>
+      <ion-radio-group [(ngModel)]="user.value" (ionChange)='getValue()'>
+      <ion-item>
+        <ion-label>男</ion-label>
+        <ion-radio slot="end" value="男"></ion-radio>    
+      </ion-item>
+      <ion-item>
+        <ion-label>女</ion-label>
+        <ion-radio slot="end" value="女"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+    </ion-list>
+    <ion-list>
+      <ion-list-header >
+        选择身份
+      </ion-list-header>
+      <ion-radio-group [(ngModel)]="user.value" (ionChange)='getValue()'>
+      <ion-item>
+        <ion-label>我是学生</ion-label>
+        <ion-radio slot="end" value="学生"></ion-radio>    
+      </ion-item>
+      <ion-item>
+        <ion-label>我是老师</ion-label>
+        <ion-radio slot="end" value="老师"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>其他</ion-label>
+        <ion-radio slot="end" value="其他"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+    </ion-list>
+  <ion-list>
+    <ion-item>
+      <ion-label>学号/工号:</ion-label>  
+      <ion-input type="text" >2000</ion-input>
+    </ion-item>
+  </ion-list>
+
+    <div style="text-align: center;">
+      <ion-button expand="full" color="primary" (click)="onLogin()">保存</ion-button>
+  </div>
+</ion-content>

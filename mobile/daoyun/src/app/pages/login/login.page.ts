@@ -4,6 +4,8 @@ import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.service';
+
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -21,14 +23,14 @@ export class LoginPage implements OnInit {
   
   constructor(private alertController: AlertController,private toastController: ToastController,
     public modalCtrl :ModalController,public loadingController: LoadingController,public http:HttpClient,
-    private localStorageService: MylocalstorageService
-   ) { }
+    private localStorageService: MylocalstorageService,public router:Router
+    ) { }
 
-  async dismiss() {
-    this.modalCtrl.dismiss({
-      'dismissed': true
-    });
-  }
+  // async dismiss() {
+  //   this.modalCtrl.dismiss({
+  //     'dismissed': true
+  //   });
+  // }
 
   ngOnInit() {
   }
@@ -57,9 +59,10 @@ export class LoginPage implements OnInit {
       this.http.get(url).subscribe((res)=>{
         if (1 == 1){
           // this.localStorageService.setStore('UserId',res["UserId"]);
-          this.localStorageService.set('UserId','1');
-          this.loading.dismiss();
-          this.dismiss();
+          this.localStorageService.set('UserId','1')
+          this.loading.dismiss()
+          // this.dismiss();
+          this.router.navigateByUrl('/tabs');
           console.log("succ  in ")
         }else{
           // this.loading.dismiss();

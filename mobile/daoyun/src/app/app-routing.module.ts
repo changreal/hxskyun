@@ -29,6 +29,10 @@ const routes: Routes = [
     path: 'search',
     loadChildren: () => import('./pages/search/search.module').then( m => m.SearchPageModule)
   },
+  {
+    path:'mine',
+    loadChildren:()=>import('./pages/mine/mine.module').then(m=>m.MinePageModule)
+  }
 
 
   

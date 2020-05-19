@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" color="primary"></ion-back-button>
+    </ion-buttons>
+    <ion-title >账号设置</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list >
+    <ion-item routerLink="/mine/set-account" [queryParams]="{title:'关联手机',property:'phone'}">
+    <ion-label>关联手机</ion-label>
+    <ion-note slot="end" color='primary'>{{shop.phone}}</ion-note>
+  </ion-item>
+  <ion-item routerLink="/mine/set-account" [queryParams]="{title:'关联邮箱',property:'email'}">
+    <ion-label>关联邮箱</ion-label>
+   
+    <ion-note *ngIf= "shop.email?.length===0" slot="end" color="danger">未关联</ion-note>
+    <ion-note *ngIf= "shop.email?.length!==0" slot="end" color='primary'>{{shop.email}}</ion-note>
+  </ion-item>
+
+  <ion-item routerLink="/mine/edit-password" >
+    <ion-label>修改密码</ion-label>
+  </ion-item>
+  </ion-list>
+</ion-content>

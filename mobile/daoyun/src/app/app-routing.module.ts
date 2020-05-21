@@ -3,11 +3,22 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
 import { LoginPageModule } from './pages/login/login.module';
-
+import { StartAppGuard } from './core/start-app.guard';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
+    redirectTo: 'welcome', // 原来是home
+    pathMatch: 'full'
+  },
+  {
+    path: 'welcome',
+    loadChildren: () => import('./pages/welcome/welcome.module').then( m => m.WelcomePageModule),
+    canActivate: [StartAppGuard]
+  },
+  {
+    path: '',
+    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule),
+  
   },
   {
     path: 'login',
@@ -32,7 +43,10 @@ const routes: Routes = [
   {
     path:'mine',
     loadChildren:()=>import('./pages/mine/mine.module').then(m=>m.MinePageModule)
-  }
+  },
+ 
+
+ 
   
 ];
 @NgModule({
@@ -40,9 +54,10 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
     LayoutModule,
     SharedModule,
-    LoginPageModule
+
+ 
    
   ],
-  exports: [RouterModule]
+  exports: [RouterModule,]
 })
 export class AppRoutingModule {}

@@ -30,24 +30,24 @@ export class MinePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.loadUserPage();
-    console.log(this.logined)
+    // this.loadUserPage();
+    // console.log(this.logined)
   }
-  loadUserPage() {
-    console.log('load in ')
-    let val=this.localStorageService.get('UserId','')
-      if(val!=null){
-        this.notLogin = false
-        this.logined = true
-      }        
-      else{
-        this.notLogin = true
-        this.logined = false
-      }
-    }
+  // loadUserPage() {
+  //   console.log('load in ')
+  //   let val=this.localStorageService.get('UserId','')
+  //     if(val!=null){
+  //       this.notLogin = false
+  //       this.logined = true
+  //     }        
+  //     else{
+  //       this.notLogin = true
+  //       this.logined = false
+  //     }
+  //   }
    // 注销
    logout() {
-    this.localStorageService.remove('UserId');
+    this.localStorageService.remove('Token');
     this.router.navigateByUrl('/login');
   }
   //

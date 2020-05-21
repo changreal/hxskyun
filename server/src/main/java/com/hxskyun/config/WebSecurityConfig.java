@@ -21,7 +21,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration addInterceptor = registry.addInterceptor(new JWTInterceptor());
         //排除配置
-        addInterceptor.excludePathPatterns("/Login/**");
+        addInterceptor.excludePathPatterns("/Login/checkLogin","/dictionary/**");
         //拦截配置
         addInterceptor.addPathPatterns("/**");
     }

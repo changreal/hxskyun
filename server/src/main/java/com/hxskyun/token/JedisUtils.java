@@ -13,6 +13,7 @@ public class JedisUtils {
     public static void setToken(String id, String token, int day) {
         int second = day * 60 * 60 * 24;
         JedisUtils.init();
+        jedis.del(id);
         jedis.set(id, token); //根据id存储token
         jedis.expire(id, second);  //设置token持续时间
     }

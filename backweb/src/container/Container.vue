@@ -93,6 +93,7 @@
           .then(() => {
            localStorage.removeItem('user');
            localStorage.removeItem('token');
+           localStorage.removeItem('tokenTimeoutData');
             this.$router.push('/login');
           })
           .catch(() => { });

@@ -51,11 +51,14 @@
           username: [{required: true, message: '请输入您的账号', trigger: 'blur'}],
           password: [{required: true, message: '请输入您的密码', trigger: 'blur'}]
         },
-        checked: false
+        checked: false,
+        userRole:'admin',
+        defaultPassword:'',
       }
     },
     methods: {
       handleSubmit(event){
+        let userRole=this.userRole;
         let nowDate=new Date();
         let timeOutData=new Date();
         timeOutData.setDate(timeOutData.getDate()+31);
@@ -69,8 +72,9 @@
                 console.log(response);
                 localStorage.setItem('token',response.data.data);
                 localStorage.setItem('tokenTimeoutData',timeOutData.getFullYear()+'-'+m+'-'+timeOutData.getDate());
+                localStorage.setItem('user',userRole);
+                localStorage.setItem('defaultPassword',response.data.encodedPassword);
                 this.logining=false;
-                localStorage.setItem('user','admin');
                 this.$router.push({path:'/index'}).catch(err=>{
                   console.log("跳转失败？")
                 })

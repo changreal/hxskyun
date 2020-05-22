@@ -17,6 +17,7 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
+    {path:'/',redirect:'/index'},
     {
       path: '/index',
       name: '首页',
@@ -52,7 +53,7 @@ export default new Router({
       isShow:true,
     },
     {
-      path: "/",
+      path: "/login",
       name: '登入页面',
       component: Login,
       permission:'user',

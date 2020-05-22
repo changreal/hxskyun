@@ -28,6 +28,9 @@
       <el-form-item style="width:100%;">
         <el-button type="primary" style="width:100%;" @click="handleSubmit" :loading="logining">登录</el-button>
       </el-form-item>
+<!--      <el-form-item style="width:100%;">-->
+<!--        <el-button type="primary" style="width:100%;" @click="handleSubmitTest" :loading="logining">测试登录</el-button>-->
+<!--      </el-form-item>-->
       <el-form-item style="width:100%;">
         <el-button style="width:100%;" @click="forgetPassword" :loading="logining">忘记密码</el-button>
       </el-form-item>
@@ -41,7 +44,7 @@
       return {
         logining: false,
         ruleForm2: {
-          username: 'admin',
+          username: '88888888888',
           password: '123456',
         },
         rules2: {
@@ -53,27 +56,44 @@
     },
     methods: {
       handleSubmit(event){
+        let nowDate=new Date();
+        let timeOutData=new Date();
+        timeOutData.setDate(timeOutData.getDate()+31);
+        let m=timeOutData.getMonth()+1;
+        console.log(this.ruleForm2.username,this.ruleForm2.password);
         this.$refs.ruleForm2.validate((valid) => {
           if(valid){
             this.logining = true;
-            if(this.ruleForm2.username === 'admin' &&
-              this.ruleForm2.password === '123456'){
-              this.logining = false;
-              localStorage.setItem('user', this.ruleForm2.username);
-              //sessionStorage.setItem('user', this.ruleForm2.username);
-              this.$router.push({path: '/index'});
-            }else{
-              this.logining = false;
+            this.$api.login(this.ruleForm2.username,this.ruleForm2.password)
+              .then(response=>{
+                console.log(response);
+                localStorage.setItem('token',response.data.data);
+                localStorage.setItem('tokenTimeoutData',timeOutData.getFullYear()+'-'+m+'-'+timeOutData.getDate());
+                this.logining=false;
+                localStorage.setItem('user','admin');
+                this.$router.push({path:'/index'}).catch(err=>{
+                  console.log("跳转失败？")
+                })
+              }).catch(error=>{
+              this.logining=false;
               this.$alert('用户名或密码有误!', 'info', {
-                confirmButtonText: '确定'
-              })
-            }
+                     confirmButtonText: '确定'
+                   })
+            })
           }else{
             console.log('输入有误');
             return false;
           }
         })
       },
+      // handleSubmitTest(){
+      //   this.$api.login(this.ruleForm2.username,this.ruleForm2.password)
+      //   .then(response=>{
+      //     console.log(response);
+      //     localStorage.setItem('token',response.data.data);
+      //     this.$router.push({path:'/index'})
+      //   })
+      // },
       forgetPassword(){
         this.$router.push({path:'/forgetPassword'});
       }

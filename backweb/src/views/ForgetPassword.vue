@@ -21,11 +21,11 @@
         <el-button @click="createCheckCode"
                    class="fp-check-code">{{createdCheckCode}}</el-button>
       </el-form-item>
-      <el-form-item prop="verifyCode">
-        <el-input style="width: 60%" v-model="ruleForm2.verifyCode" placeholder="手机验证码"></el-input>
-        <el-button  :label-position="right"
-                    @click="sendVerifyCode">{{verifyCodeState}}</el-button>
-      </el-form-item>
+<!--      <el-form-item prop="verifyCode">-->
+<!--        <el-input style="width: 60%" v-model="ruleForm2.verifyCode" placeholder="手机验证码"></el-input>-->
+<!--        <el-button  -->
+<!--                    @click="sendVerifyCode">{{verifyCodeState}}</el-button>-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-button style="width: 100%" type="primary" @click="submitForm('ruleForm2')">提交</el-button>
       </el-form-item>
@@ -60,16 +60,16 @@
           callback();
         }
       };
-      var validateVerifyCode = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入验证码'));
-        } else if (value !== this.ruleForm2.verifyCode) {
-          callback(new Error('验证码有误'));
-        } else {
-          callback();
-        }
-
-      };
+      // var validateVerifyCode = (rule, value, callback) => {
+      //   if (value === '') {
+      //     callback(new Error('请输入验证码'));
+      //   } else if (value !== this.ruleForm2.verifyCode) {
+      //     callback(new Error('验证码有误'));
+      //   } else {
+      //     callback();
+      //   }
+      //
+      // };
       return {
         ruleForm2: {
           user: '',
@@ -87,9 +87,9 @@
           checkPass: [
             {validator: validatePass2, trigger: 'blur'}
           ],
-          verifyCode: [
-            {validator: validateVerifyCode, trigger: 'blur'}
-          ]
+          // verifyCode: [
+          //   {validator: validateVerifyCode, trigger: 'blur'}
+          // ]
         },
         checkCode: '',
         createdCheckCode: '',

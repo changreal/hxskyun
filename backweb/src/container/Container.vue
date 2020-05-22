@@ -92,6 +92,7 @@
         this.$confirm('确认退出?', '提示', {})
           .then(() => {
            localStorage.removeItem('user');
+           localStorage.removeItem('token');
             this.$router.push('/login');
           })
           .catch(() => { });

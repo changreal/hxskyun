@@ -8,10 +8,11 @@ import 'element-ui/lib/theme-chalk/index.css'
 import '@/styles/index.scss'
 import axois from 'axios'
 import '@/styles/index.scss'
-import Api from './api/index.js'
+import Api from './api'
 
-Vue.prototype.$api = Api;
-Vue.prototype.$axios=axois;
+Vue.prototype.$http=axois;
+Vue.prototype.$api=Api;
+
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.$_router=router;
@@ -25,20 +26,26 @@ new Vue({
 })
   router.beforeEach((to, from, next)=>{
     if (to.matched.some(record => record.meta.requireLogin)){  // 判断该路由是否需要登录权限
-      if (localStorage.getItem('user')) {  // 判断当前用户的登录信息loginInfo是否存在
+      if (localStorage.getItem('token')) {  // 判断当前用户的登录信息loginInfo是否存在
         next();
       } else {
-        next({
-          path: '/'
-        });
+        if(to.path == '/login'){
+          next();
+        } else {
+          next({
+            path:'/login'
+          })
+        }
       }
-    } else if(to.path == '/index'){
-      if(!localStorage.getItem('user')){
-        next({
-          path: '/'
-        });
-      }
-    } else {
+    }  else {
       next();
     }
+    // if(to.fullPath=='/login'){
+    //   if(localStorage.getItem(token)){
+    //     next({
+    //       path:from.fullPath
+    //     })
+    //   } else {}
+    //   next();
+    // }
   })

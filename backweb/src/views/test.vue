@@ -35,6 +35,7 @@ import Login from "./Login";
 import ForgetPassword from "./ForgetPassword";
 import AbnormalView from "./AbnormalView";
 
+
     export default {
       name: "test",
       re:[],
@@ -185,23 +186,15 @@ import AbnormalView from "./AbnormalView";
           console.log(index, row);
         },
         testClick1() {
-          let response=[];
-          this.$api.post('',
-            {
-              bs:'vue axios配置',
-            },
-            response=>{
-            if (response.status >= 200 && response.status < 300) {
-              console.log(response.data);
-            } else {
-              console.log(response.message);
-            }
+          this.$api.dicManage.insertDicTable('yc1','testWYC13').
+            then(response=>{
+              console.log(response);
           })
         },
         testClick2(){
           axios.post('http://175.24.16.48:8082/dictionary/type', {
-            type:'测试角色',
-            itemKey:'testwyc1'
+            type:'测试角色2',
+            itemKey:'testwyc2'
           }).then((response) => {
             console.log(response)
           }).catch((error) => {
@@ -209,57 +202,29 @@ import AbnormalView from "./AbnormalView";
           })
         },
         testClick3(){
-          let jsonRoute=JSON.parse(localStorage.getItem('routeInf'));
-          console.log(jsonRoute[1].meta.isShow);
-          this.routeInf=[];
-          let j=0;
-          for(let index in jsonRoute){
-            this.routeInf[j]=jsonRoute[index];
-            j++;
-          }
-          let route;
-          console.log(this.routeInf[1].meta.isShow)
-          // for(route in this.routeInf){
-          //   this.routeInf[route].id=Number(route)+Number(1);
-          //   if(this.routeInf[route].children&&this.routeInf[route].children.length){
-          //     for(let item in this.routeInf[route].children){
-          //       this.routeInf[route].children[item].id=(Number(route)+1)*10+Number(item)+1;
-          //     }
-          //   }
-          // }
+         this.$api.test().then(response=>{
+           console.log(response);
+         }).catch(error=>{
+           console.log(error);
+         })
         },
         testClick4(){
-          console.log(this.tableData1);
+          let dateToday=new Date();
+          console.log(dateToday);
+          dateToday.setDate(dateToday.getDate()+31);
+          let m=dateToday.getMonth()+1;
+          console.log(dateToday.getDate());
+          console.log(dateToday.getFullYear()+'-'+(dateToday.getMonth()+1)+'-'+dateToday.getDate());
+          let testDate='2020-6-22';
+          if(testDate == dateToday.getFullYear()+'-'+(dateToday.getMonth()+1)+'-'+dateToday.getDate()){
+            console.log('测试成功')
+          }
+         // let m=d.getMonth()+1;
+
         },
       },
     created() {
-      // let jsonRoute=JSON.parse(localStorage.getItem('routeInf'));
-      // this.routeInf=[];
-      // let j=0;
-      // console.log(jsonRoute);
-      // for(let index in jsonRoute){
-      //   this.routeInf[j]=jsonRoute[index];
-      //   j++;
-      // }
-      //
-      //
-      // // console.log(routeInf[0]);
-      // // console.log(routeInf[0].children);
-      // // console.log(routeInf[0].children.length)
-      // let t={};
-      // let tt={};
-      // let route;
-      //
-      // for(route in this.routeInf){
-      //   t={'id':route};
-      //   this.routeInf[route].id=route+1;
-      //   if(this.routeInf[route].children&&this.routeInf[route].children.length){
-      //     for(let item in this.routeInf[route].children){
-      //       this.routeInf[route].children[item].id=(route+1)*10+item+1;
-      //       console.log(this.routeInf[route].children[item]);
-      //     }
-      //   }
-      // }
+
     }
 
     }

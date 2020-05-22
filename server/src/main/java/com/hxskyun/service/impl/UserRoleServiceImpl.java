@@ -17,7 +17,7 @@ import java.util.List;
 
 @Transactional
 @Service
-public class UserRoleServiceImpl  implements IUserRoleService {
+public class UserRoleServiceImpl implements IUserRoleService {
     @Resource
     private UserRoleMapper userRoleMapper;
     @Resource
@@ -36,16 +36,17 @@ public class UserRoleServiceImpl  implements IUserRoleService {
         return userRoleMapper.selectByUserId(user.getUserId());
     }
 
+
     @Override
-    public List<UserRole> findByUserTel(Long tel) {
-        User user = userMapper.selectByTel(tel);
+    public List<UserRole> findByUserPhone(String phone) {
+        User user = userMapper.selectByTel(phone);
         return userRoleMapper.selectByUserId(user.getUserId());
     }
 
     @Override
     public List<UserRole> findByRoleName(String rolename) {
         Role role = roleService.findByRoleName(rolename);
-        return (List)userRoleMapper.selectByRoleId(role.getRoleId());
+        return (List) userRoleMapper.selectByRoleId(role.getRoleId());
     }
 
     @Override
@@ -59,7 +60,7 @@ public class UserRoleServiceImpl  implements IUserRoleService {
         Role role = roleService.findByRoleName(rolename);
         List<UserRole> userRoles = userRoleMapper.selectByRoleId(role.getRoleId());
 
-        for(UserRole userRole : userRoles){
+        for (UserRole userRole : userRoles) {
 
             User user = userMapper.selectByPrimaryKey(userRole.getUserId());
             users.add(user);
@@ -73,7 +74,7 @@ public class UserRoleServiceImpl  implements IUserRoleService {
         List<User> users = null;
         Role role = roleService.findById(id);
         List<UserRole> userRoles = userRoleMapper.selectByRoleId(role.getRoleId());
-        for(UserRole userRole : userRoles){
+        for (UserRole userRole : userRoles) {
             User user = userMapper.selectByPrimaryKey(userRole.getUserId());
             users.add(user);
 
@@ -87,7 +88,7 @@ public class UserRoleServiceImpl  implements IUserRoleService {
         List<Role> roles = null;
         User user = userMapper.selectByName(name);
         List<UserRole> userRoles = userRoleMapper.selectByUserId(user.getUserId());
-        for(UserRole userRole : userRoles){
+        for (UserRole userRole : userRoles) {
             Role role = roleService.findById(userRole.getRoleId());
             roles.add(role);
         }
@@ -99,7 +100,7 @@ public class UserRoleServiceImpl  implements IUserRoleService {
         List<Role> roles = null;
         User user = userMapper.selectByPrimaryKey(userid);
         List<UserRole> userRoles = userRoleMapper.selectByUserId(user.getUserId());
-        for(UserRole userRole : userRoles){
+        for (UserRole userRole : userRoles) {
             Role role = roleService.findById(userRole.getRoleId());
             roles.add(role);
         }
@@ -107,12 +108,13 @@ public class UserRoleServiceImpl  implements IUserRoleService {
 
     }
 
+
     @Override
-    public List<Role> FindRoleByUsertel(Long tel) {
+    public List<Role> FindRoleByUserPhone(String phone) {
         List<Role> roles = null;
-        User user = userMapper.selectByTel(tel);
+        User user = userMapper.selectByTel(phone);
         List<UserRole> userRoles = userRoleMapper.selectByUserId(user.getUserId());
-        for(UserRole userRole : userRoles){
+        for (UserRole userRole : userRoles) {
             Role role = roleService.findById(userRole.getRoleId());
             roles.add(role);
         }

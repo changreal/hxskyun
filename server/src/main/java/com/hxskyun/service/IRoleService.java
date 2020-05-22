@@ -15,4 +15,11 @@ public interface IRoleService  {
     public void saveRole(Role role);
 
     public void deleteRole(String name);
+
+    public void deleteRoleByRoleId(Integer roleId);
+
+    public void  insertRole(Role role);
+
+
+
 }

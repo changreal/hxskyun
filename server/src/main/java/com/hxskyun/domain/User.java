@@ -5,7 +5,6 @@ import java.util.Date;
 
 public class User {
 
-
     private Long userId;
 
     private String nickname;
@@ -14,27 +13,36 @@ public class User {
 
     private String sex;
 
+    private String phone;
+
     private String email;
 
-    private Long tel;
+    private int age;
+
+    private Date birthDate;
 
     private String school;
 
-    private String classes;
+    private String academy;
+
+    private String major;
 
     private String schoolNumber;
 
-    private Date creationdate;
+    private Date creationDate;
 
     private String creator;
 
     private String modifier;
 
-    private Date modificationdate;
+    private Date modificationDate;
 
     private String password;
 
     private String salt;
+
+    public User() {
+    }
 
 
     @Override
@@ -45,14 +53,17 @@ public class User {
                 ", name='" + name + '\'' +
                 ", sex='" + sex + '\'' +
                 ", email='" + email + '\'' +
-                ", tel=" + tel +
+                ", age=" + age +
+                ", phone=" + phone +
+                ", birthDate=" + birthDate +
                 ", school='" + school + '\'' +
-                ", classes='" + classes + '\'' +
+                ", academy='" + academy + '\'' +
+                ", major='" + major + '\'' +
                 ", schoolNumber='" + schoolNumber + '\'' +
-                ", creationdate=" + creationdate +
+                ", creationdate=" + creationDate +
                 ", creator='" + creator + '\'' +
                 ", modifier='" + modifier + '\'' +
-                ", modificationdate=" + modificationdate +
+                ", modificationdate=" + modificationDate +
                 ", password='" + password + '\'' +
                 ", salt='" + salt + '\'' +
                 '}';
@@ -73,6 +84,7 @@ public class User {
     public void setSalt(String salt) {
         this.salt = salt;
     }
+
     public Long getUserId() {
         return userId;
     }
@@ -113,13 +125,6 @@ public class User {
         this.email = email == null ? null : email.trim();
     }
 
-    public Long getTel() {
-        return tel;
-    }
-
-    public void setTel(Long tel) {
-        this.tel = tel;
-    }
 
     public String getSchool() {
         return school;
@@ -130,11 +135,11 @@ public class User {
     }
 
     public String getClasses() {
-        return classes;
+        return academy;
     }
 
-    public void setClasses(String classes) {
-        this.classes = classes == null ? null : classes.trim();
+    public void setClasses(String academy) {
+        this.academy = academy == null ? null : academy.trim();
     }
 
     public String getSchoolNumber() {
@@ -145,12 +150,12 @@ public class User {
         this.schoolNumber = schoolNumber == null ? null : schoolNumber.trim();
     }
 
-    public Date getCreationdate() {
-        return creationdate;
+    public Date getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreationdate(Date creationdate) {
-        this.creationdate = creationdate;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     public String getCreator() {
@@ -169,11 +174,42 @@ public class User {
         this.modifier = modifier == null ? null : modifier.trim();
     }
 
-    public Date getModificationdate() {
-        return modificationdate;
+    public Date getModificationDate() {
+        return modificationDate;
     }
 
-    public void setModificationdate(Date modificationdate) {
-        this.modificationdate = modificationdate;
+    public void setModificationDate(Date modificationDate) {
+        this.modificationDate = modificationDate;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major == null ? null : major.trim();
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    public String getPhone() {
+      return phone;
     }
 }

@@ -40,6 +40,15 @@ public class RoleImpl implements IRoleService {
     public void deleteRole(String name) {
         Role role = roleMapper.selectByRoleName(name);
         roleMapper.deleteByPrimaryKey(role.getRoleId());
+    }
+
+    @Override
+    public void deleteRoleByRoleId(Integer roleId) {
+
+    }
+
+    @Override
+    public void insertRole(Role role) {
 
     }
 }

@@ -14,7 +14,7 @@ public interface IPassportService {
 
     public Passport findByUserName(String name);
 
-    public Passport findByTel(Long tel);
+    public Passport findByTel(String phone);
 
     public void addPassport(Passport passport , User user);
 
@@ -22,7 +22,7 @@ public interface IPassportService {
 
     public void deletePassportByUserId(Long id);
 
-    public void deletePassportByTel(Long tel);
+    public void deletePassportByTel(String phone);
 
     Passport findByToken(String token);
 

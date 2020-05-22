@@ -16,6 +16,7 @@
     </resultMap>
 
 
+
     <insert id="insertDictDetail" parameterType="com.hxskyun.domain.Dict" useGeneratedKeys="true" keyProperty="dictId">
     insert into dictionarydetail(Id,ItemKey,ItemValue,IsDefault,SortNum,CreationDate,Creator)
     values (DEFAULT,#{itemKey},#{itemValue},#{isDefault},#{sortNum},#{creationDate},#{creator});

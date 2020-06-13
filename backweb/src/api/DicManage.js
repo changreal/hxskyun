@@ -12,5 +12,17 @@ export default {
       method:'post',
       data:{type:type,itemKey:key}
     })
+  },
+  insertDicDetail(itemKey,itemValue,isDefault,sortNum){
+    return request({
+      url:'/dictionary/detail',
+      method:'post',
+      data:{
+        itemKey:itemKey,
+        itemValue:itemValue,
+        isDefault:isDefault,
+        sortNum:sortNum,
+      }
+    })
   }
 }

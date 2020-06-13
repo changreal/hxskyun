@@ -40,7 +40,7 @@
     </div></el-col>
 
   </el-row>
-    <el-dialog title="角色管理" :visible="dialogVisible" width="500px">
+    <el-dialog title="角色管理" :visible.sync="""dialogVisible" width="500px">
       <el-form :inline="true" align="center">
         <el-form-item label="角色名称" label-width="formLabelWidth">
           <el-input v-model="editRoleName"></el-input>

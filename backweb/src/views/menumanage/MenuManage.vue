@@ -30,7 +30,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog title="菜单管理" :visible="dialogVisible" width="500px" @close="kcDialog = false">
+    <el-dialog title="菜单管理" :visible.sync="dialogVisible" width="500px" @close="kcDialog = false">
       <el-form :inline="true">
         <el-form-item label="菜单标题" :label-width="formLabelWidth">
           <el-input v-model="menuName" > </el-input>

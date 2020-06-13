@@ -16,6 +16,12 @@
         <result property="major" column="Major"/>
     </resultMap>
 
+    <insert id="userRegister">
+        INSERT into
+        user(Id,UserId,UserName,Password,Phone,Email) values
+        (DEFAULT,#{userId},#{name},#{password},#{phone},#{email});
+    </insert>
+
     <select id="checkUser" resultMap="UserMap" parameterType="com.hxskyun.domain.User">
 <!--        <if test="phone!=null">-->
             SELECT *

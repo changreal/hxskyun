@@ -1,7 +1,7 @@
 package com.hxskyun.controller;
 
 
-import com.hxskyun.exception.FriendException;
+
 import com.hxskyun.service.IUserService;
 import com.hxskyun.token.JWTUtils;
 import com.hxskyun.token.JedisUtils;
@@ -23,7 +23,7 @@ public class LoginController {
     private IUserService IuserService;
 
     @ResponseBody
-    @PostMapping("/checkLogin")
+    @PostMapping("/checkLogin")//登陆
     public Result checkLogin(@RequestBody User loginUser) {
         String token;
         User userDetail = IuserService.checkUser(loginUser);
@@ -37,10 +37,26 @@ public class LoginController {
     }
 
     @ResponseBody
+    @PostMapping("/register")//注册
+    public Result register(@RequestBody User userRegister) {
+        User replyUser;
+        replyUser = IuserService.userRegister(userRegister);
+
+        return Result.success().setCode(ResultCodeEnum.Login.getCode()).setMsg("注册成功").setData(replyUser);
+    }
+
+
+    @ResponseBody
     @PostMapping("/hello")
     public Result hello() {
-        String str="如果你看到这条消息，说明token验证成功了~";
+        String str = "如果你看到这条消息，说明token验证成功了~";
+        try {
+        } catch (Exception e) {
+
+        }
         return Result.success().setCode(ResultCodeEnum.OK.getCode()).setMsg("测试成功").setData(str);
 
     }
+
+
 }

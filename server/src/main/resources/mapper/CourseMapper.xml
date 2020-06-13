@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxskyun.mapper.CourseMapper">
+    <resultMap type="com.hxskyun.domain.Course" id="courseResultMap">
+        <result property="courseId" column="ClassId"/>
+        <result property="courseName" column="ClassName"/>
+        <result property="teachId" column="TeacherId"/>
+        <result property="school" column="School"/>
+        <result property="department" column="Department"/>
+    </resultMap>
+
+    <select id="getCourseByUserId" resultMap="courseResultMap">
+        select *  from
+        (select * from CourseStudent where StudentId=#{uuid})as c
+        left join
+        classschedule as a on c.ClassId=a.ClassId
+    </select>
+
+<!--    <select id="getCourseByPage" resultMap="courseResultMap" parameterType="PaperPage">-->
+<!--        SELECT c.CourseId,c.CourseName,c.CourseHour,c.TeachId,c.startTime,u.UserName,c.CoursePlace-->
+<!--        FROM course as c,user as u-->
+<!--        <if test="courseName == null">-->
+<!--            WHERE c.TeachId=u.UserId-->
+<!--        </if>-->
+<!--        <if test="courseName!=null">-->
+<!--            WHERE c.CourseName like concat('%',#{courseName},'%') and c.TeachId=u.UserId-->
+<!--        </if>-->
+<!--        ORDER BY CourseId ASC-->
+<!--        limit #{beginPage},#{pageSize}-->
+<!--    </select>-->
+<!--    <select id="getCourseCount" resultType="java.lang.Integer">-->
+<!--        SELECT count(*)-->
+<!--        FROM course-->
+<!--        <if test="courseName!=null">-->
+<!--            WHERE CourseName=#{courseName}-->
+<!--        </if>-->
+<!--    </select>-->
+
+<!--    <insert id="addCourse" parameterType="Course">-->
+<!--        INSERT INTO course(CourseName,CourseHour,TeachId,StartTime,CoursePlace) VALUE (#{courseName}, #{courseHour}, (select UserId from user where UserName =#{userName}), #{startTime}, #{coursePlace})-->
+<!--    </insert>-->
+
+<!--    <delete id="deleteCourseById" parameterType="long">-->
+<!--        DELETE FROM course WHERE CourseId=#{courseId}-->
+<!--    </delete>-->
+
+<!--    <delete id="deleteCourseBatchById" parameterType="java.util.List">-->
+<!--        DELETE FROM course WHERE CourseId IN-->
+<!--        <foreach collection="list" item="item" open="(" separator="," close=")">-->
+<!--            #{item}-->
+<!--        </foreach>-->
+<!--    </delete>-->
+
+<!--    <update id="updateCourse" parameterType="Course">-->
+<!--        UPDATE course-->
+<!--        SET CourseName = #{courseName}, StartTime = #{startTime}, CourseHour = #{courseHour},TeachId = (select UserId from user where UserName= #{userName}), CoursePlace = #{coursePlace}-->
+<!--        WHERE  CourseId = #{courseId}-->
+<!--    </update>-->
+
+<!--    <select id="queryById" resultMap="courseResultMap" parameterType="long">-->
+<!--        SELECT CourseId,CourseName,CourseHour,TeachId,CoursePlace-->
+<!--        FROM course-->
+<!--        WHERE CourseId=#{courseId}-->
+<!--    </select>-->
+<!--    <select id="queryAllPaper" resultMap="courseResultMap">-->
+<!--        SELECT CourseId,CourseName,CourseHour,TeachId,CoursePlace-->
+<!--        FROM course-->
+<!--    </select>-->
+
+</mapper>

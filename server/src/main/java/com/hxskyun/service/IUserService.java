@@ -7,7 +7,10 @@ import java.util.Set;
 
 public interface IUserService  {
 
-    User checkUser(User loginUser);
+    User checkUser(User loginUser);//登陆验证
+
+    User userRegister(User user);//用户注册
+
 //
 //    public List<User> findAll();
 //

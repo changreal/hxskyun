@@ -69,9 +69,14 @@ public class DictController {
         return Result.success().setMsg("根据id查询类型表成功").setData(dictService.selectTypeByPrimaryKey(Id));
     }
 
-//    @GetMapping("/alltype")
-//    public Result selectAllType() {
-//        return Result.success().setMsg("根据id查询类型表成功").setData(dictService.selectTypeByPrimaryKey());
-//    }
+    @GetMapping("/allType")
+    public Result selectAllType() {
 
+        return Result.success().setMsg("查询所有类型表成功").setData(dictService.selectAllType());
+    }
+
+    @GetMapping("/allDetail")
+    public Result selectAllDetail(){
+        return Result.success().setMsg("查询所有详细表成功").setData(dictService.selectAllDetail());
+    }
 }

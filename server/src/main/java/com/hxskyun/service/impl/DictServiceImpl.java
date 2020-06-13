@@ -79,5 +79,16 @@ public class DictServiceImpl implements IDictService {
         return dict;
     }
 
+    @Override
+    public List<Dict> selectAllType() {
+
+        return dictMapper.selectAlltype();
+    }
+
+    @Override
+    public List<Dict> selectAllDetail() {
+        return dictMapper.selectAlldetail();
+    }
+
 
 }

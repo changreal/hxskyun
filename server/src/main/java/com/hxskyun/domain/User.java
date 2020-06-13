@@ -7,7 +7,7 @@ public class User {
 
     private Long userId;
 
-    private String nickname;
+//    private String nickname;//未使
 
     private String name;
 
@@ -49,7 +49,6 @@ public class User {
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", nickname='" + nickname + '\'' +
                 ", name='" + name + '\'' +
                 ", sex='" + sex + '\'' +
                 ", email='" + email + '\'' +
@@ -93,13 +92,13 @@ public class User {
         this.userId = userId;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname == null ? null : nickname.trim();
-    }
+//    public String getNickname() {
+//        return nickname;
+//    }
+//
+//    public void setNickname(String nickname) {
+//        this.nickname = nickname == null ? null : nickname.trim();
+//    }
 
     public String getName() {
         return name;

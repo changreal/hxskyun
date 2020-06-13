@@ -2,6 +2,7 @@ package com.hxskyun.mapper;
 
 
 import com.hxskyun.domain.*;
+import com.hxskyun.domain.Dict;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -81,4 +82,7 @@ public interface DictMapper {
     Dict selectTypeByPrimaryKey(Integer dictId);
 
 
+    List<Dict> selectAlltype();
+
+    List<Dict> selectAlldetail();
 }

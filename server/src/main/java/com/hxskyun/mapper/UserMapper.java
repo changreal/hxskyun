@@ -13,7 +13,9 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    User checkUser(User loginUser);
+    User checkUser(User loginUser);//登陆
+
+    int userRegister(User userRegister);//注册
 
     int deleteByPrimaryKey(Long userId);
 

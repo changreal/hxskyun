@@ -3,6 +3,7 @@ package com.hxskyun.service;
 
 import com.hxskyun.domain.Dict;
 
+import java.util.List;
 
 
 public interface IDictService {
@@ -61,6 +62,19 @@ public interface IDictService {
      */
     Dict selectTypeByPrimaryKey(Integer dictId);
 
+    /**
+     * 查询所有类型表
+     *
+     *
+     * @return
+     */
+    List<Dict> selectAllType();
 
-
+    /**
+     * 查询所有详细表
+     *
+     *
+     * @return
+     */
+    List<Dict> selectAllDetail();
 }

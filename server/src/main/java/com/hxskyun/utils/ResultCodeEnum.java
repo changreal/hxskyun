@@ -7,6 +7,9 @@ public enum ResultCodeEnum {
 
     OK("200", "处理成功"),
     Login("100","登陆成功"),
+    Register("101","注册成功"),
+    RegisterError("102","注册失败"),
+    RegisterAlreadyExist("103","注册用户已存在"),
     LoginError("105","登陆失败"),
     TokenError("-2","令牌验证失败"),
     CREATED("201", "创建成功"),

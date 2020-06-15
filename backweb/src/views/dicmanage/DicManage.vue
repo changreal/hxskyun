@@ -57,7 +57,7 @@
         <!--          <el-table-column fixed label="是否默认值" prop="isDefault"></el-table-column>-->
         <!--        </el-table>-->
         <el-form>
-          <el-table :data="selectDetailRow" style="width: 100%" highlight-current-row max-height="500px" v-show="isSelect">
+          <el-table :data="selectDetailRow" style="width: 100%" highlight-current-row max-height="500px" v-show="isSelect" >
             <el-table-column fixed label="编号" type="index">
             </el-table-column>
             <el-table-column fixed label="字典值" prop="value">
@@ -154,16 +154,16 @@
         ],
 
         dicDetail: [
-          {code: 'sex', value: '男', isDefault: '否'},
-          {code: 'sex', value: '女', isDefault: '否'},
-          {code: 'role', value: '学生', isDefault: '是'},
-          {code: 'role', value: '教师', isDefault: '否'},
-          {code: 'role', value: '管理员', isDefault: '否'},
-          {code: 'education', value: '大学本科', isDefault: '是'},
-          {code: 'education', value: '研究生', isDefault: '否'},
-          {code: 'education', value: '高中生', isDefault: '否'},
-          {code: 'classType', value: '学校课程', isDefault: '是'},
-          {code: 'classType', value: '个人课程', isDefault: '否'}
+          {id:0, code: 'sex', value: '男', isDefault: '否'},
+          {id:0, code: 'sex', value: '女', isDefault: '否'},
+          {id:0, code: 'role', value: '学生', isDefault: '是'},
+          {id:0, code: 'role', value: '教师', isDefault: '否'},
+          {id:0, code: 'role', value: '管理员', isDefault: '否'},
+          {id:0, code: 'education', value: '大学本科', isDefault: '是'},
+          {id:0, code: 'education', value: '研究生', isDefault: '否'},
+          {id:0, code: 'education', value: '高中生', isDefault: '否'},
+          {id:0, code: 'classType', value: '学校课程', isDefault: '是'},
+          {id:0, code: 'classType', value: '个人课程', isDefault: '否'}
         ],
         dialogVisible:false,
         isSelect: false,//是否选择了字典表
@@ -287,6 +287,9 @@
             this.$api.dicManage.insertDicDetail(this.editDetailRow[i].code,this.editDetailRow[i].value,
               this.editDetailRow[i].isDefault,i+1);
           }
+        }
+        if(this.editOrAdd=='edit'){
+
         }
       },
       deleteDicTable(index,row) {

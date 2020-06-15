@@ -6,7 +6,10 @@
 export default {
   name: 'App',
   created() {
-     //localStorage.setItem('routeInf',JSON.stringify(this.$_router.options.routes))
+    if(!localStorage.getItem('routeInf')){
+      this.$_router.options.routes.splice(0,1);
+      localStorage.setItem('routeInf',JSON.stringify(this.$_router.options.routes))
+    }
   }
 }
 </script>

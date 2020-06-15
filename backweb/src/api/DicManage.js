@@ -24,5 +24,33 @@ export default {
         sortNum:sortNum,
       }
     })
+  },
+  deleteDicDetail(id) {
+    return request({
+      url:'/dictionary/detail/'+id,
+      method:'delete',
+    })
+  },
+  editDicTable(id,type,itemKey) {
+    return request({
+      url:'/dictionary/type/'+id,
+      method:'put',
+      data:{
+        type:type,
+        itemKey:itemKey,
+      }
+    })
+  },
+  editDicDetail(id,itemKey,itemValue,isDefault,sortNum){
+    return request({
+      url:'/dictionary/detail/'+id,
+      method:'put',
+      data:{
+        itemKey:itemKey,
+        itemValue:itemValue,
+        isDefault:isDefault,
+        sortNum:sortNum,
+      }
+    })
   }
 }

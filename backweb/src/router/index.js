@@ -22,7 +22,7 @@ export default new Router({
       path: '/index',
       name: '首页',
       isShow:  true,
-      permission:'user',
+      permission:'teacher',
       component: Container,
       meta:{
         requireLogin: true,
@@ -38,47 +38,47 @@ export default new Router({
         //{path:'/test',name:'测试页面',component:testPage,isShow:true,},
       ]
     },
-    {
-      path:'/test',
-      name:'测试页面',
-      component:testPage,
-      permission:'user',
-      isShow:true,
-    },
-    {
-      path: '/edit',
-      name: '标准编辑页',
-      component: StandardEdit,
-      permission:'user',
-      isShow:true,
-    },
-    {
-      path: "/login",
-      name: '登入页面',
-      component: Login,
-      permission:'user',
-      isShow:true,
-    },
     // {
-    //   path: "/Login",
+    //   path:'/test',
+    //   name:'测试页面',
+    //   component:testPage,
+    //   permission:'user',
+    //   isShow:true,
+    // },
+    // {
+    //   path: '/edit',
+    //   name: '标准编辑页',
+    //   component: StandardEdit,
+    //   permission:'user',
+    //   isShow:true,
+    // },
+    // {
+    //   path: "/login",
     //   name: '登入页面',
     //   component: Login,
-    //   meta:{
-    //     isShow: true,
-    //   }
+    //   permission:'user',
+    //   isShow:true,
     // },
-    {
-      path: '/forgetPassword',
-      name: '忘记密码',
-      component: ForgetPassword,
-      permission:'user',
-      isShow:true,
-    },
+    // // {
+    // //   path: "/Login",
+    // //   name: '登入页面',
+    // //   component: Login,
+    // //   meta:{
+    // //     isShow: true,
+    // //   }
+    // // },
+    // {
+    //   path: '/forgetPassword',
+    //   name: '忘记密码',
+    //   component: ForgetPassword,
+    //   permission:'user',
+    //   isShow:true,
+    // },
     {
       path: '/error',
       name: '异常页面',
       component: AbnormalView,
-      permission:'user',
+      permission:'teacher',
       isShow:true,
     },
   ],

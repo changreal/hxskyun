@@ -10,13 +10,12 @@
       <el-form-item>
         <el-button size="mini" type="primary">新增</el-button>
       </el-form-item>
-      <el-form-item><el-button size="mini">测试按钮</el-button></el-form-item>
     </el-form>
-    <el-table :data="routeInf" style="width: 100%;margin-bottom: 20px;" row-key="id" lazy
+    <el-table :data="routeInf" style="width: 100%;margin-bottom: 20px;" row-key="id" lazy :default-expand-all="true"
                :tree-props="{children:'children',hasChildren:'hasChildren'}">
       <el-table-column prop="name" label="菜单标题" sortable width="180"></el-table-column>
       <el-table-column prop="path" label="路由地址" sortable width="180"></el-table-column>
-      <el-table-column prop="permission" label="权限标识" sortable width="180"></el-table-column>
+      <el-table-column prop="permission" label="权限等级" sortable width="180"></el-table-column>
       <el-table-column label="状态" sortable width="180">
         <template slot-scope="scope">
           <span v-show="scope.row.isShow">启用</span>
@@ -25,8 +24,8 @@
       </el-table-column>
       <el-table-column label="操作" sortable>
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="editMenuItem(scope.$index,scope.row)">编辑</el-button>
-          <el-button type="danger" size="small">删除</el-button>
+          <el-button type="primary" v-show="scope.row.id>=10" size="small" @click="editMenuItem(scope.$index,scope.row)">编辑</el-button>
+          <el-button type="danger" v-show="scope.row.id>=10" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

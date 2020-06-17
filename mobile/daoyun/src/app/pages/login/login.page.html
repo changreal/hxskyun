@@ -2,12 +2,12 @@
 
   <ion-toolbar>
     <ion-title class='ion-text-center'>登录</ion-title>
-    <ion-buttons>
+    <!-- <ion-buttons>
       <button ion-button (click)="dismiss()">
         <span ion-text color='primary' showWhen="ios">取消</span>
-        <!-- <ion-icon name="close-outline" showWhen="android"></ion-icon> -->
+        <ion-icon name="close-outline" showWhen="android"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-toolbar>
 
 </ion-header>
@@ -62,10 +62,10 @@
           <ion-button fill="clear" size="small" >手机号验证登录</ion-button>
         </ion-col>
         <ion-col>
-          <ion-button fill="clear" size="small" (click)="openForgotPassword()">忘记密码？</ion-button>
+          <ion-button fill="clear" size="small" routerLink="/forget-password">忘记密码？</ion-button>
         </ion-col>
         <ion-col>
-          <ion-button fill="clear" size="small" >注册新账号</ion-button>
+          <ion-button fill="clear" size="small" routerLink="/register">注册新账号</ion-button>
         </ion-col>
       </ion-row>
       

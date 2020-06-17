@@ -43,7 +43,15 @@ const routes: Routes = [
   {
     path:'mine',
     loadChildren:()=>import('./pages/mine/mine.module').then(m=>m.MinePageModule)
+  },  {
+    path: 'test',
+    loadChildren: () => import('./pages/test/test.module').then( m => m.TestPageModule)
   },
+  {
+    path: 'forget-password',
+    loadChildren: () => import('./pages/forget-password/forget-password.module').then( m => m.ForgetPasswordPageModule)
+  },
+
  
 
  

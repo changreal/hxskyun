@@ -19,7 +19,6 @@
     <ion-note *ngIf= "shop.email?.length===0" slot="end" color="danger">未关联</ion-note>
     <ion-note *ngIf= "shop.email?.length!==0" slot="end" color='primary'>{{shop.email}}</ion-note>
   </ion-item>
-
   <ion-item routerLink="/mine/edit-password" >
     <ion-label>修改密码</ion-label>
   </ion-item>

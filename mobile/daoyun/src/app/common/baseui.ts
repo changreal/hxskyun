@@ -16,7 +16,7 @@ export abstract class BaseUI {
             message: string) {
             const loader = await loadingCtrl.create({
                 message: message,
-                duration: 20
+                duration: 2000
             });
             await loader.present();
             return loader;

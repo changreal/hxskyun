@@ -4,20 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MinePageRoutingModule } from './mine-routing.module';
+import { ForgetPasswordPageRoutingModule } from './forget-password-routing.module';
 
-import { MinePage } from './mine.page';
-
+import { ForgetPasswordPage } from './forget-password.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    
-    MinePageRoutingModule,
-    
+    ForgetPasswordPageRoutingModule
   ],
-  declarations: [MinePage]
+  declarations: [ForgetPasswordPage]
 })
-export class MinePageModule {}
+export class ForgetPasswordPageModule {}

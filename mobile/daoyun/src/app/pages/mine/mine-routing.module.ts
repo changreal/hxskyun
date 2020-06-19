@@ -36,6 +36,7 @@ const routes: Routes = [
     path: 'headfaces',
     loadChildren: () => import('./headfaces/headfaces.module').then( m => m.HeadfacesPageModule)
   },
+ 
   
 ];
 

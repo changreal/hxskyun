@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
-import { ToastController, NavController } from '@ionic/angular';
+import { ToastController, NavController, IonSlides } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-set-account',
@@ -14,6 +15,10 @@ export class SetAccountPage implements OnInit {
   property: string; // 用户获取传来的property
   value: any;       // 用于ngModel，从shop对象的相关属性中获取数据
   shop: any;        // 用于保存从本地存储中获得店铺数据
+  @ViewChild('signupSlides' ,{static: true})  signupSlides: IonSlides;
+  submited = false;
+  slideIndex: any = 0;
+  
   constructor(private activatedRoute: ActivatedRoute, private localStorageService: LocalStorageService,
     private toastCtrl: ToastController, private statusBar: StatusBar,
     private navCtrl: NavController, private router: Router) { 
@@ -25,7 +30,52 @@ export class SetAccountPage implements OnInit {
       this.statusBar.overlaysWebView(true);
     }
 
-  ngOnInit() {
-  }
+  /**
+   * 记录当前slide的索引
+   */
+  onSlideDidChange() {
 
+    // 原来是这样，会有问题
+    // this.slideIndex = this.signupSlides.getActiveIndex();
+    // console.log('当前轮播索引: ' + this.slideIndex);
+
+  this.slideIndex = this.signupSlides.getActiveIndex().then((index:number) =>{
+      this.slideIndex = index;
+      console.log('当前轮播索引：' + this.slideIndex)
+    }  
+  )
+
+}
+
+
+/**
+ * 停止轮播
+ */
+ngOnInit() {
+  this.signupSlides.lockSwipes(true); 
+  // this.signupSlides.lockSwipeToNext(true);
+
+}
+onNext(){
+  this,this.signupSlides.lockSwipes(false);
+  this.signupSlides.slideNext();
+  this.slideIndex++;
+  this.signupSlides.lockSwipes(true);
+}
+
+onPrevious() {
+    this.signupSlides.lockSwipes(false);
+    this.signupSlides.slidePrev();
+    this.slideIndex--;
+    this.signupSlides.lockSwipes(true);
+}
+checkPassword(form: NgForm){
+  // console.log(this.submited);
+  this.submited = true;
+  // 通过验证
+  if (form.valid) {
+    // 已通过客户端验证
+    this.onNext();
+  }
+}
 }

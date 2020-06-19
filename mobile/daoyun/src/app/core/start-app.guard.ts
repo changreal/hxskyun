@@ -36,13 +36,13 @@ export class StartAppGuard  extends BaseUI implements CanActivate{
     this.common.ajaxPost(url,'').then((response:any)=>{
       
       if(response['code']==200){
-        this.loadingController.dismiss()
+        // this.loadingController.dismiss()
         console.log(response)
         console.log('res:'+response['success'])
         this.router.navigateByUrl('/tabs')
         
       }else{
-        this.loadingController.dismiss()
+        // this.loadingController.dismiss()
         this.router.navigateByUrl('/login')
         
       }

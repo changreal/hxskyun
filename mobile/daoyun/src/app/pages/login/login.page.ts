@@ -62,39 +62,19 @@ export class LoginPage extends BaseUI implements OnInit {
 
     }else{
       // 验证登录账号与密码，不对的话给出错误提示
-      // this.presentLoading("登录中。。。。")
-      // this.http.get(url).subscribe((res)=>{
-      //   if (1 == 1){
-      //     // this.localStorageService.setStore('UserId',res["UserId"]);
-      //     this.localStorageService.set('UserId','1')
-      //     this.loading.dismiss()
-      //     // this.dismiss();
-      //     this.router.navigateByUrl('/tabs');
-      //     console.log("succ  in ")
-      //   }else{
-      //     // this.loading.dismiss();
-      //     this.presentToast(res["StatusContent"])
-      //     console.log("faile in ")
-      //     this.dataList=res
-      //     
-      //   }
-      //   console.log(res)
-      // })
       super.showLoading(this.loadingController,"登录中。。。。")
       
       this.common.ajaxPost(url, this.peopleInfo)
       .then((response:any)=>{
-        if(response['success']==true){
-         
+        if(response['code']==100){   
           console.log(response);
           this.localStorageService.set('Token',response["data"])
-          this.loadingController.dismiss()
+          // this.loadingController.dismiss()
           this.router.navigateByUrl('/tabs')    
-
           console.log("succ  in ")
         }else{
-          this.loadingController.dismiss
-          this.presentToast("请检查用户名和密码")
+          // this.loadingController.dismiss()
+          this.presentToast(response["msg"])
         }
       })
       .catch((err:any)=>{

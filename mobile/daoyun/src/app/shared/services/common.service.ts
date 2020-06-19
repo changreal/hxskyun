@@ -78,7 +78,7 @@ export class CommonService {
   /** jsonp post请求promise异步 */
   ajaxPost(url: String, json: Object):any {
     let token=this.localStorageService.get('Token','')
-
+    console.log(token)
     if (token!=null){
       
       this.httpOptions.headers=this.httpOptions.headers.set('token',token)

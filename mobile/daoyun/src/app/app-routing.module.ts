@@ -7,8 +7,7 @@ import { StartAppGuard } from './core/start-app.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'join-classes', 
-    // redirectTo: 'welcome', // 原来是home
+    redirectTo: 'welcome', // 原来是home
     pathMatch: 'full'
   },
   {
@@ -45,6 +44,24 @@ const routes: Routes = [
     path:'mine',
     loadChildren:()=>import('./pages/mine/mine.module').then(m=>m.MinePageModule)
   },
+  {
+    path: 'test',
+    loadChildren: () => import('./pages/test/test.module').then( m => m.TestPageModule)
+  },
+  {
+    path: 'forget-password',
+    loadChildren: () => import('./pages/forget-password/forget-password.module').then( m => m.ForgetPasswordPageModule)
+  },
+  {
+    path: 'edit-school',
+    loadChildren: () => import('./pages/edit-school/edit-school.module').then( m => m.EditSchoolPageModule)
+  },
+  {
+    path: 'yuanxi',
+    loadChildren: () => import('./pages/yuanxi/yuanxi.module').then( m => m.YuanxiPageModule)
+  },
+
+
  
 
  

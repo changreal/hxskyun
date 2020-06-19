@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/mine"></ion-back-button>
+      <ion-back-button routerLink="/tabs/mine"></ion-back-button>
     </ion-buttons>
     <ion-title class="ion-text-center">用户信息</ion-title>
   </ion-toolbar>
@@ -20,26 +20,26 @@
     <ion-list >
       <ion-item>
         <ion-label>姓名:</ion-label>  
-        <ion-input  type="text" item-end></ion-input>
+        <ion-input  type="text" item-end [(ngModel)]="userDetail.userName" ></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>昵称:</ion-label>  
-        <ion-input type="text" >zxl</ion-input>
+        <ion-input type="text" [(ngModel)]="userDetail.nickName"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>出生年份:</ion-label>  
-        <ion-input type="text" >2000</ion-input>
+        <ion-input type="text" [(ngModel)]="userDetail.year"></ion-input>
       </ion-item>
     </ion-list>
 
     <ion-list >
-      <ion-item button detail  (click)="chooseSchool">
+      <ion-item button detail  routerLink="/edit-school">
         <ion-label>
           <ion-text color="primary">
             <h2>你所在的学校及院系</h2>
           </ion-text>
           <ion-text>
-            <p>福州大学 数计学院</p>
+            <p>{{userDetail.college}}&nbsp;&nbsp;&nbsp;{{userDetail.major}}</p>
           </ion-text>
         </ion-label>
       </ion-item>
@@ -49,7 +49,7 @@
       <ion-list-header>
         选择性别
       </ion-list-header>
-      <ion-radio-group [(ngModel)]="user.value" (ionChange)='getValue()'>
+      <ion-radio-group [(ngModel)]="userDetail.gender" (ionChange)='getValue()'>
       <ion-item>
         <ion-label>男</ion-label>
         <ion-radio slot="end" value="男"></ion-radio>    
@@ -64,7 +64,7 @@
       <ion-list-header >
         选择身份
       </ion-list-header>
-      <ion-radio-group [(ngModel)]="user.value" (ionChange)='getValue()'>
+      <ion-radio-group [(ngModel)]="userDetail.identify" (ionChange)='getValue()'>
       <ion-item>
         <ion-label>我是学生</ion-label>
         <ion-radio slot="end" value="学生"></ion-radio>    
@@ -82,11 +82,11 @@
   <ion-list>
     <ion-item>
       <ion-label>学号/工号:</ion-label>  
-      <ion-input type="text" >2000</ion-input>
+      <ion-input type="text" [(ngModel)]="userDetail.schoolenum"></ion-input>
     </ion-item>
   </ion-list>
 
     <div style="text-align: center;">
-      <ion-button expand="full" color="primary" (click)="onLogin()">保存</ion-button>
+      <ion-button expand="full" color="primary" (click)="onSave()">保存</ion-button>
   </div>
 </ion-content>

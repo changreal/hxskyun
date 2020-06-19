@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MinePageRoutingModule } from './mine-routing.module';
+import { EditSchoolPageRoutingModule } from './edit-school-routing.module';
 
-import { MinePage } from './mine.page';
+import { EditSchoolPage } from './edit-school.page';
 
 
 @NgModule({
@@ -14,10 +14,8 @@ import { MinePage } from './mine.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    
-    MinePageRoutingModule,
-    
+    EditSchoolPageRoutingModule,
   ],
-  declarations: [MinePage]
+  declarations: [EditSchoolPage]
 })
-export class MinePageModule {}
+export class EditSchoolPageModule {}

@@ -69,7 +69,7 @@ export class LoginPage extends BaseUI implements OnInit {
         if(response['code']==100){   
           console.log(response);
           this.localStorageService.set('Token',response["data"])
-          this.loadingController.dismiss()
+          // this.loadingController.dismiss()
           this.router.navigateByUrl('/tabs')    
           console.log("succ  in ")
         }else{

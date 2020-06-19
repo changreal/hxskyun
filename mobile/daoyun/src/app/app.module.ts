@@ -16,6 +16,7 @@ import { CommonService } from "./shared/services/common.service";
 // 公用module
 import { LoginPage } from './pages/login/login.page';
 import { LoginPageModule } from './pages/login/login.module';
+import { pipe } from 'rxjs';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { LoginPageModule } from './pages/login/login.module';
     AppRoutingModule,
     HttpClientModule,
     HttpClientJsonpModule,
+
   ],
 
   providers: [

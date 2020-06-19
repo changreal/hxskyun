@@ -8,7 +8,8 @@ import { LoginPageModule } from './login/login.module';
   declarations: [],
   imports: [
     CommonModule,
-    LoginPageModule
+    LoginPageModule,
+  
   ]
 })
 export class PagesModule { }

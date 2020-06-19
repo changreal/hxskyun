@@ -4,20 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MinePageRoutingModule } from './mine-routing.module';
+import { YuanxiPageRoutingModule } from './yuanxi-routing.module';
 
-import { MinePage } from './mine.page';
-
+import { YuanxiPage } from './yuanxi.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    
-    MinePageRoutingModule,
-    
+    YuanxiPageRoutingModule
   ],
-  declarations: [MinePage]
+  declarations: [YuanxiPage]
 })
-export class MinePageModule {}
+export class YuanxiPageModule {}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.service';
 
 @Component({
   selector: 'app-user-info',
@@ -10,9 +11,10 @@ export class UserInfoPage implements OnInit {
   public user={
     value:null
   }
+
   userDetail = {
     headface:'',
-    userName:'',
+    userName:'s',
     nickName:'',
     year:'',
     gender:'',
@@ -21,12 +23,25 @@ export class UserInfoPage implements OnInit {
     schoolenum:'',
     identify:''
   };
-  constructor() { }
+  constructor(public localStorageService:MylocalstorageService) { }
 
   ngOnInit() {
+  }
+  ionViewDidEnter(){
+    console.log("view enter")
+
+    let temp=this.localStorageService.get('schooAandmajor','')
+    if (temp){
+      this.userDetail.college=temp.colleage
+      this.userDetail.major=temp.major
+      this.localStorageService.remove('schooAandmajor')
+    }
+    
   }
   getValue(){
     console.log('我选中的是', this.user.value)
   }
-
+  onSave(){
+    console.log(this.userDetail)
+  }
 }

@@ -7,7 +7,8 @@ import { StartAppGuard } from './core/start-app.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'welcome', // 原来是home
+    redirectTo: 'join-classes', 
+    // redirectTo: 'welcome', // 原来是home
     pathMatch: 'full'
   },
   {

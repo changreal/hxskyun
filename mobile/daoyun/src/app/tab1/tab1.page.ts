@@ -44,9 +44,10 @@ export class Tab1Page {
   getData(url:string){
 
     // url= 'http://a.itying.com/api/productlist'   //这个是成功的
-    // url = '/dictionary/detail/1'
+    url = '/dictionary/detail/1'
+    // url = 'http://47.115.121.100:3000/logintest'
 
-    this.common.ajaxGet(this.url)
+    this.common.ajaxGet(url)
     .then((response:any)=>{
       console.log(response);
       this.dataList = response.data

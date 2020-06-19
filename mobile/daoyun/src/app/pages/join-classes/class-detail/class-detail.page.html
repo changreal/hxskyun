@@ -9,18 +9,18 @@
 
 <ion-content>
 
-  <ion-card>
+  <ion-card [hidden]='!hasThisClass'>
 
     <!-- 班课头信息 -->
-    <ion-card-header>
+    <ion-card-header >
       <ion-item lines='full'>
         <ion-thumbnail slot="start">
           <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
         </ion-thumbnail>
         <ion-label>
-          <h3>2019级工硕</h3>
-          <h4>工程实践</h4>
-          <p>池芝标</p>
+          <h3>{{courseMajor}}</h3>
+          <h4>{{courseName}}</h4>
+          <p>{{courseTeacherName}}</p>
           <p>
             <span>2019-2020-2</span>  <span>学校课表班课</span>
           </p>
@@ -29,12 +29,12 @@
     </ion-card-header>
 
     <!-- 其他信息 -->
-    <ion-card-content>
+    <ion-card-content >
       <ion-list>
         <ion-item lines='full'> 
           <ion-label>
             <h3>学校院系</h3>
-            <p>清华大学 蔡徐坤</p>
+            <p>{{courseSchool}}&nbsp;{{courseDepartment}} </p>
           </ion-label>
         </ion-item>
         <ion-item lines='full'> 

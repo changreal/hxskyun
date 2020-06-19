@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-// 引入popover
-import { PopoverController } from '@ionic/angular';
 // import { PopoverComponent } from './components/popover/popover.component';
-import { PopoverComponent } from '../components/popover/popover.component';
-
+import { ZrServicesService } from "../../shared/services/zr-services.service";
+// import { ToastServiceProvider } from "../../shared/services/toast-service.service";
 
 @Component({
   selector: 'app-join-classes',
@@ -12,36 +10,45 @@ import { PopoverComponent } from '../components/popover/popover.component';
 })
 export class JoinClassesPage implements OnInit {
 
-  courses:any[]=[
-    {
-      courseId:0,
-      subject: '工程实践',
-      school: '福州大学',
-      userName:'池芝标',
-      class: '2019级工硕'
-    },
-    {
-      courseId:1,
-      subject: '软件工程',
-      school: '福州大学',
-      userName:'标芝池',
-      class: '2019级工硕'
-    },
-  ];
+  userId:any = '123'
+  courseId:any
+  role:any  // 身份
 
-  constructor(public popoverController: PopoverController) {}
+
+  courses:any[];
+  courses_length = 0
+
+
+  constructor(private zrServices: ZrServicesService,
+    ) {}
 
   ngOnInit() {
+    this.loadCourseData()
   }
 
-  async presentPopover(ev: any) {
-    const popover = await this.popoverController.create({
-      component: PopoverComponent,
-      event: ev,
-      translucent: true
-    });
-    return await popover.present();
+  loadCourseData(){
+    this.zrServices.getCourseById(this.userId).then((result:any) => {
+      // console.log('根据用户号，获取该用户已加入的课程列表', result);
+      if (result.code =='200') {
+        this.courses = result.data
+        this.courses_length = this.courses.length
+      }else{
+        console.log(result.msg);
+      }
+    }).catch(async (error)=>{
+      console.log('请求课程列表出现错误：', error);
+    })
+    
   }
+
+  // async presentPopover(ev: any) {
+  //   const popover = await this.popoverController.create({
+  //     component: PopoverComponent,
+  //     event: ev,
+  //     translucent: true
+  //   });
+  //   return await popover.present();
+  // }
 
 
     

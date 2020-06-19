@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ZrServicesService } from "../../../shared/services/zr-services.service";
+
+
 
 @Component({
   selector: 'app-join-class',
@@ -7,9 +11,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JoinClassPage implements OnInit {
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute,
+              private zrServices: ZrServicesService,
+    ) { }
 
   ngOnInit() {
+    this.activatedRoute.queryParams.subscribe((result) => {
+      console.log('传入的参数');
+      
+    })
   }
 
 }

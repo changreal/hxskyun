@@ -186,26 +186,30 @@ import AbnormalView from "./AbnormalView";
           console.log(index, row);
         },
         testClick1() {
-          this.$api.dicManage.insertDicTable('yc1','testWYC13').
+          this.$api.dicManage.getDicTableAll().
             then(response=>{
               console.log(response);
-          })
-        },
-        testClick2(){
-          axios.post('http://175.24.16.48:8082/dictionary/type', {
-            type:'测试角色2',
-            itemKey:'testwyc2'
-          }).then((response) => {
-            console.log(response)
-          }).catch((error) => {
+          }).catch(error =>{
             console.log(error)
           })
+
+        },
+        testClick2(){
+          let tempData;
+          tempData=this.$api.dicManage.getDicDetailAll().
+          then(response=>{
+            console.log(response);
+          }).catch(error =>{
+            console.log(error)
+          })
+
         },
         testClick3(){
-         this.$api.test().then(response=>{
-           console.log(response);
-         }).catch(error=>{
-           console.log(error);
+         this.$api.dicManage.insertDicTable('职务','job')
+          .then(response=>{
+            console.log(response);
+          }).catch(error=>{
+            console.log(error);
          })
         },
         testClick4(){

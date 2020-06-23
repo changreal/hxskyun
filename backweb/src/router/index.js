@@ -38,42 +38,42 @@ export default new Router({
         //{path:'/test',name:'测试页面',component:testPage,isShow:true,},
       ]
     },
+    {
+      path:'/test',
+      name:'测试页面',
+      component:testPage,
+      permission:'user',
+      isShow:true,
+    },
+    {
+      path: '/edit',
+      name: '标准编辑页',
+      component: StandardEdit,
+      permission:'user',
+      isShow:true,
+    },
+    {
+      path: "/login",
+      name: '登入页面',
+      component: Login,
+      permission:'user',
+      isShow:true,
+    },
     // {
-    //   path:'/test',
-    //   name:'测试页面',
-    //   component:testPage,
-    //   permission:'user',
-    //   isShow:true,
-    // },
-    // {
-    //   path: '/edit',
-    //   name: '标准编辑页',
-    //   component: StandardEdit,
-    //   permission:'user',
-    //   isShow:true,
-    // },
-    // {
-    //   path: "/login",
+    //   path: "/Login",
     //   name: '登入页面',
     //   component: Login,
-    //   permission:'user',
-    //   isShow:true,
+    //   meta:{
+    //     isShow: true,
+    //   }
     // },
-    // // {
-    // //   path: "/Login",
-    // //   name: '登入页面',
-    // //   component: Login,
-    // //   meta:{
-    // //     isShow: true,
-    // //   }
-    // // },
-    // {
-    //   path: '/forgetPassword',
-    //   name: '忘记密码',
-    //   component: ForgetPassword,
-    //   permission:'user',
-    //   isShow:true,
-    // },
+    {
+      path: '/forgetPassword',
+      name: '忘记密码',
+      component: ForgetPassword,
+      permission:'user',
+      isShow:true,
+    },
     {
       path: '/error',
       name: '异常页面',

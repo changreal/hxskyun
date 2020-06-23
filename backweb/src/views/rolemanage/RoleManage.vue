@@ -40,16 +40,16 @@
     </div></el-col>
 
   </el-row>
-    <el-dialog title="角色管理" :visible.sync="""dialogVisible" width="500px">
+    <el-dialog title="角色管理" :visible.sync="dialogVisible" width="500px">
       <el-form :inline="true" align="center">
         <el-form-item label="角色名称" label-width="formLabelWidth">
-          <el-input v-model="editRoleName"></el-input>
+          <el-input v-model="editRoleName" size="small"></el-input>
         </el-form-item>
         <el-form-item label="角色类型" label-width="formLabelWidth">
-          <el-input v-model="editRoleType"></el-input>
+          <el-input v-model="editRoleType" size="small"></el-input>
         </el-form-item>
         <el-form-item label="角色等级" label-width="formLabelWidth">
-          <el-input v-model="editRoleGrade"></el-input>
+          <el-input v-model="editRoleGrade" size="small"></el-input>
         </el-form-item>
       </el-form>
       <el-form>
@@ -104,7 +104,6 @@
         selectRole(row, event, column){
           this.roleName=row.roleName;
           this.roleType=row.roleType;
-          console.log(this.roleType);
           let selectedId=[];
           if(this.roleType=='admin'){
             for(let i in this.routeInf){
@@ -142,7 +141,6 @@
 
               }
             }
-            console.log(selectedId);
             this.$refs.tree.setCheckedNodes(selectedId);
           }
         },
@@ -156,7 +154,6 @@
           this.editRoleType=row.roleType;
           this.editRoleGrade=row.roleGrade;
           this.editRoleRow=index;
-          console.log(this.editRoleRow);
         },
         saveRole(){
           let date=new Date();
@@ -177,13 +174,18 @@
         }
       },
       created() {
+        /*
+        危险操作，考虑到接口没那么快，这里打算直接写死逻辑了
+        这里获取所有拥有的页面
+         */
         let jsonRoute=JSON.parse(localStorage.getItem('routeInf'));
         this.routeInf=[];
         let j=0;
-        for(let index in jsonRoute){
-          this.routeInf[j]=jsonRoute[index];
-          j++;
-        }
+        this.routeInf[0]=jsonRoute[0];
+        // for(let index in jsonRoute){
+        //   this.routeInf[j]=jsonRoute[index];
+        //   j++;
+        // }
         let route;
         for(route in this.routeInf){
           this.routeInf[route].id=Number(route)+Number(1);

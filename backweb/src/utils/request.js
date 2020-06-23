@@ -24,7 +24,6 @@ service.interceptors.request.use(
       localStorage.removeItem('token');
       localStorage.removeItem('tokenTimeoutDate');
     }
-    console.log(config.url);
     if(config.url=='/Login'){
       return config;
     }else {

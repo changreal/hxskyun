@@ -5,55 +5,10 @@
     <resultMap type="com.hxskyun.domain.Course" id="courseResultMap">
         <result property="courseId" column="ClassId"/>
         <result property="courseName" column="ClassName"/>
-        <result property="classType" column="ClassType"/>
-        <result property="classDes" column="ClassDes"/>
-        <result property="studyRequire" column="studyRequire"/>
-        <result property="courseSemester" column="courseSemester"/>
         <result property="teachId" column="TeacherId"/>
         <result property="school" column="School"/>
         <result property="department" column="Department"/>
     </resultMap>
-
-    <resultMap type="com.hxskyun.domain.CourseStudent" id="courseStudentResultMap">
-        <result property="courseId" column="ClassId"/>
-        <result property="studentId" column="studentId"/>
-        <result property="studentExp" column="studentExp"/>
-    </resultMap>
-
-    <resultMap type="com.hxskyun.domain.CourseSign" id="courseSignResultMap">
-        <result property="signId" column="SignId"/>
-        <result property="studentId" column="studentId"/>
-        <result property="courseId" column="CourseId"/>
-        <result property="signTime" column="signTime"/>
-        <result property="endTime" column="endTime"/>
-        <result property="signStatus" column="signStatus"/>
-    </resultMap>
-
-    <insert id="insertCourseStudent" useGeneratedKeys="true">
-        insert into CourseStudent(Id,ClassId,studentId)
-        values (DEFAULT,#{courseId},#{studentId});
-    </insert>
-
-    <insert id="sendCourseSign" useGeneratedKeys="true">
-        insert into CourseSign(Id,SignId,CourseId,studentId,endTime,signStatus)
-        values (DEFAULT,#{signId},#{courseId},#{studentId},#{endTime},#{signStatus});
-    </insert>
-
-    <update id="joinCourseSign">
-        update CourseSign
-        SET signTime = #{signTime},
-            signStatus = #{signStatus}
-        where CourseId = #{courseId} and studentId = #{studentId} and SignId=#{signId}
-    </update>
-
-    <delete id="exitCourseStudent">
-        delete from CourseStudent where ClassId=#{courseId} and studentId=#{studentId};
-    </delete>
-
-    <select id="getCourseByUserIdCourseId" resultMap="courseStudentResultMap">
-    select * from CourseStudent where ClassId=#{courseId} and studentId=#{studentId};
-    </select>
-
 
     <select id="getCourseByUserId" resultMap="courseResultMap">
         select *  from
@@ -61,89 +16,56 @@
         left join
         classschedule as a on c.ClassId=a.ClassId
     </select>
-    <select id="getTeacherNameByTeacherId" resultType="String">
-        select UserName from user where UserId=#{uuid}
-    </select>
 
-    <select id="getCourseByCourseId" resultMap="courseResultMap">
-        select * from classschedule where ClassId=#{uuid}
-    </select>
-    <select id="getMembersByCourseId" resultMap="courseStudentResultMap">
-    select * from CourseStudent where ClassId=#{uuid}
-    </select>
-    <select id="getStudentNameByUserId" resultType="java.lang.String">
-        select UserName from user where UserId=#{uuid}
-    </select>
-    <select id="getMembersCountByCourseId" resultType="java.lang.Integer">
-        select Count(*) from CourseStudent where ClassId=#{uuid}
-    </select>
+<!--    <select id="getCourseByPage" resultMap="courseResultMap" parameterType="PaperPage">-->
+<!--        SELECT c.CourseId,c.CourseName,c.CourseHour,c.TeachId,c.startTime,u.UserName,c.CoursePlace-->
+<!--        FROM course as c,user as u-->
+<!--        <if test="courseName == null">-->
+<!--            WHERE c.TeachId=u.UserId-->
+<!--        </if>-->
+<!--        <if test="courseName!=null">-->
+<!--            WHERE c.CourseName like concat('%',#{courseName},'%') and c.TeachId=u.UserId-->
+<!--        </if>-->
+<!--        ORDER BY CourseId ASC-->
+<!--        limit #{beginPage},#{pageSize}-->
+<!--    </select>-->
+<!--    <select id="getCourseCount" resultType="java.lang.Integer">-->
+<!--        SELECT count(*)-->
+<!--        FROM course-->
+<!--        <if test="courseName!=null">-->
+<!--            WHERE CourseName=#{courseName}-->
+<!--        </if>-->
+<!--    </select>-->
 
-    <select id="courseSignByUserIdCourseId" resultMap="courseSignResultMap">
-        select * from CourseSign where CourseId=#{courseId} and studentId=#{studentId}
-    </select>
+<!--    <insert id="addCourse" parameterType="Course">-->
+<!--        INSERT INTO course(CourseName,CourseHour,TeachId,StartTime,CoursePlace) VALUE (#{courseName}, #{courseHour}, (select UserId from user where UserName =#{userName}), #{startTime}, #{coursePlace})-->
+<!--    </insert>-->
 
-    <select id="getCourseExpByCourseIdUserId" resultType="java.lang.Integer">
-        select studentExp from CourseStudent where ClassId=#{courseId} and studentId=#{studentId}
-    </select>
-    <select id="getRankByCourseIdUserId" resultType="java.lang.Integer">
-SELECT ranking from
-(SELECT t.*, @rownum := @rownum + 1 AS ranking FROM
-	(SELECT @rownum := 0) as r, (SELECT * FROM CourseStudent where CourseStudent.ClassId=#{courseId} ORDER BY studentExp DESC ) AS t)as s
-where s.ClassId=#{courseId} and s.studentId=#{studentId}
-    </select>
-    <select id="getEndTimeBySignIdUserId" resultMap="courseSignResultMap">
-        select * from CourseSign where SignId=#{signId} and studentId=#{studentId}
-    </select>
+<!--    <delete id="deleteCourseById" parameterType="long">-->
+<!--        DELETE FROM course WHERE CourseId=#{courseId}-->
+<!--    </delete>-->
 
-    <!--    <select id="getCourseByPage" resultMap="courseResultMap" parameterType="PaperPage">-->
-    <!--        SELECT c.CourseId,c.CourseName,c.CourseHour,c.TeachId,c.startTime,u.UserName,c.CoursePlace-->
-    <!--        FROM course as c,user as u-->
-    <!--        <if test="courseName == null">-->
-    <!--            WHERE c.TeachId=u.UserId-->
-    <!--        </if>-->
-    <!--        <if test="courseName!=null">-->
-    <!--            WHERE c.CourseName like concat('%',#{courseName},'%') and c.TeachId=u.UserId-->
-    <!--        </if>-->
-    <!--        ORDER BY CourseId ASC-->
-    <!--        limit #{beginPage},#{pageSize}-->
-    <!--    </select>-->
-    <!--    <select id="getCourseCount" resultType="java.lang.Integer">-->
-    <!--        SELECT count(*)-->
-    <!--        FROM course-->
-    <!--        <if test="courseName!=null">-->
-    <!--            WHERE CourseName=#{courseName}-->
-    <!--        </if>-->
-    <!--    </select>-->
+<!--    <delete id="deleteCourseBatchById" parameterType="java.util.List">-->
+<!--        DELETE FROM course WHERE CourseId IN-->
+<!--        <foreach collection="list" item="item" open="(" separator="," close=")">-->
+<!--            #{item}-->
+<!--        </foreach>-->
+<!--    </delete>-->
 
-    <!--    <insert id="addCourse" parameterType="Course">-->
-    <!--        INSERT INTO course(CourseName,CourseHour,TeachId,StartTime,CoursePlace) VALUE (#{courseName}, #{courseHour}, (select UserId from user where UserName =#{userName}), #{startTime}, #{coursePlace})-->
-    <!--    </insert>-->
+<!--    <update id="updateCourse" parameterType="Course">-->
+<!--        UPDATE course-->
+<!--        SET CourseName = #{courseName}, StartTime = #{startTime}, CourseHour = #{courseHour},TeachId = (select UserId from user where UserName= #{userName}), CoursePlace = #{coursePlace}-->
+<!--        WHERE  CourseId = #{courseId}-->
+<!--    </update>-->
 
-    <!--    <delete id="deleteCourseById" parameterType="long">-->
-    <!--        DELETE FROM course WHERE CourseId=#{courseId}-->
-    <!--    </delete>-->
-
-    <!--    <delete id="deleteCourseBatchById" parameterType="java.util.List">-->
-    <!--        DELETE FROM course WHERE CourseId IN-->
-    <!--        <foreach collection="list" item="item" open="(" separator="," close=")">-->
-    <!--            #{item}-->
-    <!--        </foreach>-->
-    <!--    </delete>-->
-
-    <!--    <update id="updateCourse" parameterType="Course">-->
-    <!--        UPDATE course-->
-    <!--        SET CourseName = #{courseName}, StartTime = #{startTime}, CourseHour = #{courseHour},TeachId = (select UserId from user where UserName= #{userName}), CoursePlace = #{coursePlace}-->
-    <!--        WHERE  CourseId = #{courseId}-->
-    <!--    </update>-->
-
-    <!--    <select id="queryById" resultMap="courseResultMap" parameterType="long">-->
-    <!--        SELECT CourseId,CourseName,CourseHour,TeachId,CoursePlace-->
-    <!--        FROM course-->
-    <!--        WHERE CourseId=#{courseId}-->
-    <!--    </select>-->
-    <!--    <select id="queryAllPaper" resultMap="courseResultMap">-->
-    <!--        SELECT CourseId,CourseName,CourseHour,TeachId,CoursePlace-->
-    <!--        FROM course-->
-    <!--    </select>-->
+<!--    <select id="queryById" resultMap="courseResultMap" parameterType="long">-->
+<!--        SELECT CourseId,CourseName,CourseHour,TeachId,CoursePlace-->
+<!--        FROM course-->
+<!--        WHERE CourseId=#{courseId}-->
+<!--    </select>-->
+<!--    <select id="queryAllPaper" resultMap="courseResultMap">-->
+<!--        SELECT CourseId,CourseName,CourseHour,TeachId,CoursePlace-->
+<!--        FROM course-->
+<!--    </select>-->
 
 </mapper>

@@ -7,8 +7,6 @@ public class Role {
 
     private String roleName;
 
-    private String RoleDescription;
-
     private Date creationdate;
 
     private String creator;
@@ -16,7 +14,6 @@ public class Role {
     private String modifier;
 
     private Date modificationdate;
-
 
     public Integer getRoleId() {
         return roleId;
@@ -64,13 +61,5 @@ public class Role {
 
     public void setModificationdate(Date modificationdate) {
         this.modificationdate = modificationdate;
-    }
-
-    public String getRoleDescription() {
-        return RoleDescription;
-    }
-
-    public void setRoleDescription(String roleDescription) {
-        RoleDescription = roleDescription;
     }
 }

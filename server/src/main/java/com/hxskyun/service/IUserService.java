@@ -11,13 +11,9 @@ public interface IUserService  {
 
     User userRegister(User user);//用户注册
 
-
-     List<User> findAll();
-
-     void deleteUserByUserId(Long id);
-
-     User updateUser(User user);
-
+//
+//    public List<User> findAll();
+//
 //    public User findById(Long id);
 //
 //    public User findByName(String name);
@@ -30,7 +26,7 @@ public interface IUserService  {
 //
 //    public void saveUser(User user);
 //
-
+//    public void deleteUserByUserId(String id);
 //
 //    public void deleteUserByTel(String phone);
 //

@@ -19,8 +19,6 @@ public interface UserMapper {
 
     int deleteByPrimaryKey(Long userId);
 
-    int updateUser(User user);
-
     int insert(User record);
 
     int insertSelective(User record);
@@ -29,7 +27,7 @@ public interface UserMapper {
 
     int updateByPrimaryKeySelective(User record);
 
-
+    int updateByPrimaryKey(User record);
 
     User selectByName(String name);
 

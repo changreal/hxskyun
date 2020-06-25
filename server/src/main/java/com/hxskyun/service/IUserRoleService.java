@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IUserRoleService {
 
-    public UserRole selectUserroleByUserId(Long userid);//根据UserID查找用户角色
+    public List<UserRole> findByUserId(Long userid);
 
     public List<UserRole> findByUserName(String name);
 

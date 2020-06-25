@@ -5,10 +5,8 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.auth0.jwt.interfaces.Claim;
 
 import com.hxskyun.token.JWTUtils;
-
-import com.hxskyun.token.TokenUtils;
+import com.hxskyun.token.JedisUtils;
 import com.hxskyun.utils.ResultCodeEnum;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,9 +21,6 @@ import java.util.Map;
 
 @Component
 public class JWTInterceptor implements HandlerInterceptor {
-
-    @Autowired
-    private TokenUtils tokenUtils;
 
     public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
             throws Exception {
@@ -52,9 +47,7 @@ public class JWTInterceptor implements HandlerInterceptor {
                 returnResponse(response, ResultCodeEnum.TokenError.getCode(), "无效的身份令牌");
                 return false;
             }
-//           String localToken = JedisUtils.getToken(map.get("userId").asInt().toString());//userId的类型 jwt的claim是int，jedis是string
-            String localToken = tokenUtils.getToken(map.get("userId").asInt().toString());//userId的类型 jwt的claim是int，jedis是string
-
+            String localToken = JedisUtils.getToken(map.get("userId").asInt().toString());//userId的类型 jwt的claim是int，jedis是string
             /** 您的处理逻辑 */
             if (localToken == null || localToken.equals("")) {
                 returnResponse(response, ResultCodeEnum.TokenError.getCode(), "身份令牌已失效，请重新登录");

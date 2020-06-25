@@ -25,15 +25,9 @@ public class UserRoleServiceImpl implements IUserRoleService {
     @Autowired
     private IRoleService roleService;
 
-//    @Override
-//    public List<UserRole> findByUserId(Long userid) {
-//        return userRoleMapper.selectByUserId(userid);
-//    }
-
     @Override
-    public UserRole selectUserroleByUserId(Long userid) {
-
-        return userRoleMapper.selectUserroleByUserId(userid);
+    public List<UserRole> findByUserId(Long userid) {
+        return userRoleMapper.selectByUserId(userid);
     }
 
     @Override

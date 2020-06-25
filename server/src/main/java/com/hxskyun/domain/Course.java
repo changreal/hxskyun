@@ -7,7 +7,11 @@ public class Course {
   private String courseName;
   private long courseHour;
   private long teachId;
-  private String userName;
+  private String teacherName;
+  private String classType;
+  private String classDes;
+  private String studyRequire;
+  private String courseSemester;
   private String startTime;
   private String coursePlace;
   private String school;
@@ -49,13 +53,7 @@ public class Course {
     this.teachId = teachId;
   }
 
-  public String getUserName() {
-    return userName;
-  }
 
-  public void setUserName(String userName) {
-    this.userName = userName;
-  }
 
   public String getStartTime() {
     return startTime;
@@ -98,5 +96,45 @@ public class Course {
 
   public void setMajor(String major) {
     this.major = major;
+  }
+
+  public String getTeacherName() {
+    return teacherName;
+  }
+
+  public void setTeacherName(String teacherName) {
+    this.teacherName = teacherName;
+  }
+
+  public String getClassType() {
+    return classType;
+  }
+
+  public void setClassType(String classType) {
+    this.classType = classType;
+  }
+
+  public String getClassDes() {
+    return classDes;
+  }
+
+  public void setClassDes(String classDes) {
+    this.classDes = classDes;
+  }
+
+  public String getStudyRequire() {
+    return studyRequire;
+  }
+
+  public void setStudyRequire(String studyRequire) {
+    this.studyRequire = studyRequire;
+  }
+
+  public String getCourseSemester() {
+    return courseSemester;
+  }
+
+  public void setCourseSemester(String courseSemester) {
+    this.courseSemester = courseSemester;
   }
 }

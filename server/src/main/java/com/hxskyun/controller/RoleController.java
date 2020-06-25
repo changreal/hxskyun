@@ -2,13 +2,33 @@ package com.hxskyun.controller;
 
 import com.hxskyun.domain.*;
 import com.hxskyun.domain.ServerResponse;
+import com.hxskyun.mapper.RoleMapper;
+import com.hxskyun.utils.Result;
+import com.hxskyun.utils.ResultCodeEnum;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+
+@Controller
 @RequestMapping("/Role")
 public class RoleController {
+    @Autowired
+    RoleMapper roleMapper;
 
+    @ResponseBody
+    @GetMapping("/getAllRole")
+    public Result GetAllRole()
 
+    {
+        List<Role> roleList=roleMapper.selectAll();
+        int Count=roleList.size();
+        return Result.success().setData(roleList).setCount(Count).setCode(ResultCodeEnum.OK.getCode()).setMsg("查询所有角色表信息成功");
+    }
 
+    @ResponseBody
     @PostMapping
     public ServerResponse insert(@RequestBody Role record) {
         return new ServerResponse(0, null, "插入成功");

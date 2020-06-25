@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @ControllerAdvice
+@ResponseBody
 public class GlobalExceptionHandler {
     /**
      * 全局异常处理
@@ -16,10 +17,16 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
-    @ResponseBody
-    @ExceptionHandler(FriendException.class)
-    public Result handlerException(FriendException e) {
-        return  Result.success(false).setCode(e.getCode()).setMsg(e.getMessage());
+
+    @ExceptionHandler({Exception.class})
+    public Object handlerException(Exception e) {
+        FriendException friendException = new FriendException();
+        if (e instanceof FriendException) {
+            friendException.setCode(((FriendException) e).getCode());
+            friendException.setMsg(((FriendException) e).getMsg());
+        }
+        System.out.println(e);
+        return Result.success(false).setCode(friendException.getCode()).setMsg(friendException.getMsg());
 
     }
 }

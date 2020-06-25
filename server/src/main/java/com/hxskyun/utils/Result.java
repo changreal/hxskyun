@@ -26,6 +26,9 @@ public class Result<T> implements Serializable {
     @ApiModelProperty("数据")
     private T data;
 
+    @ApiModelProperty("计数")
+    private int count;
+
     @ApiModelProperty("额外数据")
     private Map<String, Object> extra;
 
@@ -48,6 +51,15 @@ public class Result<T> implements Serializable {
 
     public Result<T> setSuccess(boolean success) {
         this.success = success;
+        return this;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public Result<T> setCount(int count) {
+        this.count = count;
         return this;
     }
 
@@ -106,6 +118,7 @@ public class Result<T> implements Serializable {
                 .setMsg(ResultCodeEnum.OK.getMsg())
                 .setSuccess(true);
     }
+
 
 
 }

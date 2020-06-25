@@ -11,11 +11,15 @@ public interface UserRoleMapper {
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(UserRole record);
+    int insertOrUpdate(UserRole record);//更新
+
+    int insert(UserRole record);//新增
 
     int insertSelective(UserRole record);
 
-    UserRole selectByPrimaryKey(Integer id);
+    UserRole selectUserroleByUserId(Long id);//roleId
+
+    Integer selectRoleIdByUserId(Long id);
 
     int updateByPrimaryKeySelective(UserRole record);
 

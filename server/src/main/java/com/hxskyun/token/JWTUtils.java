@@ -6,6 +6,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.hxskyun.domain.User;
+import com.hxskyun.exception.FriendException;
+import com.hxskyun.utils.ResultCodeEnum;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -34,7 +36,7 @@ public class JWTUtils {
         String token = JWT.create()
                 .withHeader(map)
                 .withClaim("userName", userDetail.getName())
-                .withClaim("userId", userDetail.getUserId()) // 存入claim的userId字段是int类型，而稍后要存入jedis的是String类型，解密后处理不当可能导致null
+                .withClaim("userId", userDetail.getUserId()) // 存入claim的userId字段是int类型，而稍后要存入mysql的是String类型，解密后处理不当可能导致null
                 .withExpiresAt(expiresDate) // 设置过期的日期
                 .withIssuedAt(iatDate) // 签发时间
                 .withIssuer("auth0")
@@ -52,7 +54,7 @@ public class JWTUtils {
         try {
             jwt = verifier.verify(token);  //核实token
         } catch (Exception e) {
-            throw new Exception("登录过期");
+            throw new FriendException("登录过期", ResultCodeEnum.LoginError.getCode());
         }
         return jwt.getClaims();  //返回的是解析完的token，是一个map，里面有设定的键值对
     }

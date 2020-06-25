@@ -1,10 +1,11 @@
 package com.hxskyun.controller;
 
 
-
+import com.hxskyun.service.IUserRoleService;
 import com.hxskyun.service.IUserService;
 import com.hxskyun.token.JWTUtils;
 import com.hxskyun.token.JedisUtils;
+import com.hxskyun.token.TokenUtils;
 import com.hxskyun.utils.Result;
 import com.hxskyun.domain.*;
 
@@ -22,18 +23,25 @@ public class LoginController {
     @Autowired
     private IUserService IuserService;
 
+    @Autowired
+    private IUserRoleService IUserRoleService ;
+    @Autowired
+    private TokenUtils tokenUtils;
+
     @ResponseBody
     @PostMapping("/checkLogin")//登陆
     public Result checkLogin(@RequestBody User loginUser) {
         String token;
         User userDetail = IuserService.checkUser(loginUser);
+        UserRole userRole= IUserRoleService.selectUserroleByUserId(userDetail.getUserId());
         try {
             token = JWTUtils.createToken(userDetail);
-            JedisUtils.setToken(String.valueOf(userDetail.getUserId()), token, 7);
+          //  JedisUtils.setToken(String.valueOf(userDetail.getUserId()), token, 7);
+            tokenUtils.setToken(String.valueOf(userDetail.getUserId()), token, 7);
         } catch (Exception e) {
             return Result.failure(ResultCodeEnum.LoginError);
         }
-        return Result.success().setCode(ResultCodeEnum.Login.getCode()).setMsg("登陆成功").setData(token);
+        return Result.success().setCode(ResultCodeEnum.Login.getCode()).setMsg("登陆成功").setData(token).addExtra("userRole",userRole);
     }
 
     @ResponseBody

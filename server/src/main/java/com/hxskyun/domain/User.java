@@ -7,8 +7,6 @@ public class User {
 
     private Long userId;
 
-//    private String nickname;//未使
-
     private String name;
 
     private String sex;
@@ -19,6 +17,8 @@ public class User {
 
     private int age;
 
+    private int roleId;//用户角色ID 1：管理2：老师 3：学生
+
     private Date birthDate;
 
     private String school;
@@ -26,8 +26,6 @@ public class User {
     private String academy;
 
     private String major;
-
-    private String schoolNumber;
 
     private Date creationDate;
 
@@ -39,7 +37,6 @@ public class User {
 
     private String password;
 
-    private String salt;
 
     public User() {
     }
@@ -58,13 +55,11 @@ public class User {
                 ", school='" + school + '\'' +
                 ", academy='" + academy + '\'' +
                 ", major='" + major + '\'' +
-                ", schoolNumber='" + schoolNumber + '\'' +
                 ", creationdate=" + creationDate +
                 ", creator='" + creator + '\'' +
                 ", modifier='" + modifier + '\'' +
                 ", modificationdate=" + modificationDate +
                 ", password='" + password + '\'' +
-                ", salt='" + salt + '\'' +
                 '}';
     }
 
@@ -76,13 +71,7 @@ public class User {
         this.password = password;
     }
 
-    public String getSalt() {
-        return salt;
-    }
 
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
 
     public Long getUserId() {
         return userId;
@@ -133,20 +122,12 @@ public class User {
         this.school = school == null ? null : school.trim();
     }
 
-    public String getClasses() {
+    public String getAcademy() {
         return academy;
     }
 
-    public void setClasses(String academy) {
+    public void setAcademy(String academy) {
         this.academy = academy == null ? null : academy.trim();
-    }
-
-    public String getSchoolNumber() {
-        return schoolNumber;
-    }
-
-    public void setSchoolNumber(String schoolNumber) {
-        this.schoolNumber = schoolNumber == null ? null : schoolNumber.trim();
     }
 
     public Date getCreationDate() {
@@ -211,4 +192,14 @@ public class User {
     public String getPhone() {
       return phone;
     }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+
 }

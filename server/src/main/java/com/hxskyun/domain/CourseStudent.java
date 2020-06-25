@@ -6,7 +6,9 @@ public class CourseStudent {
   private long id;
   private long courseId;//课程id
   private long studentId;//用户id
+  private String studentName;//用户姓名
   private long studentExp;
+  private Integer ranking;//排名
 
 
   public long getId() {
@@ -44,4 +46,19 @@ public class CourseStudent {
     this.studentExp = studentExp;
   }
 
+  public String getStudentName() {
+    return studentName;
+  }
+
+  public void setStudentName(String studentName) {
+    this.studentName = studentName;
+  }
+
+  public Integer getRanking() {
+    return ranking;
+  }
+
+  public void setRanking(Integer ranking) {
+    this.ranking = ranking;
+  }
 }

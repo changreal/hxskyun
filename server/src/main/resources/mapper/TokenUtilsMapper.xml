@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hxskyun.mapper.TokenUtilsMapper">
+
+
+    <insert id="settoken">
+        insert into TokenList(id,token)
+        values (#{id},#{token});
+    </insert>
+
+    <delete id="deletetoken">
+        delete from TokenList where id=#{id};
+    </delete>
+
+    <select id="gettoken" resultType="java.lang.String">
+        select token from TokenList where id=#{id};
+    </select>
+</mapper>

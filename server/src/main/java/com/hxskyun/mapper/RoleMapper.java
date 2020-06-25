@@ -40,7 +40,7 @@ public interface RoleMapper {
      * @return
      */
 
-    Role selectByPrimaryKey(Integer roleId);
+    Role selectRoleByPrimaryKey(Integer roleId);
     /**
      * 根据Selective更新
      *
@@ -72,4 +72,6 @@ public interface RoleMapper {
      */
 
     Role selectByRoleName(String name);
+
+    Role selectByPrimaryKey(Integer id);
 }

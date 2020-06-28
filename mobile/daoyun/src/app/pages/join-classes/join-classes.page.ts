@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ZrServicesService } from "../../shared/services/zr-services.service";
 import { Router } from '@angular/router';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.service';
 // import { ToastServiceProvider } from "../../shared/services/toast-service.service";
 
 @Component({
@@ -22,11 +23,15 @@ export class JoinClassesPage implements OnInit {
 
 
   constructor(private zrServices: ZrServicesService,public router:Router,private barcodeScanner: BarcodeScanner,
-    ) {}
+    private localStorageService: MylocalstorageService) {
+     
+      
+    }
 
   ngOnInit() {
+    this.userId=this.localStorageService.get('uid','')
     this.loadCourseData()
-    console.log('userid'+this.userId)
+    console.log('join-userid'+this.userId)
   }
 
   loadCourseData(){
@@ -58,12 +63,13 @@ export class JoinClassesPage implements OnInit {
     this.barcodeScanner.scan().then(barcodeData => {
       this.courseId=barcodeData['text']
       console.log(this.courseId)
-      alert(JSON.stringify(barcodeData));
+      // alert(JSON.stringify(barcodeData));
+      this.router.navigate(['/join-classes/join'], {queryParams: {cId: this.courseId
+      }});
    }).catch(err => {
        alert(err);
    });
-    this.router.navigate(['/join-classes/join'], {queryParams: {cId: this.courseId
-    }});
+    
   }
     
 }

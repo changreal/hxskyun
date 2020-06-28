@@ -27,6 +27,7 @@
     "cordova-android": "^8.1.0",
     "core-js": "^2.5.4",
     "phonegap-plugin-barcodescanner": "^8.1.0",
+    "qrcanvas": "^3.1.1",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"

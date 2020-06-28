@@ -24,7 +24,22 @@ export class ZrServicesService {
   constructor(public http: HttpClient,
     ) { }
 
+// 加入班课
+login(info:object){
+  let url = this.config.domain + '/Login/checkLogin' 
+  return new Promise((resolve, reject) => {
 
+    this.http.post(url, JSON.stringify(info),this.httpOptions).subscribe((response: any) => {
+      // 请求成功的回调函数
+      resolve(response)
+    }, (error:HttpErrorResponse) => {
+      // 请求错误的回调函数
+      console.log('service的错误：',error);
+      reject(error);
+      
+    })
+  })
+}
   // 根据学号/工号获取已加入的课程
   getCourseById(id){
     let url = this.config.domain + '/course/userId/' + id

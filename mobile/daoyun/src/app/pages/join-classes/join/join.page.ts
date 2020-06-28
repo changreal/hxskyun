@@ -4,6 +4,7 @@ import { ZrServicesService } from 'src/app/shared/services/zr-services.service';
 import { BaseUI } from 'src/app/common/baseui';
 import { ToastController } from '@ionic/angular';
 import { Route } from '@angular/compiler/src/core';
+import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.service';
 
 @Component({
   selector: 'app-join',
@@ -14,7 +15,7 @@ export class JoinPage extends BaseUI implements OnInit  {
   courseId:any
   hasThisClass:boolean = false
    // 临时变量
-   userId:any = '123123123'
+   userId:any
   // 班课信息
   courseMajor:string;
   courseName:string
@@ -22,7 +23,7 @@ export class JoinPage extends BaseUI implements OnInit  {
   courseSchool:string
   courseTeacherName:string
   constructor(private activatedRoute: ActivatedRoute, private zrServices: ZrServicesService,
-    private toastController: ToastController,private router:Router
+    private toastController: ToastController,private router:Router, private localStorageService: MylocalstorageService
     ) {
     super()
     activatedRoute.queryParams.subscribe(queryParams => {
@@ -32,6 +33,7 @@ export class JoinPage extends BaseUI implements OnInit  {
    }
 
   ngOnInit() {
+    this.userId=this.localStorageService.get('uid','')
     this.loadCourseInfo()
   }
   loadCourseInfo(){

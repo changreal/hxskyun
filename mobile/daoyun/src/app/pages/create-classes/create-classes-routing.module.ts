@@ -23,7 +23,11 @@ const routes: Routes = [
   {
     path: 'sign-in-teacher',
     loadChildren: () => import('./sign-in-teacher/sign-in-teacher.module').then( m => m.SignInTeacherPageModule)
+  },  {
+    path: 'qrcode',
+    loadChildren: () => import('./qrcode/qrcode.module').then( m => m.QrcodePageModule)
   }
+
 ];
 
 @NgModule({

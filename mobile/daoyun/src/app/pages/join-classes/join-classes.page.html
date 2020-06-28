@@ -17,7 +17,9 @@
           <ion-icon slot="icon-only" name="add" ></ion-icon>
         </ion-button>
         <!-- 二维码扫描加入班课 -->
-        <ion-button color="primary" [routerLink]="['/join-classes/join-class']" >
+        <!-- <ion-button color="primary" [routerLink]="['/join-classes/join-class']" > -->
+         
+          <ion-button color="primary"  (click)="brscanner()" >
           <ion-icon name="scan-outline" slot="icon-only"></ion-icon>
         </ion-button>
 

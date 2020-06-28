@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Md5 } from 'ts-md5';
+// import { Md5 } from 'ts-md5';
 // 引入environemnts
 import { environment } from "../../../environments/environment";
 import { AjaxResult } from '../classes/ajax-result';
@@ -100,7 +100,38 @@ export class ZrServicesService {
       })
     })
   }
+// 加入班课
+joinClass(info:object){
+  let url = this.config.domain + '/course/joinCourse' 
+  return new Promise((resolve, reject) => {
 
+    this.http.post(url, JSON.stringify(info),this.httpOptions).subscribe((response: any) => {
+      // 请求成功的回调函数
+      resolve(response)
+    }, (error:HttpErrorResponse) => {
+      // 请求错误的回调函数
+      console.log('service的错误：',error);
+      reject(error);
+      
+    })
+  })
+}
+  // 退出班课
+exitClass(info:object){
+  let url = this.config.domain + '/course/exitCourse' 
+  return new Promise((resolve, reject) => {
+
+    this.http.post(url, JSON.stringify(info),this.httpOptions).subscribe((response: any) => {
+      // 请求成功的回调函数
+      resolve(response)
+    }, (error:HttpErrorResponse) => {
+      // 请求错误的回调函数
+      console.log('service的错误：',error);
+      reject(error);
+      
+    })
+  })
+}
 
 
 

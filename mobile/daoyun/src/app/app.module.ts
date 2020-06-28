@@ -17,7 +17,7 @@ import { CommonService } from "./shared/services/common.service";
 import { LoginPage } from './pages/login/login.page';
 import { LoginPageModule } from './pages/login/login.module';
 import { pipe } from 'rxjs';
-
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @NgModule({
   declarations: [AppComponent,
@@ -28,12 +28,14 @@ import { pipe } from 'rxjs';
     AppRoutingModule,
     HttpClientModule,
     HttpClientJsonpModule,
+    
 
   ],
 
   providers: [
     StatusBar,
     SplashScreen,
+    BarcodeScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     CommonService
   ],

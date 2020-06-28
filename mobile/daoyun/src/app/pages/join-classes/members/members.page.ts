@@ -10,7 +10,7 @@ import { ZrServicesService } from "../../../shared/services/zr-services.service"
 export class MembersPage implements OnInit {
 
   // 临时变量
-  userId:any = '123'
+  userId:any = '123123123'
   // 变量
   courseId:string
   courseName:string

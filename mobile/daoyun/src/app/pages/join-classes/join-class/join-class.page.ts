@@ -10,7 +10,7 @@ import { ZrServicesService } from "../../../shared/services/zr-services.service"
   styleUrls: ['./join-class.page.scss'],
 })
 export class JoinClassPage implements OnInit {
-
+    cousreId:any
   constructor(private activatedRoute: ActivatedRoute,
               private zrServices: ZrServicesService,
     ) { }

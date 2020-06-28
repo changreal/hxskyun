@@ -6,7 +6,7 @@
     </ion-buttons>
     <ion-title>加入班课</ion-title>
     <ion-buttons slot="primary">
-      <ion-button color="primary" [routerLink]="['/join-classes/join']"  >
+      <ion-button color="primary"  routerLink="/join-classes/join" [queryParams]="{cId:courseId}">
         下一步
       </ion-button>
     </ion-buttons>
@@ -20,7 +20,7 @@
 
   <ion-item>
     <ion-label position="fixed">输入班课号</ion-label>
-    <ion-input type="number" placeholder="输入班课号"></ion-input>
+    <ion-input type="number" placeholder="输入班课号"  [(ngModel)]="courseId"></ion-input>
   </ion-item>
 
 

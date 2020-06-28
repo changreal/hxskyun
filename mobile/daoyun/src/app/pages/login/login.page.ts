@@ -66,6 +66,7 @@ export class LoginPage extends BaseUI implements OnInit {
       
       this.common.ajaxPost(url, this.peopleInfo)
       .then((response:any)=>{
+        super.showToast(this.toastController,response)
         if(response['code']==100){   
           console.log(response);
           this.localStorageService.set('Token',response["data"])
@@ -75,10 +76,12 @@ export class LoginPage extends BaseUI implements OnInit {
         }else{
           // this.loadingController.dismiss()
           this.presentToast(response["msg"])
+          
         }
       })
       .catch((err:any)=>{
         console.log(err);
+        super.showToast(this.toastController,err)
       })
     }
 }

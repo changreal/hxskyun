@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ToastController,} from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
+
 
 
 @Injectable({
@@ -16,30 +19,22 @@ export class ToastServiceProvider {
 /**
 构造函数引入
 */
-  constructor(public toast:ToastController) {
+  constructor(public toast:ToastController,
+              public alertController:AlertController,
+              private router: Router) {
     console.log('Hello ToastServiceProvider Provider');
   }
 
-  /**
-   * 错误信息提示框
-   * @param message 消息
-   */
+/**
+ * toaset的部分
+ */
+
   errorToast(message:any){
     this.presentToast(message,this.errorColor);
   }
-
-  /**
-   * 普通信息提示框
-   * @param message 消息
-   */
   generalToast(message:any){
     this.presentToast(message,this.generalColor);
   }
-
-  /**
-   * 成功信息提示框
-   * @param message
-   */
   successToast(message:any){
     this.presentToast(message,this.successColor);
   }
@@ -88,6 +83,62 @@ export class ToastServiceProvider {
 
     toast.present();//出发消息提示框
   }
+
+
+  /**
+   * alert的部分
+   */
+  errorAlert(message:any){
+    this.presentAlert(message)
+  }
+
+
+  // 无回调的alert提示框
+  async presentAlert(message:any) {
+    const alert = await this.alertController.create({
+      animated: true,
+      // cssClass: 'my-custom-class',
+      // mode:'md',
+      header: '提示',
+      // subHeader: 'Subtitle',
+      message: message,
+      buttons: ['好的']
+    });
+
+    await alert.present();
+  }
+
+  // 点击按钮有回调跳转的Alert确认框
+  async presentAlertConfirm(message:any, url:any, params?:any) {
+    const alert = await this.alertController.create({
+      animated: true,
+      // cssClass: 'my-custom-class',
+      header: '提示',
+      message: message,
+      buttons: [
+        {
+          text: '取消',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: '确认',
+          handler: ()=>{
+            this.router.navigate([url],{
+              queryParams:params
+            })
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
+
 
 }
 

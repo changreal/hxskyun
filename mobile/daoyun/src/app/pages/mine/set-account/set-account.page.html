@@ -17,7 +17,7 @@
          </ion-item>
 
         <ion-item >
-          <ion-input name="password" type="{{pwshow?'text':'password'}}"  placeholder='密码' [(ngModel)]="password"></ion-input>
+          <ion-input name="password" type="{{pwshow?'text':'password'}}"  placeholder='密码' required [(ngModel)]="password"></ion-input>
           <a href="javascript:;"rel="external nofollow" item-end (click)="pwshow=!pwshow" [ngClass]="pwshow?'eyeshow':'eyehide'">
             <ion-icon name="eye-outline" color="dark" class="eye-hide"></ion-icon>  <!--闭眼图标-->
             <ion-icon name="eye-off-outline" color="dark" class="eye-show"></ion-icon>  <!--睁眼图标-->
@@ -37,7 +37,7 @@
       <form>
         <ion-list>
           <ion-item>
-            <ion-input name="{{property}}" type="text" [(ngModel)]="value" required placeholder="{{title}}"></ion-input>
+            <ion-input name="{{property}}" type="text" [(ngModel)]="value" required placeholder="{{property}}"></ion-input>
           </ion-item>
         </ion-list>
         <div padding-horizontal>

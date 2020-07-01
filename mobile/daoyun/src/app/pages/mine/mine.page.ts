@@ -5,6 +5,8 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
 import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.service';
 import { UserInfoPage } from './user-info/user-info.page';
 import { Router } from '@angular/router';
+import { ZrServicesService } from 'src/app/shared/services/zr-services.service';
+import { UserInfo } from 'src/app/myClass/userinfo';
 
 @Component({
   selector: 'app-mine',
@@ -15,10 +17,27 @@ export class MinePage implements OnInit {
   public notLogin: boolean = true
   public logined: boolean = false
   headface: string
-  userinfo: string[]
-
+  userinfo= 
+  {"userId": '',
+  "name": ''
+  // "sex": '',
+  // "phone":'',
+  // "email": '',
+  // "age": '',
+  // "roleId": '',
+  // "birthDate": '',
+  // "school": '',
+  // "academy": '',
+  // "major": '',
+  // "creationDate": '',
+  // "creator": '',
+  // "modifier": '',
+  // "modificationDate": '',
+  // "password": ''
+}
+  userId:any
   constructor(public modalController: ModalController,private localStorageService: MylocalstorageService,
-    public navCtrl: NavController,public router:Router,public alertController: AlertController) { }
+    public navCtrl: NavController,public router:Router,public alertController: AlertController,private zrServices: ZrServicesService) { }
 
   ngOnInit() {
   }
@@ -30,6 +49,9 @@ export class MinePage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.userId=this.localStorageService.get('uid','')
+    console.log(this.userinfo)
+    this.loadUserInfo()
     // this.loadUserPage();
     // console.log(this.logined)
   }
@@ -46,8 +68,20 @@ export class MinePage implements OnInit {
   //     }
   //   }
    // 注销
+   loadUserInfo(){
+
+    this.zrServices.getUserByUserId(this.userId).then(async (result:any) => {
+      console.log('here:', result.data);
+      if(result.success){
+        this.userinfo.name=result.data.name 
+      }  
+    }).catch((error) => {
+      console.log('获取用户信息失败', error)
+    })
+  }
    logout() {
     this.localStorageService.remove('Token');
+    this.localStorageService.remove('uid');
     this.router.navigateByUrl('/login');
   }
   //
@@ -57,10 +91,6 @@ export class MinePage implements OnInit {
     message: '你已安装了最新版本',
     buttons: ['ok']
   });
-
   await alert.present();
 }
-
-
-  
 }

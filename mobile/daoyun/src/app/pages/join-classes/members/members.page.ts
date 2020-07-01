@@ -39,6 +39,7 @@ export class MembersPage implements OnInit {
       
       this.members_count = result.data.length
       this.members = result.data
+      
       // 排序
       this.members.sort((a: any, b: any) => {
         return b.studentExp - a.studentExp;//大到小
@@ -51,9 +52,11 @@ export class MembersPage implements OnInit {
   }
 
   getMyCourseExpInfo(){
+    console.log('here:', this.courseId, this.userId);
+    
     let params:object = {
-      "courseId" : this.courseId,
-      "studentId" : this.userId
+      "courseId" : this.courseId, //1
+      "studentId" : this.userId //123123123
     }
     this.zrServices.getMemberCourseExpInfo(params).then((result:any) => {
       console.log('查询改用户的课程经验值为：',result.data);

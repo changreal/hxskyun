@@ -64,7 +64,7 @@ export class JoinClassesPage implements OnInit {
       this.courseId=barcodeData['text']
       console.log(this.courseId)
       // alert(JSON.stringify(barcodeData));
-      this.router.navigate(['/join-classes/join'], {queryParams: {cId: this.courseId
+      this.router.navigate(['/tabs/join-classes/join'], {queryParams: {cId: this.courseId
       }});
    }).catch(err => {
        alert(err);

@@ -34,7 +34,7 @@ export class StartAppGuard  extends BaseUI implements CanActivate{
     // let val=this.localStorageService.get('Token','')
     // console.log(val)
     this.common.ajaxPost(url,'').then((response:any)=>{
-      
+      console.log('start---'+response)
       if(response['code']==200){
         // this.loadingController.dismiss()
         console.log(response)

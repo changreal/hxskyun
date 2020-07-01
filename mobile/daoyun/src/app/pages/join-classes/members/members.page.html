@@ -53,7 +53,7 @@
 
     <ion-item button  class="member-item" *ngFor="let member of members;let i=index">
       <!-- 头像部分 -->
-      <ion-note slot="start" class="ion-no-margin ion-margin-vertical">{{i+1}}</ion-note>
+      <ion-note slot="start" class="ion-no-margin ion-margin-vertical">{{member.ranking}}</ion-note>
       <ion-thumbnail slot="start" class="mythumbnail">
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
       </ion-thumbnail>

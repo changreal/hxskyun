@@ -1,33 +1,85 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/create-classes/sign-in-teacher"></ion-back-button>
+      <ion-button (click)="onBack()">
+        <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title>签到中</ion-title>
+
+    <ion-title>签到</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
+
+
 <ion-content>
+  
+  <!-- 签到时间设置 -->
+  <ion-item-divider>
+    <ion-label>
+      签到时间设置
+    </ion-label>
+  </ion-item-divider>
+
+    <ion-item>
+      <ion-label>签到分钟</ion-label>
+      <!-- <ion-input type="text" placeholder="3" value="3"></ion-input> -->
+      <ion-input type='number' clearInput  [(ngModel)]="signInfo.duration"  name='duration' placeholder='请输入分钟数' required></ion-input>
+    </ion-item>
+    
+
+  <!-- 签到区域 -->
+  <ion-item-divider>
+    <ion-label>
+      签到情况
+    </ion-label>
+  </ion-item-divider>
+  <ion-item>
+    <!-- <ion-toolbar>
+      <ion-title class="ion-text-center"><span>16</span>/<span>48</span></ion-title>
+    </ion-toolbar> -->
+
+    <!-- <ion-label>Awesome Label</ion-label> -->
+    <ion-text >
+      <p>已签到：<span>{{signCount}}</span>人</p>
+      <p>总人数：<span>{{courseMembersCount}}</span>&nbsp;人</p>
+    </ion-text>
+    
+  </ion-item>
+
+  <!-- 局部刷新，不一定用哈 -->
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed" mode='ios' [hidden]="isStrat">
+    <ion-fab-button color="warning" (click)="doRefresh()">
+      <ion-icon name="refresh-outline">点击刷新</ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  
+
+  
   
 </ion-content>
 
-
 <ion-footer>
-  <ion-toolbar>
-    <ion-title class="ion-text-center"><span>16</span>/<span>48</span></ion-title>
-  </ion-toolbar>
 
-  <ion-toolbar>
-    
-      <ion-button  fill='outline' size='large' shape='round' color="dark" class="ion-padding-start">
+  <ion-toolbar  class="ion-margin-vertical">
+
+      <ion-button  #cancelButton (click)="doCancelSignIn()" [disabled]="!isStart" fill='outline' size='large' shape='round' color="dark" class="ion-padding-start">
         <ion-label>放弃</ion-label>
       </ion-button>
-
-      <ion-button  fill='outline' size='large' slot="end" shape='round' color="danger" class="ion-padding-end" >
+  
+      <ion-button #startButton (click)="doStartSignIn()"  [disabled]="isStart" fill='outline' size='large' shape='round' color="primary" class="ion-margin-start ion-padding-start">
+        <ion-label>开始</ion-label>
+      </ion-button>
+      
+  
+      <ion-button #finishButton (click)="doEndSignIn()" [disabled]="!isStart"  fill='outline' size='large' slot="end" shape='round' color="danger" class="ion-padding-start ion-margin-end" >
         <ion-label>结束</ion-label>
       </ion-button>
-
     
+
       
   </ion-toolbar>
 </ion-footer>
+

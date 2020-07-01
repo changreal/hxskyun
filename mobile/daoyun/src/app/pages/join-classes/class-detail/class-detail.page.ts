@@ -16,6 +16,7 @@ export class ClassDetailPage extends BaseUI implements OnInit {
    userId:any = '123123123'
   courseId:string
   hasThisClass:boolean = false
+  submited = false
   // 班课信息
   courseMajor:string;
   courseName:string

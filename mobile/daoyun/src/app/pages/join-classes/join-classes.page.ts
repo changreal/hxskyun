@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 // import { PopoverComponent } from './components/popover/popover.component';
 import { ZrServicesService } from "../../shared/services/zr-services.service";
+import { Router } from '@angular/router';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.service';
 // import { ToastServiceProvider } from "../../shared/services/toast-service.service";
 
 @Component({
@@ -19,11 +22,16 @@ export class JoinClassesPage implements OnInit {
   courses_length = 0
 
 
-  constructor(private zrServices: ZrServicesService,
-    ) {}
+  constructor(private zrServices: ZrServicesService,public router:Router,private barcodeScanner: BarcodeScanner,
+    private localStorageService: MylocalstorageService) {
+     
+      
+    }
 
   ngOnInit() {
+    this.userId=this.localStorageService.get('uid','')
     this.loadCourseData()
+    console.log('join-userid'+this.userId)
   }
 
   loadCourseData(){
@@ -50,6 +58,18 @@ export class JoinClassesPage implements OnInit {
   //   return await popover.present();
   // }
 
+  brscanner(){
 
+    this.barcodeScanner.scan().then(barcodeData => {
+      this.courseId=barcodeData['text']
+      console.log(this.courseId)
+      // alert(JSON.stringify(barcodeData));
+      this.router.navigate(['/tabs/join-classes/join'], {queryParams: {cId: this.courseId
+      }});
+   }).catch(err => {
+       alert(err);
+   });
+    
+  }
     
 }

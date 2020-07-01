@@ -24,7 +24,7 @@ service.interceptors.request.use(
       localStorage.removeItem('token');
       localStorage.removeItem('tokenTimeoutDate');
     }
-    if(config.url=='/Login'){
+    if(config.url=='/#/login'){
       return config;
     }else {
       config.headers.token=localStorage.getItem('token');

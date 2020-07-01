@@ -2,7 +2,7 @@
   <div>
     <el-form :inline="true" class="demo-form-inline">
       <el-form-item>
-        <el-input v-model="search" placeholder="请输入字典名"></el-input>
+        <el-input v-model="search" placeholder="请根据字典名查询"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="success" @click="selectDicTable">查询</el-button>
@@ -151,7 +151,7 @@
           {id:3, name: '学历', code: 'education'},
           {id:4, name: '班课类型', code: 'classType'}
         ],
-
+        dicTableForSelect:[],
         dicDetail: [
           {id:0, code: 'sex', value: '男', isDefault: '否'},
           {id:0, code: 'sex', value: '女', isDefault: '否'},
@@ -213,6 +213,10 @@
           }).catch(error=>{
             console.log(error);
           });
+        this.dicTableForSelect.splice(0);
+        for(let i=0;i<this.dicTable.length;i++){
+          this.dicTableForSelect.push(this.dicTable[i]);
+        }
       },
       editDicDetail(){
         for(let i=0;i<this.editDetailRow.length;i++){
@@ -230,10 +234,28 @@
       以上方法用于直接调用访问数据库接口
        */
       selectDicTable(){
-        this.selectDetailRow.splice(0);
-        //暂做测试用按钮
         console.log(this.dicTable);
-        console.log(this.dicDetail);
+        console.log(this.dicTableForSelect);
+        //this.dicTableForSelect.splice(0);
+        // for(let i=0;i<this.dicTable.length;i++){
+        //   this.dicTableForSelect.push(this.dicTable[i]);
+        // }
+        this.dicTable.splice(0);
+        if(this.search==null||this.search==''){
+          for(let i=0;i<this.dicTableForSelect.length;i++){
+            this.dicTable.push(this.dicTableForSelect[i]);
+          }
+        }else {
+          for(let i=0;i<this.dicTableForSelect.length;i++){
+            if(this.dicTableForSelect[i].name==this.search){
+              this.dicTable.push(this.dicTableForSelect[i]);
+            }
+          }
+        }
+        // this.selectDetailRow.splice(0);
+        // //暂做测试用按钮
+        // console.log(this.dicTable);
+        // console.log(this.dicDetail);
       },
       addDicTable(){
         this.beforeEditDicTableCode='';
@@ -285,12 +307,12 @@
           this.$api.dicManage.insertDicTable(this.editDicTableName, this.editDicTableCode)
           .then(response=>{
             newDicTableId=response.data.data;
-            console.log(this.editDicTableName);//里面没有输出应该是因为在这里，this.editDicTable变成形参了
+            //console.log(this.editDicTableName);//里面没有输出应该是因为在这里，this.editDicTable变成形参了
           }).catch(error=>{
             console.log(error)
           })
 
-          console.log('newDicTableId='+newDicTableId);
+         // console.log('newDicTableId='+newDicTableId);
           this.dicTable.splice(0);
           this.getDicTableAll();
           for(let i=0;i<this.editDetailRow.length;i++){
@@ -336,6 +358,7 @@
             this.dicDetail.splice(0);
             this.selectDetailRow.splice(0);
             setTimeout(this.getDicDetailAll,800);
+
           }
           // for (i in this.dicTable) {
           //   if (this.dicTable[i].code == this.beforeEditDicTableCode) {
@@ -428,24 +451,23 @@
       tempDicTable=this.$api.dicManage.getDicTableAll()
       .then(response =>{
         tempDicTable=response;
+        //console.log(response);
         for(let i=0;i<tempDicTable.data.data.length;i++){
           this.dicTable.push({id:tempDicTable.data.data[i].dictId,
             name:tempDicTable.data.data[i].type,
             code:tempDicTable.data.data[i].itemKey})
+          // this.dicTableForSelect.push({id:tempDicTable.data.data[i].dictId,
+          //   name:tempDicTable.data.data[i].name,
+          //   code:tempDicTable.data.data[i].itemKey})
+        }
+        for(let i=0;i<this.dicTable.length;i++){
+          this.dicTableForSelect.push(this.dicTable[i]);
         }
       }).catch(error=>{
         console.log(error);
         });
-      // this.$api.dicManage.getDicDetailAll()
-      //   .then(response=>{
-      //     tempDicDetail=response;
-      //     for(let i=0;i<tempDicDetail.data.data.length;i++){
-      //       this.dicDetail.push({id:tempDicDetail.data.data[i].dictId,
-      //         code:tempDicDetail.data.data[i].itemKey,
-      //         value: tempDicDetail.data.data[i].itemValue,
-      //         isDefault: tempDicDetail.data.data[i].isDefault});
-      //     }
-      //   })
+
+
       tempDicDetail=this.$api.dicManage.getDicDetailAll()
         .then(response =>{
           tempDicDetail=response;

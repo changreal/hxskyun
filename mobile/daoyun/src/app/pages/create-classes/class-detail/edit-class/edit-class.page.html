@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/join-classes"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/create-classes"></ion-back-button>
     </ion-buttons>
     <ion-title>编辑班课基本信息</ion-title>
   </ion-toolbar>
@@ -9,56 +9,89 @@
 
 <ion-content class="ion-padding-horizontal">
 
-    <ion-item lines='none'  class="ion-margin-top" >
-      <ion-label  class="ion-padding-vertical ion-text-center"  color="primary" >
-        <!-- <ion-button  expand="block" fill="clear" size='large' shape="round"> -->
-          <ion-avatar class="ion-padding-vertical create-class-avatar "   >
-            <ion-icon name="add-outline" size='large'></ion-icon>
-          </ion-avatar>
-          <h5>班课图片</h5>
-        <!-- </ion-button> -->
-      </ion-label>
-    </ion-item>
-
     
-  <!-- 签到列表 -->
-  <ion-list lines='full'>
+  <form (ngSubmit)='doSubmit(formData)'  #formData="ngForm"  validating >
+
+    <ion-list lines='full'>
+
+      <ion-item-divider>
+        <ion-label color="dark">设置班课信息</ion-label>
+      </ion-item-divider>
 
 
-    <!-- 内容部分 -->
+      <!-- 内容部分 -->
+      <ion-item>
+        <ion-label>学期</ion-label>
+        <ion-select  name='semester' [(ngModel)]="course_semester" #semester='ngModel' required placeholder='请选择学期' >
+          <ion-select-option *ngFor="let s of semesters" [value]="s.name" >{{s.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="(semester.invalid && semester.touched) || submited" [hidden]="!semester.errors?.required">
+        <ion-text  color="danger" >
+          <p class="tips ion-padding-start" >
+            请选择学期
+          </p>
+        </ion-text>
+      </ion-item>
 
-    
-    <ion-item>
-      <ion-label>班级</ion-label>
-      <ion-input placeholder="Placeholder"></ion-input>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label>课程</ion-label>
-      <ion-input placeholder="Placeholder"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label >课程</ion-label>
+        <!-- #courseName="ngModel"的方式是来获取ngModel对象， ngModel对象有.errors的属性来获取验证规则 -->
+        <ion-input name='courseName'  #courseName="ngModel" placeholder="请输入课程（如工程实践）" required maxlength='20' [(ngModel)]="course_name"></ion-input>
+        <ion-text color="danger" *ngIf="(courseName.invalid && courseName.touched) || submited">
+          <p class="tips ion-padding-start" [hidden]="!courseName.errors?.required">
+            请输入课程名称
+          </p>
+        </ion-text>
+      </ion-item>
+      
+      <ion-item >
+        <ion-label >学校</ion-label>
+        <ion-input name='school' #school='ngModel' placeholder="请输入学校（如福州大学）" maxlength='20' required 
+        [(ngModel)]="course_school" ></ion-input>
+        <ion-text color="danger" *ngIf="(school.invalid && school.touched) || submited">
+          <p class="tips ion-padding-start" [hidden]="!school.errors?.required">
+            请输入学校名称
+          </p>
+        </ion-text>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">学期</ion-label>
-      <ion-select>
-        <ion-select-option value="" selected>2019-2020-1</ion-select-option>
-        <ion-select-option value="nes">2019-2020-2</ion-select-option>
-        <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
-        <ion-select-option value="ps">PlayStation</ion-select-option>
-      </ion-select>
-    </ion-item>
+      <ion-item >
+        <ion-label >院系</ion-label>
+        <ion-input name='department' #department='ngModel' placeholder="请输入院系（如数计学院）" maxlength='20' required 
+        [(ngModel)]="course_department" ></ion-input>
+        <ion-text color="danger" *ngIf="(department.invalid && department.touched) || submited">
+          <p class="tips ion-padding-start" [hidden]="!department.errors?.required">
+            请输入院系名称
+          </p>
+        </ion-text>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>学习要求</ion-label>
-      <ion-input placeholder="Placeholder"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>班级</ion-label>
+        <ion-input name='major' #major='ngModel' placeholder="请输入班级（如2019级计算机工硕）" maxlength='20' required 
+        [(ngModel)]="course_major" ></ion-input>
+        <ion-text color="danger" *ngIf="(major.invalid && major.touched) || submited">
+          <p class="tips ion-padding-start" [hidden]="!major.errors?.required">
+            请输入班级名称
+          </p>
+        </ion-text>
+      </ion-item>
+      
+      
+      <ion-item>
+        <ion-label position="floating">学习要求</ion-label>
+        <ion-textarea name='courseDes' #courseDes='ngModel' placeholder="输入学习要求（不超过100字）" rows="2" maxlength='100'  [(ngModel)]="course_des" class="ion-text-wrap"></ion-textarea>
+      </ion-item>
+      
 
 
-  </ion-list>
+    </ion-list>
 
-  <ion-button  expand="block" fill="outline" shape="round">
-    保存
+  <ion-button  type='submit' expand="block" fill="outline" shape="round" >
+    修改班课
   </ion-button>
+</form>
 
 
 

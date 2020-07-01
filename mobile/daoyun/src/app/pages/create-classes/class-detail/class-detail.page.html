@@ -13,7 +13,7 @@
     <!-- 班课头信息 -->
     <ion-item lines='full'>
       <ion-note slot="end" class="ion-no-margin">
-        <ion-button  expand="block" fill="clear" shape="round" [routerLink]="['/create-classes/class-detail/edit-class']" >
+        <ion-button  expand="block" fill="clear" shape="round" [routerLink]="['/create-classes/class-detail/edit-class']"  [queryParams]="{courseId:courseId}">
           <ion-icon name="create-outline"  color="primary" slot="icon-only"></ion-icon>
         </ion-button>
       </ion-note>
@@ -21,11 +21,11 @@
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
       </ion-thumbnail>
       <ion-label>
-        <h3>班级名</h3>
-        <h4>课程名称</h4>
-        <p>老师名</p>
+        <h3>{{this.courseMajor}}</h3>
+        <h4>{{this.courseName}}</h4>
+        <p>{{this.courseTeacherName}}</p>
         <p>
-          <span>2019-2020-2</span> <span>学校课表班课</span>
+          <span>{{this.courseSemester}}</span>
         </p>
       </ion-label>
     </ion-item>
@@ -35,17 +35,23 @@
 
     <!-- 内容部分 -->
     <ion-item>
-      <ion-label>学习要求</ion-label>
-      <ion-input placeholder="Placeholder"></ion-input>
+      <ion-label  position="floating">学习要求</ion-label>
+      <ion-text class="ion-padding-top" color="medium">
+        <p>{{this.courseDes}}</p>
+      </ion-text>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">学校院系</ion-label>
-      <ion-input></ion-input>
+      <ion-text class="ion-padding-top" color="medium">
+        <p>
+          {{this.courseSchool}}&nbsp;{{this.courseDepartment}}
+        </p>
+      </ion-text>
     </ion-item>
 
     <!-- 退出班课按钮 -->
-    <ion-button slot="start" expand="block" fill='outline' shape='round' class="ion-margin-top" color="danger">
+    <ion-button slot="start" expand="block" fill='outline' shape='round' class="ion-margin-top" color="danger" (click)="doSubmit()">
       结束班课
     </ion-button>
 

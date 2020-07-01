@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>我创建的班课</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary" [routerLink]="['/create-classes/create-class']" >
+      <ion-button color="primary" (click)="doCreateCourse()">
         <ion-icon slot="start" name="add" ></ion-icon>创建班课
       </ion-button>
     </ion-buttons>
@@ -12,7 +12,7 @@
 <ion-content padding>
 
   <!-- 班课列表 -->
-  <ion-list>
+  <ion-list *ngIf="courses_length" >
 
     <!-- 列表头 -->
     <ion-item-divider>
@@ -22,7 +22,7 @@
     </ion-item-divider>
 
     <!-- 班课部分 -->
-    <ion-item button detail lines='full'  routerLink="/create-classes/members" >
+    <ion-item button detail lines='full'  routerLink="/create-classes/members" *ngFor="let course of courses" [queryParams]="{courseId:course.courseId,courseName:course.courseName}">
       <!-- 头像部分 -->
       <ion-thumbnail slot="start">
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
@@ -32,38 +32,10 @@
       <ion-label>
         <!-- 文字部分 -->
         <ion-text color="primary">
-          <h3>2019级工硕（班级名）</h3>
+          <h3>{{course.major}}</h3>
         </ion-text>
         <ion-text >
-          <p><span >2019-2020-2</span><span class="ion-margin-start Tint" >874628</span></p>
-        </ion-text>
-
-        <!-- 按钮部分 -->
-        <div>
-          <ion-buttons slot="secondary" >
-            <ion-button slot="end" size="small" > 
-              <ion-icon name="hand-right-outline" slot="start" size="small"  color="medium" ></ion-icon>
-              签到
-            </ion-button>
-          </ion-buttons>
-        </div>
-      </ion-label>
-      <!-- 内容部分结束 -->
-    </ion-item>
-    <ion-item button detail lines='full'  routerLink="/create-classes/members" >
-      <!-- 头像部分 -->
-      <ion-thumbnail slot="start">
-        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
-      </ion-thumbnail>
-
-      <!-- 内容部分 -->
-      <ion-label>
-        <!-- 文字部分 -->
-        <ion-text color="primary">
-          <h3>2019级工硕（班级名）</h3>
-        </ion-text>
-        <ion-text >
-          <p><span >2019-2020-2</span><span class="ion-margin-start Tint" >874628</span></p>
+          <p><span >{{course.courseDate}}</span><span class="ion-margin-start Tint" >{{course.courseCode}}</span></p>
         </ion-text>
 
         <!-- 按钮部分 -->

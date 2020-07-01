@@ -85,7 +85,7 @@ export class ZrServicesService {
   // 查看某一门课程的某个成员的信息
   getMemberCourseExpInfo(info:object){
     
-    let url = this.config.domain + '/course/courseSignByUserIdCourseId' 
+    let url = this.config.domain + '/course/courseSignByUserIdCourseId/' 
   
     return new Promise((resolve, reject) => {
 
@@ -101,6 +101,143 @@ export class ZrServicesService {
     })
   }
 
+  // 创建班课服务
+  postNewCourse(data){
+    let url = this.config.domain + '/course/'
+    return new Promise((reslove, reject) => {
+      this.http.post(url, JSON.stringify(data), this.httpOptions).subscribe((response) => {
+        reslove(response);
+      }, (error:HttpErrorResponse) => {
+        console.log('创建班课异常错误：', error);
+        reject(error);
+      })
+    })
+
+  }
+
+  //修改班课信息
+  postEidtCourseByCourseId(courseId,data){
+    let url = this.config.domain + '/course/' + courseId
+    console.log('发送修改班课信息：', data);
+    return new Promise((reslove, reject) => {
+      this.http.put(url, JSON.stringify(data), this.httpOptions).subscribe((response) => {
+        reslove(response);
+      }, (error) => {
+        reject(error);
+      })
+    })
+  }
+
+
+  /**
+   * 签到相关
+   */
+
+  //  获取某门课程的历史签到列表
+  getSignByCourseId(courseId){
+    let url = this.config.domain + '/course/courseSignByCourseId/' + courseId
+  
+    return new Promise((resolve, reject) => {
+
+      this.http.get(url).subscribe((response: any) => {
+        // 请求成功的回调函数
+        resolve(response)
+      }, (error:HttpErrorResponse) => {
+        // 请求错误的回调函数
+        console.log('service的错误：',error);
+        reject(error);
+        
+      })
+    })
+  }
+
+  // 某次历史签到结果详细信息
+  getSignDetailBySignId(signId){
+    let url = this.config.domain + '/signDeital/' + signId
+  
+    return new Promise((resolve, reject) => {
+
+      this.http.get(url).subscribe((response: any) => {
+        // 请求成功的回调函数
+        resolve(response)
+      }, (error:HttpErrorResponse) => {
+        // 请求错误的回调函数
+        console.log('service的错误：',error);
+        reject(error);
+        
+      })
+    })
+  }
+
+  // 获取当前签到的信息
+  getCurrentSignBySignId(signId){
+    let url = this.config.domain + '/currentSign/' + signId
+  
+    return new Promise((resolve, reject) => {
+
+      this.http.get(url).subscribe((response: any) => {
+        // 请求成功的回调函数
+        resolve(response)
+      }, (error:HttpErrorResponse) => {
+        // 请求错误的回调函数
+        console.log('service的错误：',error);
+        reject(error);
+        
+      })
+    })
+  
+  }
+
+  // 开始签到
+  startSignIn(courseId, longitude, latitude, duration ){
+    let url = this.config.domain + '/startSignIn/'
+    let data = {
+      'longitude' : longitude,
+      'latitude' : latitude,
+      'duration' : duration
+    }
+
+    return new Promise((reslove, reject) => {
+      this.http.post(url, JSON.stringify(data), this.httpOptions).subscribe((response) => {
+        reslove(response);
+      }, (error:HttpErrorResponse) => {
+        console.log('发起签到异常错误：', error);
+        reject(error);
+      })
+    })
+
+  }
+
+  // 放弃签到
+  cancelSignIn(signId){
+    let url = this.config.domain + '/cancelSignIn/' + signId
+
+    return new Promise((reslove, reject) => {
+      this.http.post(url, this.httpOptions).subscribe((response) => {
+        reslove(response);
+      }, (error:HttpErrorResponse) => {
+        console.log('放弃签到异常错误：', error);
+        reject(error);
+      })
+    })
+
+  }
+
+  // 结束签到
+  endSignIN(signId){
+
+    let url = this.config.domain + '/endSignIn/' + signId
+
+    return new Promise((reslove, reject) => {
+      this.http.post(url, this.httpOptions).subscribe((response) => {
+        reslove(response);
+      }, (error:HttpErrorResponse) => {
+        console.log('结束签到异常错误：', error);
+        reject(error);
+      })
+    })
+    
+  }
 
 
 

@@ -10,7 +10,7 @@ import { ZrServicesService } from "../../shared/services/zr-services.service";
 })
 export class JoinClassesPage implements OnInit {
 
-  userId:any = '123'
+  userId:any = '123123123'
   courseId:any
   role:any  // 身份
 

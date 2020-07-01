@@ -3,12 +3,21 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/create-classes"></ion-back-button>
     </ion-buttons>
-    <ion-title>班级名</ion-title>
+    <ion-title>{{courseName}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  
+
+  <ion-refresher slot="fixed" (ionRefresh)="loadMembers($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="下拉刷新"
+      refreshingSpinner="circles"
+      refreshingText="加载中...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <!-- 信息操作栏 -->
   <ion-card>
 
@@ -17,14 +26,14 @@
       <ion-toolbar>
         <ion-row class="ion-align-items-center"> 
           <ion-col size='7'>
-            <ion-button shape='round'  color="primary" fill="solid" [routerLink]="['/create-classes/sign-in-teacher']"  >
+            <ion-button shape='round'  color="primary" fill="solid" [routerLink]="['/create-classes/sign-in-teacher']"  [queryParams]="{courseId:courseId, courseMembersCount:members_count}" >
               <ion-icon  name="star" size='small'></ion-icon>
                <ion-label>&nbsp;发起签到&nbsp;</ion-label>
             </ion-button>
           </ion-col>
 
           <ion-col size='5'>
-            <ion-button shape='round'  color="tertiary" fill="outline" [routerLink]="['/create-classes/class-detail']" >
+            <ion-button shape='round'  color="tertiary" fill="outline" [routerLink]="['/create-classes/class-detail']" [queryParams]="{courseId:courseId}">
               <ion-icon name="grid-outline"></ion-icon>
               <ion-label>&nbsp;班课详情&nbsp;</ion-label>
             </ion-button>
@@ -41,34 +50,34 @@
 
     <!-- 列表头 -->
     <ion-list-header lines='none' class="ion-padding-horizontal" >
-      <a>
-        <ion-label color="primary">切换为按学号/经验值显示</ion-label>
-      </a>
+        <ion-button (click)="sort_flag=!sort_flag"  fill="clear">
+          <ion-label color="primary">切换为按学号/经验值显示（点击后下拉刷新）</ion-label>
+        </ion-button>
     </ion-list-header>
 
     <ion-item-divider>
       <ion-label>成员总数</ion-label>
-      <ion-label class="ion-text-right"> 155人</ion-label>
+      <ion-label class="ion-text-right">&nbsp;&nbsp;{{members_count}}人</ion-label>
     </ion-item-divider>
 
-    <!-- 成员信息部分 -->
+    <!-- 成员信息部分 --> 
+    
 
-    <ion-item  class="member-item">
+    <ion-item  class="member-item" *ngFor="let member of members;let i=index" >
       <!-- 头像部分 -->
-      <ion-note slot="start" class="ion-no-margin ion-margin-vertical">1</ion-note>
+      <ion-note slot="start" class="ion-no-margin ion-margin-vertical">{{i+1}}</ion-note>
       <ion-thumbnail slot="start" class="mythumbnail">
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
       </ion-thumbnail>
       <!-- 内容部分 -->
       <ion-label>
-        <h3>蔡徐坤</h3>
-        <p>1902975823 <span class="exp ion-float-right exp-color">48经验值</span></p>
+        <h3>{{member.studentName}}</h3>
+        <p>{{member.studentId}} <span class="exp ion-float-right exp-color">{{member.studentExp}}&nbsp;经验值</span></p>
         <p>签到<span>1</span>&nbsp;迟到<span>1</span>&nbsp;旷课<span>1</span></p>
       </ion-label>
     </ion-item>
 
   </ion-list>
-
 
 
   

@@ -7,11 +7,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content  *ngIf="myInfo">
+<ion-content  >
   
   <!-- 信息操作栏 -->
-  <ion-card>
-    <ion-card-header class="ion-text-center" >
+  <ion-card >
+    <ion-card-header class="ion-text-center" *ngIf="myInfo" >
       <ion-card-title>当前获得 <span>{{myInfo.exp}}</span> 经验</ion-card-title>
       <ion-card-subtitle>第 <span>{{myInfo.ranking}}</span> 名</ion-card-subtitle>
     </ion-card-header>
@@ -53,7 +53,7 @@
 
     <ion-item button  class="member-item" *ngFor="let member of members;let i=index">
       <!-- 头像部分 -->
-      <ion-note slot="start" class="ion-no-margin ion-margin-vertical">{{i+1}}</ion-note>
+      <ion-note slot="start" class="ion-no-margin ion-margin-vertical">{{member.ranking}}</ion-note>
       <ion-thumbnail slot="start" class="mythumbnail">
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
       </ion-thumbnail>

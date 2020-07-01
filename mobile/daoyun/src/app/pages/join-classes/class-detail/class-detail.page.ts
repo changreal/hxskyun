@@ -13,6 +13,7 @@ export class ClassDetailPage implements OnInit {
 
   courseId:string
   hasThisClass:boolean = false
+  submited = false
   // 班课信息
   courseMajor:string;
   courseName:string

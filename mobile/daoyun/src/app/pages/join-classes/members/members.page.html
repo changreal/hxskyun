@@ -21,7 +21,7 @@
       <ion-toolbar>
         <ion-row class="ion-align-items-center"> 
           <ion-col size='7'>
-            <ion-button  mode='md' shape='round'  color="primary" fill="solid" [routerLink]="['/join-classes/sign-in']"  >
+            <ion-button  mode='md' shape='round'  color="primary" fill="solid" [routerLink]="['/join-classes/sign-in']" [queryParams]='{courseId:courseId}'  >
               <ion-icon  name="star" size='small'></ion-icon>
                <ion-label>&nbsp;点击签到&nbsp;</ion-label>
             </ion-button>

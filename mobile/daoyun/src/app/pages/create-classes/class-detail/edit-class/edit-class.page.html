@@ -57,7 +57,7 @@
       </ion-item> -->
 
       <ion-item>
-        <ion-label>新学校</ion-label>
+        <ion-label>学校</ion-label>
         <ion-select  name='school' [(ngModel)]="course_school" #school='ngModel' required placeholder='请选择学校' >
           <ion-select-option *ngFor="let s of schools" [value]="s.name" >{{s.name}}</ion-select-option>
         </ion-select>

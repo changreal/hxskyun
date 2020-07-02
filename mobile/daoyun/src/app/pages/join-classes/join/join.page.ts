@@ -5,6 +5,7 @@ import { BaseUI } from 'src/app/common/baseui';
 import { ToastController } from '@ionic/angular';
 import { Route } from '@angular/compiler/src/core';
 import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.service';
+import { EventService } from 'src/app/shared/services/event.service';
 
 @Component({
   selector: 'app-join',
@@ -22,7 +23,7 @@ export class JoinPage extends BaseUI implements OnInit  {
   courseDepartment:string
   courseSchool:string
   courseTeacherName:string
-  constructor(private activatedRoute: ActivatedRoute, private zrServices: ZrServicesService,
+  constructor(private activatedRoute: ActivatedRoute, private zrServices: ZrServicesService,public eventService:EventService,
     private toastController: ToastController,private router:Router, private localStorageService: MylocalstorageService
     ) {
     super()
@@ -35,6 +36,10 @@ export class JoinPage extends BaseUI implements OnInit  {
   ngOnInit() {
     this.userId=this.localStorageService.get('uid','')
     this.loadCourseInfo()
+  }
+  ionViewDidLeave(){
+    console.log('joinclass leave')
+    this.eventService.event.emit('classupdate');
   }
   loadCourseInfo(){
 

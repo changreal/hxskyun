@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ZrServicesService } from "../../shared/services/zr-services.service";
 import { LocalStorageService } from "../../shared/services/local-storage.service";
 import { ToastServiceProvider } from "../../shared/services/toast-service.service";
+import { EventService } from 'src/app/shared/services/event.service';
+
 
 @Component({
   selector: 'app-create-classes',
@@ -48,18 +50,20 @@ export class CreateClassesPage implements OnInit {
               private zrServices: ZrServicesService,
               private localStorageService: LocalStorageService,
               private toastService: ToastServiceProvider,
-              private router:Router) {
+              private router:Router,
+              public eventService:EventService) {
     
 
                 
   }
 
   ngOnInit() {
-    this.role = this.localStorageService.getStore('roleId','3')
+    this.role = this.localStorageService.getStore('roleId','2')
     this.userId = this.localStorageService.getStore('uid', null)
 
     console.log('当前身份是：', this.role);
     console.log('当前用户id是：', this.userId);
+    
 
     // 判断身份
     if(this.role == '2' || this.role=='1'){
@@ -71,6 +75,11 @@ export class CreateClassesPage implements OnInit {
     }
     
   }
+
+  ionViewWillEnter() {
+  }
+
+  
 
   loadCourseData(){
 

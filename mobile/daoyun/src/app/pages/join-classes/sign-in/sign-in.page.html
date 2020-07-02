@@ -9,7 +9,7 @@
 
 <ion-content>
 
-    <ion-item lines='none'  class="ion-margin" >
+    <ion-item lines='none'  class="ion-margin" button (click)="doSignIn()">
       <ion-label class="ion-padding-vertical"  color="primary">
         <!-- <ion-button  expand="block" fill="clear" size='large' shape="round"> -->
           <ion-avatar class="ion-padding-vertical sign-in-avatar ion-text-center"   >
@@ -27,24 +27,16 @@
     <!-- 列表头 -->
     <ion-list-header lines='full' class="ion-padding-horizontal">
       <ion-label>历史签到记录</ion-label>
-      <ion-label class="ion-text-right" color="warning">75%</ion-label>
+      <ion-label class="ion-text-right" color="primary">{{signCount}}次</ion-label>
     </ion-list-header>
 
     <!-- 内容部分 -->
-    <ion-item>
+    <ion-item *ngFor="let item of myInfo">
       <ion-label >
-        <h4><time>2020-02-29 星期六</time>&nbsp;签到 </h4>
-        <p><time>11:57</time> <span class="exp ion-float-right">已签到</span> </p>
+        <h4><time>{{item.endTime | date:'yyyy-MM-dd'}}</time>&nbsp;签到 </h4>
+        <p><time> {{item.endTime | date:'HH:mm:ss'}} </time> <span class="exp ion-float-right">{{item.signStatus}}</span> </p>
       </ion-label>
     </ion-item>
-
-    <ion-item>
-      <ion-label >
-        <h4><time>2020-02-29 星期六</time>&nbsp;签到 </h4>
-        <p><time>11:57</time> <span class="exp ion-float-right">缺勤</span> </p>
-      </ion-label>
-    </ion-item>
-
 
   </ion-list>
 

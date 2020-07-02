@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ZrServicesService } from "../../../shared/services/zr-services.service";
 import { LocalStorageService } from "../../../shared/services/local-storage.service";
 import { ToastServiceProvider } from "../../../shared/services/toast-service.service";
+import { EventService } from "../../../shared/services/event.service";
 
 @Component({
   selector: 'app-members',
@@ -23,7 +24,9 @@ export class MembersPage implements OnInit {
     private zrServices: ZrServicesService,
     private localStorageService: LocalStorageService,
     private toastService: ToastServiceProvider,
-    private router: Router) { }
+    private router: Router,
+    public eventService: EventService
+    ) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((result) => {
@@ -34,6 +37,23 @@ export class MembersPage implements OnInit {
     this.loadMembers(null)
 
   }
+
+  ionViewWillEnter(){
+    this.activatedRoute.queryParams.subscribe((result) => {
+      this.courseId = result.courseId;
+      this.courseName = result.courseName
+    })
+    this.eventService.event.on('memberupdate', () => {
+      this.loadCourseInfo();
+    this.loadMembers(null)
+
+    })
+
+  }
+
+  
+
+  
 
   // ionViewWillEnter() {
   //   this.activatedRoute.queryParams.subscribe((result) => {

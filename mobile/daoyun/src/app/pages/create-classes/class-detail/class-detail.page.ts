@@ -4,6 +4,8 @@ import { ZrServicesService } from "../../../shared/services/zr-services.service"
 import { LocalStorageService } from "../../../shared/services/local-storage.service";
 import { ToastServiceProvider } from "../../../shared/services/toast-service.service";
 
+import { EventService } from 'src/app/shared/services/event.service';
+
 @Component({
   selector: 'app-class-detail',
   templateUrl: './class-detail.page.html',
@@ -34,7 +36,9 @@ export class ClassDetailPage implements OnInit {
     private zrServices: ZrServicesService,
     private localStorageService: LocalStorageService,
     private toastService: ToastServiceProvider,
-    private router: Router) { }
+    private router: Router,
+    public eventService:EventService,
+    ) { }
 
   ngOnInit() {
     // 传入课程编号，从而编辑该门课程
@@ -45,14 +49,20 @@ export class ClassDetailPage implements OnInit {
     });
     this.getCourseInfo()
   }
+  
 
-  ionViewWillEnter() {
-    this.activatedRoute.queryParams.subscribe((result:any) => {
-      this.courseId = result.courseId;
-    });
-    //这两个方法在将要进入界面的时候会触发,相当于是局部刷新,整个页面不会跟着刷新
-      this.getCourseInfo();   
-  }
+  // ionViewWillEnter() {
+  //   this.activatedRoute.queryParams.subscribe((result:any) => {
+  //     this.courseId = result.courseId;
+  //   });
+  //   //这两个方法在将要进入界面的时候会触发,相当于是局部刷新,整个页面不会跟着刷新
+  //     this.getCourseInfo();   
+  // }
+
+  // ionViewDidLeave(){
+  //   console.log('createclass-detail leave')
+  //   this.eventService.event.emit('memberupdate');
+  // }
 
   // 查询班课信息
   getCourseInfo(){

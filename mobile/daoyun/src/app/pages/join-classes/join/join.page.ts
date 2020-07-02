@@ -39,8 +39,8 @@ export class JoinPage extends BaseUI implements OnInit  {
   loadCourseInfo(){
 
     this.zrServices.getCourseByCourseId(this.courseId).then(async (result:any) => {
-      console.log('here:', result.data);
-      if(result.success){
+      console.log('here:', result);
+      if(result.data){
         this.hasThisClass = true
         this.courseName = result.data.courseName
         this.courseMajor = result.data.major
@@ -62,10 +62,12 @@ export class JoinPage extends BaseUI implements OnInit  {
     this.zrServices.joinClass(params).then((result:any) => {
      if(result.code=='200'){
         super.showToast(this.toastController,'加入班课成功')
-        this.router.navigateByUrl('/tabs/join-classes') 
-        console.log(result.code)
-        console.log('课程data：',result.data);
-        console.log(result.msg)
+        location.replace('/tabs/join-classes')   // 这样实现页面刷新，并且无法返回当前页面路径
+
+        // this.router.navigateByUrl('/tabs/join-classes') 
+        // console.log(result.code)
+        // console.log('课程data：',result.data);
+        // console.log(result.msg)
     }else if(result.code=='400'){
         super.showToast(this.toastController,'已加入该班课')
     }

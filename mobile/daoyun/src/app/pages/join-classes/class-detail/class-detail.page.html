@@ -2,7 +2,8 @@
   <ion-toolbar>
     <ion-title>班课详情</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/join-classes/members"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/join-classes/members" queryParams='{courseId:courseId}'></ion-back-button>
+      <!-- <ion-back-button (click)="onBack()"></ion-back-button> -->
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -19,7 +20,7 @@
         </ion-thumbnail>
         <ion-label>
           <h3>{{courseMajor}}</h3>
-          <h4>{{courseName}}</h4>
+          <h4>{{courseName}}&nbsp;&nbsp;课程码：{{courseId}}</h4>
           <p>{{courseTeacherName}}</p>
           <p>
             <span>2019-2020-2</span>  <span>学校课表班课</span>

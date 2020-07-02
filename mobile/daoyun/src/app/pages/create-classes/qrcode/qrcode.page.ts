@@ -1,5 +1,7 @@
 import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { qrcanvas } from 'qrcanvas';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-qrcode',
@@ -8,14 +10,17 @@ import { qrcanvas } from 'qrcanvas';
 })
 export class QrcodePage implements OnInit {
 
-  constructor(private elementRef: ElementRef) { }
+  constructor(private elementRef: ElementRef,private activatedRoute: ActivatedRoute,) { }
   options: any;
   effects = ['none', 'liquid', 'round', 'spot'];
   @Input() size: string;
   @Input() data: string;
   @Input() logo: string;
-  courseid='1111'
+  courseid=''
   ngOnInit() {
+    this.activatedRoute.queryParams.subscribe((result) => {
+      this.courseid = result.courseId;
+    });
   }
   generateQrCode() {
     let innerHTML = '';
@@ -46,6 +51,10 @@ export class QrcodePage implements OnInit {
       const canvas = qrcanvas(this.options);
       this.elementRef.nativeElement.querySelector('#qrcode').appendChild(canvas);
     }
+  }
+
+  onBack(){
+    location.replace("/tabs/create-classes")
   }
 
 }

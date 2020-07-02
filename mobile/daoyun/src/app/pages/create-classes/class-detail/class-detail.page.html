@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>课程名称</ion-title>
+    <ion-title>{{courseName}}</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/create-classes/members"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/create-classes" ></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -13,7 +13,7 @@
     <!-- 班课头信息 -->
     <ion-item lines='full'>
       <ion-note slot="end" class="ion-no-margin">
-        <ion-button  expand="block" fill="clear" shape="round" [routerLink]="['/create-classes/class-detail/edit-class']"  [queryParams]="{courseId:courseId}">
+        <ion-button  expand="block" fill="clear" shape="round" [routerLink]="['/create-classes/class-detail/edit-class']"  [queryParams]="{courseId:courseId,course_name:courseName}">
           <ion-icon name="create-outline"  color="primary" slot="icon-only"></ion-icon>
         </ion-button>
       </ion-note>
@@ -21,11 +21,11 @@
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
       </ion-thumbnail>
       <ion-label>
-        <h3>{{this.courseMajor}}</h3>
-        <h4>{{this.courseName}}</h4>
-        <p>{{this.courseTeacherName}}</p>
+        <h3>{{courseMajor}}</h3>
+        <h4>{{courseName}}</h4>
+        <p>{{courseTeacherName}}</p>
         <p>
-          <span>{{this.courseSemester}}</span>
+          <span>{{courseSemester}}</span>
         </p>
       </ion-label>
     </ion-item>
@@ -37,7 +37,7 @@
     <ion-item>
       <ion-label  position="floating">学习要求</ion-label>
       <ion-text class="ion-padding-top" color="medium">
-        <p>{{this.courseDes}}</p>
+        <p>{{courseDes}}</p>
       </ion-text>
     </ion-item>
 
@@ -45,13 +45,13 @@
       <ion-label position="floating">学校院系</ion-label>
       <ion-text class="ion-padding-top" color="medium">
         <p>
-          {{this.courseSchool}}&nbsp;{{this.courseDepartment}}
+          {{courseSchool}}&nbsp;{{courseDepartment}}
         </p>
       </ion-text>
     </ion-item>
 
     <!-- 退出班课按钮 -->
-    <ion-button slot="start" expand="block" fill='outline' shape='round' class="ion-margin-top" color="danger" (click)="doSubmit()">
+    <ion-button slot="start" expand="block" fill='outline' shape='round' class="ion-margin-top" color="danger" (click)="doSubmit()" *ngIf="courseStatus!='已结课'">
       结束班课
     </ion-button>
 

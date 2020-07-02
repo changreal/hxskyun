@@ -36,10 +36,10 @@ export class CreateClassesPage implements OnInit {
       },
     ],
     teacherName:'池芝标',
-    teacherId:1
+    // teacherId:1
   }
   courses:any[] = this.result.courses
-  courses_length=1
+  courses_length=0
   userId:string=''
   role:string=''
 
@@ -55,15 +55,17 @@ export class CreateClassesPage implements OnInit {
   }
 
   ngOnInit() {
-    this.role = 'teacher'
-    // this.role = this.localStorageService.getStore('role','student')
+    this.role = this.localStorageService.getStore('roleId','3')
+    this.userId = this.localStorageService.getStore('uid', null)
+
     console.log('当前身份是：', this.role);
+    console.log('当前用户id是：', this.userId);
 
     // 判断身份
-    if(this.role == 'teacher'){
-      // this.loadCourseData()
+    if(this.role == '2' || this.role=='1'){
+      this.loadCourseData()
     }else{
-      // 不是教师身份的话没有此权限
+      // 不是教师或者管理员身份的话没有此权限
       this.courses_length = 0
       this.toastService.presentAlert('您没有此权限！')
     }
@@ -76,29 +78,24 @@ export class CreateClassesPage implements OnInit {
     // this.role = this.localStorageService.getStore('role','student')
     
     // 获取数据前再判断一次身份
-    if(this.role == 'teacher'){
-      this.zrServices.getCourseById(this.userId).then((result:any) => {
-        // console.log('根据用户号，获取该用户已加入的课程列表', result);
-        if (result.code =='200') {
-          this.courses = result.data
-          this.courses_length = this.courses.length
-        }else{
-          console.log(result.msg);
-        }
-      }).catch(async (error)=>{
-        console.log('请求教师创建的课程列表出现错误：', error);
-      })
-    }
-    else{
-      this.courses_length = 0;
-    }
+    this.zrServices.getCreatedCourseById(this.userId).then((result:any) => {
+      console.log('根据用户号，获取该用户已加入的课程列表', result);
+      if (result.code =='200') {
+        this.courses = result.data
+        this.courses_length = this.courses.length
+      }else{
+        console.log(result.msg);
+      }
+    }).catch(async (error)=>{
+      console.log('请求教师创建的课程列表出现错误：', error);
+    })
   }
 
   // 加入班课触发事件
   doCreateCourse(){
     let url = "/create-classes/create-class"
-    if(this.role == 'teacher'){
-      this.router.navigateByUrl(url)
+    if(this.role == '1' || this.role == '2'){
+      this.router.navigate([url]);
     }else{
       // 学生创建班课权限
       this.toastService.presentAlert('您没有此权限！')

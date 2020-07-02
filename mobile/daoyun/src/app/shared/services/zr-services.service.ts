@@ -24,22 +24,83 @@ export class ZrServicesService {
   constructor(public http: HttpClient,
     ) { }
 
-// 加入班课
+  // 登录
   login(info:object){
-  let url = this.config.domain + '/Login/checkLogin' 
-  return new Promise((resolve, reject) => {
+    let url = this.config.domain + '/Login/checkLogin' 
+    return new Promise((resolve, reject) => {
 
-    this.http.post(url, JSON.stringify(info),this.httpOptions).subscribe((response: any) => {
-      // 请求成功的回调函数
-      resolve(response)
-    }, (error:HttpErrorResponse) => {
-      // 请求错误的回调函数
-      console.log('service的错误：',error);
-      reject(error);
-      
+      this.http.post(url, JSON.stringify(info),this.httpOptions).subscribe((response: any) => {
+        // 请求成功的回调函数
+        resolve(response)
+      }, (error:HttpErrorResponse) => {
+        // 请求错误的回调函数
+        console.log('service的错误：',error);
+        reject(error);
+        
+      })
     })
-  })
-}
+  }
+
+  // 获取学期
+  getSemester(){
+
+    let url = this.config.domain + '/dictionary/List/courseSemeste'
+    return new Promise((resolve, reject) => {
+      
+      this.http.get(url).subscribe((response: any) => {
+        // 请求成功的回调函数
+        resolve(response)
+
+      }, (error:HttpErrorResponse) => {
+        // 请求错误的回调函数
+        console.log('service的错误：',error);
+        reject(error);
+        
+      })
+    })
+
+  }
+
+  // 获取学校
+  getSchool(){
+    let url = this.config.domain + '/dictionary/List/schoolList'
+    return new Promise((resolve, reject) => {
+      
+      this.http.get(url).subscribe((response: any) => {
+        // 请求成功的回调函数
+        resolve(response)
+
+      }, (error:HttpErrorResponse) => {
+        // 请求错误的回调函数
+        console.log('service的错误：',error);
+        reject(error);
+        
+      })
+    })
+    
+  }
+
+  // 获取学院
+  getDepartment(){
+
+    let url = this.config.domain + '/dictionary/List/departmentList'
+    return new Promise((resolve, reject) => {
+      
+      this.http.get(url).subscribe((response: any) => {
+        // 请求成功的回调函数
+        resolve(response)
+
+      }, (error:HttpErrorResponse) => {
+        // 请求错误的回调函数
+        console.log('service的错误：',error);
+        reject(error);
+        
+      })
+    })
+    
+  }
+
+
   // 根据学号/工号获取已加入的课程
   getCourseById(id){
     let url = this.config.domain + '/course/userId/' + id
@@ -150,11 +211,27 @@ export class ZrServicesService {
   }
 
 
-
+  // 查看我创建的课程列表
+    getCreatedCourseById(id){
+      let url = this.config.domain + '/course/teacherId/' + id
+      return new Promise((resolve, reject) => {
+        
+        this.http.get(url).subscribe((response: any) => {
+          // 请求成功的回调函数
+          resolve(response)
+  
+        }, (error:HttpErrorResponse) => {
+          // 请求错误的回调函数
+          console.log('service的错误：',error);
+          reject(error);
+          
+        })
+      })
+    }
 
   // 创建班课服务
   postNewCourse(data){
-    let url = this.config.domain + '/course/'
+    let url = this.config.domain + '/course/creatCourse'
     return new Promise((reslove, reject) => {
       this.http.post(url, JSON.stringify(data), this.httpOptions).subscribe((response) => {
         reslove(response);
@@ -167,11 +244,11 @@ export class ZrServicesService {
   }
 
   //修改班课信息
-  postEidtCourseByCourseId(courseId,data){
-    let url = this.config.domain + '/course/' + courseId
+  postEidtCourseByCourseId(data){
+    let url = this.config.domain + '/course/updateCourse/'
     console.log('发送修改班课信息：', data);
     return new Promise((reslove, reject) => {
-      this.http.put(url, JSON.stringify(data), this.httpOptions).subscribe((response) => {
+      this.http.post(url, JSON.stringify(data), this.httpOptions).subscribe((response) => {
         reslove(response);
       }, (error) => {
         reject(error);

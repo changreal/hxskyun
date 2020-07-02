@@ -5,7 +5,7 @@
       <ion-back-button defaultHref="/join-classes"></ion-back-button>
     </ion-buttons>
     <ion-title>加入班课</ion-title>
-    <ion-buttons slot="primary">
+    <ion-buttons slot="primary" [hidden]='!courseId' >
       <ion-button color="primary"  routerLink="/join-classes/join" [queryParams]="{cId:courseId}">
         下一步
       </ion-button>

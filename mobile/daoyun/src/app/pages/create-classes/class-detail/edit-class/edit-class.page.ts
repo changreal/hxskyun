@@ -14,22 +14,34 @@ import { NgForm } from '@angular/forms';
 export class EditClassPage implements OnInit {
 
   submited:boolean = false
-  semesters:any[]=[ //学期
-    {id:'1', name:'2019-2020-1'},
-    {id:'2', name:'2019-2020-2'},
-    {id:'3', name:'2020-2021-1'},
-    {id:'4', name:'2020-2021-2'},
-    {id:'5', name:'2021-2022-1'},
-  ]
+  semesters:any[]= []
+  schools:any[] = []
+  departments:any[] = []
+  loadFinished:boolean = false;
 
+  // semesters:any[]=[ //学期
+  //   {id:'1', name:'2019-2020-1'},
+  //   {id:'2', name:'2019-2020-2'},
+  //   {id:'3', name:'2020-2021-1'},
+  //   {id:'4', name:'2020-2021-2'},
+  //   {id:'5', name:'2021-2022-1'},
+  // ]
+
+  // courseStatus:any[]=[ //学期
+  //   {id:'1', name:'未开始'},
+  //   {id:'2', name:'进行中'},
+  //   {id:'3', name:'已结课'},
+  // ]
+  userId=''
   course_name=''
   course_school=''            //学校
-  course_semester='2019-2020-1'        //学期
+  course_semester=''        //学期
   course_major=''             //专业（班级）
   course_courseName=''         //课程名
   course_des=''          //学习要求
   course_department=''        //学校院系
   course_teacherName=''
+  course_status = ''
 
   courseId = ''
   constructor(private activatedRoute: ActivatedRoute,
@@ -39,13 +51,50 @@ export class EditClassPage implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-
+    this.userId = this.localStorageService.getStore('uid', '2')
     // 传入课程编号，从而编辑该门课程
     this.activatedRoute.queryParams.subscribe((result) => {
       console.log(result);
       this.courseId = result.courseId;
     });
     this.getCourseInfo()
+    this.loadBasicInfo()
+  }
+
+  // 获取学期、学校、学院
+  loadBasicInfo(){
+    // 获取学期
+    this.zrServices.getSemester().then((result:any) => {
+      for(let r of result.data){
+        let item = {
+          id:r.dictId,
+          name:r.itemValue
+        }
+        this.semesters.push(item)
+      }
+    })
+
+    // 获取学校
+    this.zrServices.getSchool().then((result:any) => {
+      for(let r of result.data){
+        let item = {
+          id:r.dictId,
+          name:r.itemValue
+        }
+        this.schools.push(item)
+      }
+    })
+    // 获取学院
+    this.zrServices.getDepartment().then((result:any) => {
+      for(let r of result.data){
+        let item = {
+          id:r.dictId,
+          name:r.itemValue
+        }
+        this.departments.push(item)
+      }
+    })
+
   }
   
   // 查询班课信息
@@ -62,6 +111,8 @@ export class EditClassPage implements OnInit {
         this.course_department = result.data.department
         this.course_des = result.data.classDes
         this.course_teacherName = result.data.teacherName
+        this.course_status = result.data.endClassStatus
+
       }
     }).catch((error) => {
       console.log('查找班课信息失败', error);
@@ -80,32 +131,38 @@ export class EditClassPage implements OnInit {
 
   // 保存表单项
   onCourseSave(){
-    let TeacherId = this.localStorageService.getStore('UserId', null)
     let theCourseInfo:any = {} // 新建课程信息
     
-    theCourseInfo['courseName'] = this.course_name
+    theCourseInfo['teachId'] = this.userId
+    theCourseInfo['courseId'] = this.courseId
     theCourseInfo['courseSemester'] = this.course_semester
+    theCourseInfo['major'] = this.course_major
+    theCourseInfo['courseName'] = this.course_name
+    theCourseInfo['classDes'] = this.course_des
     theCourseInfo['school'] = this.course_school
     theCourseInfo['department'] = this.course_department
-    theCourseInfo['major'] = this.course_major
-    theCourseInfo['courseDes'] = this.course_des
+    theCourseInfo['endClassStatus'] = this.course_status
     
     // 提交到service更新
-    this.zrServices.postEidtCourseByCourseId(this.courseId,theCourseInfo).then(async(result:any) => {
+    this.zrServices.postEidtCourseByCourseId(theCourseInfo).then(async(result:any) => {
       console.log('添加课程的返回信息', result);
       
       // 请求返回状态
       if(result.code == '200'){
         // 跳出提示框提示修改成功！
-        let url = '/create-classes/class-detail?courseId=' + this.courseId
-        let params = this.courseId
-        this.toastService.presentAlertConfirm('创建班课成功！', url, params)  //回调函数跳转
+        // let url = '/tabs/create-classes/class-detail?courseId=' + this.courseId
+        let url = '/tabs/create-classes/class-detail'
+        let params = {
+          courseId : this.courseId
+        }
+        this.toastService.presentAlertConfirm('修改班课成功！', url, params)  //回调函数跳转
+        // this.toastService.presentAlertConfirm('修改班课成功！', url)  //回调函数跳转
       }else{
         console.log(result.msg);
       }
       
     }).catch((error) => {
-      console.log('新建课程失败', error);
+      console.log('修改课程失败', error);
       
     })
     

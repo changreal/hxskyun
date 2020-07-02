@@ -13,7 +13,7 @@
       
       <ion-buttons slot="start">
         <!-- 点击进入输入班课号页面 -->
-        <ion-button color="primary" [routerLink]="['/join-classes/join-class']" >
+        <ion-button color="primary" [routerLink]="['/tabs/join-classes/join-class']" >
           <ion-icon slot="icon-only" name="add" ></ion-icon>
         </ion-button>
         <!-- 二维码扫描加入班课 -->
@@ -43,10 +43,10 @@
     </ion-list-header> -->
 
 
-    <ion-item button detail  *ngFor="let course of courses" routerLink="/join-classes/members"  [queryParams]="{courseId:course.courseId, courseName:course.courseName}" >
+    <ion-item button detail lines='full' *ngFor="let course of courses" routerLink="/join-classes/members"  [queryParams]="{courseId:course.courseId, courseName:course.courseName}" >
       <!-- 头像部分 -->
       <ion-thumbnail slot="start">
-        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+        <div class="profile_icon">{{course.courseName[0]}}</div>
       </ion-thumbnail>
 
       <!-- 内容部分 -->
@@ -58,16 +58,19 @@
         <ion-text>
           <p>{{course.teacherName}}&nbsp;&nbsp;&nbsp;<span>{{course.major}}</span></p>
         </ion-text>
+        <ion-text >
+          <p>{{course.courseSemester}} </p>
+        </ion-text>
 
         <!-- 按钮部分 -->
-        <div>
+        <!-- <div>
           <ion-buttons slot="secondary" >
             <ion-button slot="end" size="small" > 
               <ion-icon name="hand-right-outline" slot="start"></ion-icon>
               签到
             </ion-button>
           </ion-buttons>
-        </div>
+        </div> -->
       </ion-label>
       <!-- 内容部分结束 -->
 

@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ZrServicesService } from "../../../shared/services/zr-services.service";
 import { ToastController } from '@ionic/angular';
 import { BaseUI } from 'src/app/common/baseui';
+import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.service';
+import { EventService } from 'src/app/shared/services/event.service';
 
 
 
@@ -13,7 +15,7 @@ import { BaseUI } from 'src/app/common/baseui';
 })
 export class ClassDetailPage extends BaseUI implements OnInit {
    // 临时变量
-   userId:any = '123123123'
+   userId:any 
   courseId:string
   hasThisClass:boolean = false
   submited = false
@@ -24,22 +26,28 @@ export class ClassDetailPage extends BaseUI implements OnInit {
   courseSchool:string
   courseTeacherName:string
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private zrServices: ZrServicesService,private toastController: ToastController,private router:Router) {
+  constructor(private activatedRoute: ActivatedRoute,private localStorageService: MylocalstorageService,
+              private zrServices: ZrServicesService,private toastController: ToastController,private router:Router,
+              public eventService:EventService) {
     super()
 
   }
 
   ngOnInit() {
+    // this.userId=this.localStorageService.get('uid','')
     this.activatedRoute.queryParams.subscribe((result:any)=>{
       this.courseId = result.courseId
       
     })
-
-    this.loadCourseInfo()
-    
   }
-
+  ionViewDidLeave(){
+    console.log('joinclass leave')
+    this.eventService.event.emit('classupdate');
+  }
+  ionViewWillEnter() {
+    this.userId=this.localStorageService.get('uid','')
+    this.loadCourseInfo()
+  }
   loadCourseInfo(){
 
     this.zrServices.getCourseByCourseId(this.courseId).then(async (result:any) => {

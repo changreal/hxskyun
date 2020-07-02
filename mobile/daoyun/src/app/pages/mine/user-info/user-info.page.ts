@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.service';
 import { ZrServicesService } from 'src/app/shared/services/zr-services.service';
 import { BaseUI } from 'src/app/common/baseui';
-import { ToastController } from '@ionic/angular';
+import { ToastController, } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { EventService } from 'src/app/shared/services/event.service';
 
 @Component({
   selector: 'app-user-info',
@@ -27,7 +28,8 @@ export class UserInfoPage  extends BaseUI implements OnInit {
     roleId:''
   };
   constructor(public localStorageService:MylocalstorageService,private zrServices: ZrServicesService,private toastController: ToastController,
-    private router :Router ) { super()}
+    private router :Router, public eventService: EventService
+    ) { super()}
 
   ngOnInit() {
     this.userId=this.localStorageService.get('uid','')
@@ -71,6 +73,10 @@ export class UserInfoPage  extends BaseUI implements OnInit {
   getValue(){
     console.log('我选中的是', this.userDetail.roleId)
   }
+  ionViewDidLeave(){
+    console.log('userinfo leave')
+    this.eventService.event.emit('userupdate');
+  }
   onSave(){
    
     
@@ -80,6 +86,7 @@ export class UserInfoPage  extends BaseUI implements OnInit {
       if(result.code=='200'){
          super.showToast(this.toastController,'用户信息更新成功')
          this.router.navigateByUrl('/tabs/mine') 
+        // this.router.navigateByUrl('/tabs/mine').then(()=>{location.reload();});
          console.log(result.code)
          console.log('userdetail：',result.data);
          console.log(result.msg)

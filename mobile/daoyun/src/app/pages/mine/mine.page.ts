@@ -7,6 +7,7 @@ import { UserInfoPage } from './user-info/user-info.page';
 import { Router } from '@angular/router';
 import { ZrServicesService } from 'src/app/shared/services/zr-services.service';
 import { UserInfo } from 'src/app/myClass/userinfo';
+import { EventService } from 'src/app/shared/services/event.service';
 
 @Component({
   selector: 'app-mine',
@@ -37,6 +38,7 @@ export class MinePage implements OnInit {
 }
   userId:any
   constructor(public modalController: ModalController,private localStorageService: MylocalstorageService,
+    public eventService: EventService,
     public navCtrl: NavController,public router:Router,public alertController: AlertController,private zrServices: ZrServicesService) { }
 
   ngOnInit() {
@@ -48,10 +50,17 @@ export class MinePage implements OnInit {
     modal.present()
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     this.userId=this.localStorageService.get('uid','')
     console.log(this.userinfo)
     this.loadUserInfo()
+    this.eventService.event.on('userupdate', () => {
+      this.loadUserInfo();
+    })
+
+    // this.loadUserInfo()
+    console.log('mine view in ')
+    console.log(this.userinfo.name)
     // this.loadUserPage();
     // console.log(this.logined)
   }

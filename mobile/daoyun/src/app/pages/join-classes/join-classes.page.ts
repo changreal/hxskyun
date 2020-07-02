@@ -4,6 +4,7 @@ import { ZrServicesService } from "../../shared/services/zr-services.service";
 import { Router } from '@angular/router';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.service';
+import { EventService } from 'src/app/shared/services/event.service';
 // import { ToastServiceProvider } from "../../shared/services/toast-service.service";
 
 @Component({
@@ -13,7 +14,7 @@ import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.se
 })
 export class JoinClassesPage implements OnInit {
 
-  userId:any = '123123123'
+  userId:any  
   courseId:any
   role:any  // 身份
 
@@ -23,15 +24,25 @@ export class JoinClassesPage implements OnInit {
 
 
   constructor(private zrServices: ZrServicesService,public router:Router,private barcodeScanner: BarcodeScanner,
-    private localStorageService: MylocalstorageService) {
+    private localStorageService: MylocalstorageService,public eventService:EventService) {
      
       
     }
 
   ngOnInit() {
+    // this.userId=this.localStorageService.get('uid','')
+    // this.loadCourseData()
+    
+  }
+  ionViewWillEnter() {
     this.userId=this.localStorageService.get('uid','')
-    this.loadCourseData()
     console.log('join-userid'+this.userId)
+    this.loadCourseData()
+    this.eventService.event.on('classupdate', () => {
+      this.loadCourseData();
+    })
+    console.log('join view in ')
+    console.log(this.courses_length)
   }
 
   loadCourseData(){

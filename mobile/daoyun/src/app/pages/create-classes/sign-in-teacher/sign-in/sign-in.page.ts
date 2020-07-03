@@ -164,20 +164,20 @@ export class SignInPage implements OnInit {
 
   // 获取地址
   getLocation() {
-  //   let geolocation = new BMap.Geolocation(); //新建地图对象
-  //   return new Promise((reslove, reject) => {
-  //     geolocation.getCurrentPosition(function (r) {
-  //       console.log(this.getStatus())
-  //       if (this.getStatus() == 0) {
-  //         console.log('获取位置成功：', r.point.lat, r.point.lng);
-  //         reslove(r);
-  //       }
-  //       else {
-  //         console.log('获取位置失败:', this.getStatus());
-  //         reject(this.getStatus());
-  //       }
-  //     });
-  //   })
+    let geolocation = new BMap.Geolocation(); //新建地图对象
+    return new Promise((reslove, reject) => {
+      geolocation.getCurrentPosition(function (r) {
+        console.log(this.getStatus())
+        if (this.getStatus() == 0) {
+          console.log('获取位置成功：', r.point.lat, r.point.lng);
+          reslove(r);
+        }
+        else {
+          console.log('获取位置失败:', this.getStatus());
+          reject(this.getStatus());
+        }
+      });
+    })
     let coordinate:any = {
       longitude:12,
       latitude:23

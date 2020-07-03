@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { LayoutModule } from './layout/layout.module';
+// import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
-import { LoginPageModule } from './pages/login/login.module';
+// import { LoginPageModule } from './pages/login/login.module';
 import { StartAppGuard } from './core/start-app.guard';
 const routes: Routes = [
   {
@@ -61,16 +61,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/yuanxi/yuanxi.module').then( m => m.YuanxiPageModule)
   },
 
-
- 
-
- 
   
 ];
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
-    LayoutModule,
+    // LayoutModule,
     SharedModule,
 
  

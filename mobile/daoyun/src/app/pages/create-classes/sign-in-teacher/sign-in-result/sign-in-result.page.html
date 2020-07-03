@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/create-classes/sign-in-teacher"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/create-classes"></ion-back-button>
     </ion-buttons>
     <ion-title>签到结果</ion-title>
   </ion-toolbar>
@@ -11,74 +11,48 @@
 
     <!-- 成员列表 -->
     <ion-list lines='full'>
-  
+      
+      <!-- 缺勤 -->
       <ion-item-divider>
-        <ion-label>缺勤</ion-label>
-        <ion-label class="ion-text-right"> 1人</ion-label>
+        <ion-label color="dark">缺勤</ion-label>
+        <ion-label color="dark">&nbsp;{{unsigned_students.length}}人</ion-label>
       </ion-item-divider>
   
       <!-- 成员信息部分 -->
-      <ion-item  class="member-item">
+
+      <ion-item  class="member-item" *ngFor="let student of unsigned_students; index as i">
         <!-- 头像部分 -->
-        <ion-note slot="start" class="ion-no-margin ion-margin-vertical">1</ion-note>
+        <ion-note slot="start" class="ion-no-margin ion-margin-vertical">{{i+1}}</ion-note>
         <ion-thumbnail slot="start" class="mythumbnail">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+        <div class="profile_icon_orange">{{student.studentName[0]}}</div>
         </ion-thumbnail>
         <!-- 内容部分 -->
         <ion-label>
-          <h3>蔡徐坤</h3>
-          <p>1902975823 <span class="exp ion-float-right exp-color">48经验值</span></p>
+          <h3>{{student.studentName}}</h3>
+          <p>{{student.studentId}} <span class="exp ion-float-right exp-color"></span></p>
         </ion-label>
       </ion-item>
 
-
+      <!-- 已签到 -->
       <ion-item-divider>
-        <ion-label>迟到</ion-label>
-        <ion-label class="ion-text-right"> 2人</ion-label>
+        <ion-label color="dark">已签到</ion-label>
+        <ion-label class="ion-text-right" color="dark">&nbsp;{{signed_students.length}} 人</ion-label>
       </ion-item-divider>
       <!-- 成员信息部分 -->
-      <ion-item  class="member-item">
+      <ion-item  class="member-item" *ngFor="let student of signed_students; index as i">
         <!-- 头像部分 -->
-        <ion-note slot="start" class="ion-no-margin ion-margin-vertical">1</ion-note>
+        <ion-note slot="start" class="ion-no-margin ion-margin-vertical">{{i+1}}</ion-note>
         <ion-thumbnail slot="start" class="mythumbnail">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+        <div class="profile_icon_orange">{{student.studentName[0]}}</div>
         </ion-thumbnail>
         <!-- 内容部分 -->
         <ion-label>
-          <h3>蔡徐坤</h3>
-          <p>1902975823 <span class="exp ion-float-right exp-color">48经验值</span></p>
-        </ion-label>
-      </ion-item>
-      <ion-item  class="member-item">
-        <!-- 头像部分 -->
-        <ion-note slot="start" class="ion-no-margin ion-margin-vertical">1</ion-note>
-        <ion-thumbnail slot="start" class="mythumbnail">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
-        </ion-thumbnail>
-        <!-- 内容部分 -->
-        <ion-label>
-          <h3>蔡徐坤</h3>
-          <p>1902975823 <span class="exp ion-float-right exp-color">48经验值</span></p>
+          <h3>{{student.studentName}}</h3>
+          <p style="color: #085308;">签到距离&nbsp;<ion-icon name="location-outline"></ion-icon>：{{student.signDistance}}km</p>
+          <p style="color: #000;">学生号：{{student.studentId}} <span class="exp ion-float-right exp-color"></span></p>
         </ion-label>
       </ion-item>
 
-      <ion-item-divider>
-        <ion-label>出勤</ion-label>
-        <ion-label class="ion-text-right">1人</ion-label>
-      </ion-item-divider>
-      <!-- 成员信息部分 -->
-      <ion-item  class="member-item">
-        <!-- 头像部分 -->
-        <ion-note slot="start" class="ion-no-margin ion-margin-vertical">1</ion-note>
-        <ion-thumbnail slot="start" class="mythumbnail">
-          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
-        </ion-thumbnail>
-        <!-- 内容部分 -->
-        <ion-label>
-          <h3>蔡徐坤</h3>
-          <p>1902975823 <span class="exp ion-float-right exp-color">48经验值</span></p>
-        </ion-label>
-      </ion-item>
   
     </ion-list>
 

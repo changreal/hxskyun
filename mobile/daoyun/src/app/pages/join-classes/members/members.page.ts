@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ZrServicesService } from "../../../shared/services/zr-services.service";
+import { LoadingController } from '@ionic/angular';
+import { BaseUI } from 'src/app/common/baseui';
 
 @Component({
   selector: 'app-members',
   templateUrl: './members.page.html',
   styleUrls: ['./members.page.scss'],
 })
-export class MembersPage implements OnInit {
+export class MembersPage extends BaseUI implements OnInit {
 
   // 临时变量
   userId:any = '123123123'
@@ -20,22 +22,27 @@ export class MembersPage implements OnInit {
 
 
   constructor(private activatedRoute: ActivatedRoute,
-    private zrServices: ZrServicesService,) { }
+    private zrServices: ZrServicesService,
+    public loadingController: LoadingController
+    ) { 
+      super()
+    }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((result:any)=>{
-      console.log('result:',result);
+      // console.log('result:',result);
       this.courseId = result.courseId
       this.courseName = result.courseName
     })
-    this.getMyCourseExpInfo()
-    this.loadMembers() // 获取该课程成员列表
+    super.showLoading( this.loadingController,'请等待',800)
+    // this.getMyCourseExpInfo()
+    this.loadMembers(null) // 获取该课程成员列表
   }
 
-  loadMembers(){
+  loadMembers(event){
 
     this.zrServices.getMembersByCourseId(this.courseId).then((result:any) => {
-      console.log(this.courseName, '课程结果为：', result);
+      // console.log(this.courseName, '课程结果为：', result);
       
       this.members_count = result.data.length
       this.members = result.data
@@ -46,23 +53,25 @@ export class MembersPage implements OnInit {
       })
       
     }).catch((error) => {
-      console.log('获取', this.courseName, '课程信息失败')
+      // console.log('获取', this.courseName, '课程信息失败')
+    }).finally(()=>{
+      if(event != null){
+        event.target.complete()
+      }
     })
 
   }
 
   getMyCourseExpInfo(){
-    console.log('here:', this.courseId, this.userId);
+    // console.log('here:', this.courseId, this.userId);
     
     let params:object = {
       "courseId" : this.courseId, //1
       "studentId" : this.userId //123123123
     }
     this.zrServices.getMemberCourseExpInfo(params).then((result:any) => {
-      console.log('查询改用户的课程经验值为：',result.data);
+      console.log('查询改用户的课程经验值为：',result);
       this.myInfo = result.data[0]
-      console.log(this.myInfo);
-      
     }).catch((error) => {
       console.log('获取用户该课程的经验值失败')
     })

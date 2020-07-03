@@ -4,13 +4,15 @@ import { ZrServicesService } from "../../../shared/services/zr-services.service"
 import { LocalStorageService } from "../../../shared/services/local-storage.service";
 import { ToastServiceProvider } from "../../../shared/services/toast-service.service";
 import { EventService } from "../../../shared/services/event.service";
+import { LoadingController } from '@ionic/angular';
+import { BaseUI } from 'src/app/common/baseui';
 
 @Component({
   selector: 'app-members',
   templateUrl: './members.page.html',
   styleUrls: ['./members.page.scss'],
 })
-export class MembersPage implements OnInit {
+export class MembersPage extends BaseUI  implements OnInit {
 
   userId = ''
   courseId = ''
@@ -25,8 +27,11 @@ export class MembersPage implements OnInit {
     private localStorageService: LocalStorageService,
     private toastService: ToastServiceProvider,
     private router: Router,
-    public eventService: EventService
-    ) { }
+    public eventService: EventService,
+    public loadingController: LoadingController
+    ) { 
+      super()
+    }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((result) => {
@@ -35,6 +40,7 @@ export class MembersPage implements OnInit {
     })
     this.loadCourseInfo()
     this.loadMembers(null)
+    super.showLoading( this.loadingController,'请等待',800)
 
   }
 
@@ -45,13 +51,13 @@ export class MembersPage implements OnInit {
     })
     this.eventService.event.on('memberupdate', () => {
       this.loadCourseInfo();
-    this.loadMembers(null)
-
+      this.loadMembers(null)
+      super.showLoading( this.loadingController,'请等待',800)
+      
     })
 
   }
 
-  
 
   
 
@@ -68,11 +74,10 @@ export class MembersPage implements OnInit {
   loadCourseInfo(){
     // 根据id获取该班课的信息
     this.zrServices.getCourseByCourseId(this.courseId).then(async (result:any) => {
-      console.log(result);
+      // console.log(result);
       
       if(result.code == '200'){
         this.courseStatus = result.data.endClassStatus
-        console.log(this.courseStatus);
         
       }
     }).catch((error) => {
@@ -82,7 +87,7 @@ export class MembersPage implements OnInit {
 
   loadMembers(event){
     this.zrServices.getMembersByCourseId(this.courseId).then((result:any) => {
-      console.log( '成员返回为：', result);
+      // console.log( '成员返回为：', result);
       this.members = result.data
       this.members_count = result.data.length
       // 排序

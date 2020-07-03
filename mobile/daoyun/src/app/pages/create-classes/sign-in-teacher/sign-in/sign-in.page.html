@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
 
-    <ion-title>签到</ion-title>
+    <ion-title>{{courseName}}签到</ion-title>
 
   </ion-toolbar>
 </ion-header>
@@ -32,7 +32,7 @@
   <!-- 签到区域 -->
   <ion-item-divider>
     <ion-label>
-      签到情况
+      {{courseName}}签到情况
     </ion-label>
   </ion-item-divider>
   <ion-item>
@@ -45,7 +45,7 @@
       <h5 style="color: darkslateblue;">
         每5秒更新一次
       </h5>
-      <p>已签到：<span>{{signCount}}</span>人</p>
+      <p>已签到：<span >{{signCount}}</span>人</p>
       <p>总人数：<span>{{courseMembersCount}}</span>&nbsp;人</p>
     </ion-text>
     
@@ -57,6 +57,7 @@
       <ion-icon name="refresh-outline">点击刷新</ion-icon>
     </ion-fab-button>
   </ion-fab> -->
+
 
   
 
@@ -72,7 +73,7 @@
         <ion-label>放弃</ion-label>
       </ion-button>
   
-      <ion-button #startButton (click)="doStartSignIn()"  [disabled]="isStart" fill='outline' size='large' shape='round' color="primary" class="ion-margin-start ion-padding-start">
+      <ion-button #startButton (click)="doSignIn()"  [disabled]="isStart" fill='outline' size='large' shape='round' color="primary" class="ion-margin-start ion-padding-start">
         <ion-label>开始</ion-label>
       </ion-button>
       

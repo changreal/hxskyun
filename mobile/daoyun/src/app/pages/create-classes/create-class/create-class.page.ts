@@ -4,6 +4,8 @@ import { ZrServicesService } from "../../../shared/services/zr-services.service"
 import { LocalStorageService } from "../../../shared/services/local-storage.service";
 import { ToastServiceProvider } from "../../../shared/services/toast-service.service";
 import { NgForm } from '@angular/forms';
+import { BaseUI } from 'src/app/common/baseui';
+import { LoadingController } from '@ionic/angular';
 
 
 
@@ -12,7 +14,7 @@ import { NgForm } from '@angular/forms';
   templateUrl: './create-class.page.html',
   styleUrls: ['./create-class.page.scss'],
 })
-export class CreateClassPage implements OnInit {
+export class CreateClassPage extends BaseUI implements OnInit {
 
   submited:boolean = false
   // semesters:any[]=[ //学期
@@ -43,9 +45,15 @@ export class CreateClassPage implements OnInit {
               private zrServices: ZrServicesService,
               private localStorageService: LocalStorageService,
               private toastService: ToastServiceProvider,
-              private router: Router) { }
+              private router: Router,
+              public loadingController: LoadingController
+    ) {
+      super()
+
+     }
 
   ngOnInit() {
+    super.showLoading( this.loadingController,'请等待',400)
     this.loadBasicInfo()
   }
 
@@ -107,6 +115,8 @@ export class CreateClassPage implements OnInit {
     newCourseInfo['department'] = this.courseInfo.department
     newCourseInfo['endClassStatus'] = '进行中'
 
+    
+    super.showLoading( this.loadingController,'请等待',1000)
 
     this.zrServices.postNewCourse(newCourseInfo).then(async(result:any) => {
       console.log('添加课程的返回信息', result);
@@ -123,6 +133,7 @@ export class CreateClassPage implements OnInit {
         
         console.log('新创建的班课号为：', courseId);
         // 新建成功，则弹出提示框，并且回调单数为跳转到qrCode页
+
         this.toastService.presentAlertConfirm('创建班课成功！', url, queryParams)
       }else{
         console.log(result.msg);

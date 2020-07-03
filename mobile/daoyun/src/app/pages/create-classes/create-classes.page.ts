@@ -4,6 +4,8 @@ import { ZrServicesService } from "../../shared/services/zr-services.service";
 import { LocalStorageService } from "../../shared/services/local-storage.service";
 import { ToastServiceProvider } from "../../shared/services/toast-service.service";
 import { EventService } from 'src/app/shared/services/event.service';
+import { LoadingController } from '@ionic/angular';
+import { BaseUI } from 'src/app/common/baseui';
 
 
 @Component({
@@ -11,36 +13,9 @@ import { EventService } from 'src/app/shared/services/event.service';
   templateUrl: './create-classes.page.html',
   styleUrls: ['./create-classes.page.scss'],
 })
-export class CreateClassesPage implements OnInit {
+export class CreateClassesPage extends BaseUI  implements OnInit {
 
-  result:any = {
-    courses:[
-      {
-      courseId : 8,
-      courseName: '工程实践',
-      courseCode:'123456',
-      major:'2019级工硕（班级名）1班',
-      courseDate:'2019-2020-2'
-      },
-      {
-        courseId : 9,
-        courseName: '工程实践',
-        courseCode:'654321',
-        major:'2019级工硕（班级名）2班',
-        courseDate:'2019-2020-2'
-      },
-      {
-        courseId : 10,
-        courseName: '智能技术',
-        courseCode:'112233',
-        major:'2019级工硕（班级名）',
-        courseDate:'2019-2020-2'
-      },
-    ],
-    teacherName:'池芝标',
-    // teacherId:1
-  }
-  courses:any[] = this.result.courses
+  courses:any[] = []
   courses_length=0
   userId:string=''
   role:string=''
@@ -51,23 +26,26 @@ export class CreateClassesPage implements OnInit {
               private localStorageService: LocalStorageService,
               private toastService: ToastServiceProvider,
               private router:Router,
-              public eventService:EventService) {
-    
-
-                
+              public eventService:EventService,
+              public loadingController: LoadingController
+  ) { 
+    super()
   }
+          
 
   ngOnInit() {
+    super.showLoading( this.loadingController,'请等待',300)
+
     this.role = this.localStorageService.getStore('roleId','2')
     this.userId = this.localStorageService.getStore('uid', null)
 
     console.log('当前身份是：', this.role);
-    console.log('当前用户id是：', this.userId);
+    // console.log('当前用户id是：', this.userId);
     
 
     // 判断身份
     if(this.role == '2' || this.role=='1'){
-      this.loadCourseData()
+      this.loadCourseData(null)
     }else{
       // 不是教师或者管理员身份的话没有此权限
       this.courses_length = 0
@@ -81,22 +59,26 @@ export class CreateClassesPage implements OnInit {
 
   
 
-  loadCourseData(){
+  loadCourseData(event){
 
     // this.userId = this.localStorageService.getStore('userId', null)
     // this.role = this.localStorageService.getStore('role','student')
     
-    // 获取数据前再判断一次身份
     this.zrServices.getCreatedCourseById(this.userId).then((result:any) => {
-      console.log('根据用户号，获取该用户已加入的课程列表', result);
+      // console.log('根据用户号，获取该用户已加入的课程列表', result);
       if (result.code =='200') {
         this.courses = result.data
         this.courses_length = this.courses.length
       }else{
-        console.log(result.msg);
+        this.toastService.errorToast(result.msg)
       }
     }).catch(async (error)=>{
-      console.log('请求教师创建的课程列表出现错误：', error);
+      // console.log('请求教师创建的课程列表出现错误：', error);
+      this.toastService.errorToast(error.message)
+    }).finally(() => {
+      if (event != null) { //如果不是第一次调用，则需要通知refresher控件结束工作
+        event.target.complete();
+      }
     })
   }
 

@@ -26,14 +26,15 @@
       <ion-toolbar>
         <ion-row class="ion-align-items-center"> 
           <ion-col size='7' *ngIf="courseStatus!='已结课'">
-            <ion-button  shape='round'  color="primary" fill="solid" [routerLink]="['/create-classes/sign-in-teacher']"  [queryParams]="{courseId:courseId, courseMembersCount:members_count}" >
-              <ion-icon  name="star" size='small'></ion-icon>
+            <ion-button  shape='round'  color="primary" fill="solid" [routerLink]="['/create-classes/sign-in-teacher']"  [queryParams]="{courseId:courseId, courseMembersCount:members_count, courseName:courseName}" >
+              <!-- <ion-icon  name="star" size='small'></ion-icon> -->
+              <ion-icon name="hand-left-outline" ></ion-icon>
                <ion-label>&nbsp;发起签到&nbsp;</ion-label>
             </ion-button>
           </ion-col>
 
           <ion-col size='5'>
-            <ion-button shape='round'  color="tertiary" fill="outline" [routerLink]="['/create-classes/class-detail']" [queryParams]="{courseId:courseId,courseName:courseName}">
+            <ion-button shape='round'  color="warning" fill="solid" [routerLink]="['/create-classes/class-detail']" [queryParams]="{courseId:courseId,courseName:courseName}">
               <ion-icon name="grid-outline"></ion-icon>
               <ion-label>&nbsp;班课详情&nbsp;</ion-label>
             </ion-button>
@@ -67,7 +68,7 @@
       <!-- 头像部分 -->
       <ion-note slot="start" class="ion-no-margin ion-margin-vertical">{{i+1}}</ion-note>
       <ion-thumbnail slot="start" class="mythumbnail">
-        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+        <div class="profile_icon_orange">{{member.studentName[0]}}</div>
       </ion-thumbnail>
       <!-- 内容部分 -->
       <ion-label>

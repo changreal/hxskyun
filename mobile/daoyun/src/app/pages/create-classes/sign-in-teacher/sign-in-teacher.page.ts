@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ZrServicesService } from "../../../shared/services/zr-services.service";
 import { LocalStorageService } from "../../../shared/services/local-storage.service";
+import { LoadingController } from '@ionic/angular';
+import { BaseUI } from 'src/app/common/baseui';
 
 
 @Component({
@@ -9,13 +11,14 @@ import { LocalStorageService } from "../../../shared/services/local-storage.serv
   templateUrl: './sign-in-teacher.page.html',
   styleUrls: ['./sign-in-teacher.page.scss'],
 })
-export class SignInTeacherPage implements OnInit {
+export class SignInTeacherPage extends BaseUI implements OnInit {
 
   courseMembersCount = ''
-  signCount = '1'
+  signCount = ''
   
   // 发起签到所需变量
   courseId = ''
+  courseName=''
 
 
   // 签到列表
@@ -25,12 +28,17 @@ export class SignInTeacherPage implements OnInit {
     private zrServices: ZrServicesService,
     private localStorageService: LocalStorageService,
     private router: Router,
-    ) { }
+    public loadingController: LoadingController
+    ) { 
+      super()
+    }
 
   ngOnInit() {
+    super.showLoading( this.loadingController,'请等待',800)
     this.activatedRoute.queryParams.subscribe((result) => {
-      console.log('传入的参数：', result);
+      // console.log('传入的参数：', result);
       this.courseId = result.courseId;
+      this.courseName = result.courseName
       this.courseMembersCount = result.courseMembersCount
     })
     this.loadHistorySignList()
@@ -41,7 +49,7 @@ export class SignInTeacherPage implements OnInit {
   // 获取历史签到记录列表
   loadHistorySignList(){
     this.zrServices.getSignByCourseId(this.courseId).then(async (result:any) => {
-      console.log('here',result);
+      // console.log('here',result);
       if(result.code == '200'){
         this.signCount = result.data.length
 
@@ -66,6 +74,7 @@ export class SignInTeacherPage implements OnInit {
     this.router.navigate([url],{
       queryParams:{
         courseId:this.courseId,
+        courseName:this.courseName,
         courseMembersCount:this.courseMembersCount
       }
     })

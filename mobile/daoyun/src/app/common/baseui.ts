@@ -1,7 +1,8 @@
 import { LoadingController, ToastController } from '@ionic/angular';
 
 export abstract class BaseUI {
-    constructor() {
+    constructor(
+    ) {
 
     }
 
@@ -13,10 +14,10 @@ export abstract class BaseUI {
      * @memberof BaseUI
      */
     protected async showLoading(loadingCtrl: LoadingController,
-            message: string) {
+            message: string, duration=2000) {
             const loader = await loadingCtrl.create({
                 message: message,
-                duration: 2000
+                duration: duration
             });
             await loader.present();
             return loader;

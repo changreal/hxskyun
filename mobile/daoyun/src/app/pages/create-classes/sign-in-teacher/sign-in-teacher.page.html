@@ -9,7 +9,8 @@
 
 <ion-content>
 
-    <ion-item lines='none'  class="ion-margin" button  (click)="doSignIn()">
+
+    <ion-item lines='none'  class="ion-margin" button (click)="doSignIn()" >
       <ion-label class="ion-padding-vertical"  color="primary">
         <ion-avatar class="ion-padding-vertical sign-in-avatar ion-text-center"  >
           <ion-icon name="checkbox-outline" size='large'></ion-icon>
@@ -21,7 +22,7 @@
 
     <!-- 列表头 -->
     <ion-list-header lines='full' class="ion-padding-horizontal">
-      <ion-label color="medium">历史签到记录</ion-label>
+      <ion-label color="medium">{{courseName}}&nbsp;历史签到记录</ion-label>
       <ion-label class="ion-text-right">考勤次数：<a class="primary" >{{signCount}}</a></ion-label>
     </ion-list-header>
  

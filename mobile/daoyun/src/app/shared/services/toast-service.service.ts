@@ -22,7 +22,7 @@ export class ToastServiceProvider {
   constructor(public toast:ToastController,
               public alertController:AlertController,
               private router: Router) {
-    console.log('Hello ToastServiceProvider Provider');
+    // console.log('Hello ToastServiceProvider Provider');
   }
 
   refresh(){location.reload()}
@@ -112,6 +112,7 @@ export class ToastServiceProvider {
 
   // 点击按钮有回调跳转的Alert确认框
   async presentAlertConfirm(message:any, url:any, params?:any) {
+      
     const alert = await this.alertController.create({
       animated: true,
       // cssClass: 'my-custom-class',

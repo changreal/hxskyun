@@ -10,8 +10,6 @@ import { JoinClassesPage } from './join-classes.page';
 // 引入自定义模块
 import { SearchPageModule }  from '../search/search.module'
 import { MembersPageModule } from "./members/members.module";
-// 引入自定义组件
-import { PopoverComponent } from "../components/popover/popover.component";
 
 
 @NgModule({
@@ -24,7 +22,6 @@ import { PopoverComponent } from "../components/popover/popover.component";
     SearchPageModule,
     MembersPageModule,
   ],
-  entryComponents: [PopoverComponent],
-  declarations: [JoinClassesPage,PopoverComponent],
+  declarations: [JoinClassesPage],
 })
 export class JoinClassesPageModule {}

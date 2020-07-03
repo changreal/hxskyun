@@ -3,24 +3,21 @@
     <ion-title>我加入的班课</ion-title>
      <!-- 加入按钮 -->
     <ion-buttons slot="end" size='large'>
-      <!-- <ion-button color="primary" fill="outline" >
-        加入班课
-        <ion-icon name="add-outline"></ion-icon>
-      </ion-button> -->
-      <!-- <ion-button (click)="presentPopover($event)">
-        <ion-icon  ios="ellipsis-horizontal" md="ellipsis-horizontal" slot="icon-only"  ></ion-icon>
-      </ion-button> -->
       
       <ion-buttons slot="start">
         <!-- 点击进入输入班课号页面 -->
-        <ion-button color="primary" [routerLink]="['/tabs/join-classes/join-class']" >
-          <ion-icon slot="icon-only" name="add" ></ion-icon>
+        <ion-button color="primary"  [routerLink]="['/tabs/join-classes/join-class']" >
+          <!-- <ion-icon slot="icon-only" name="add" size='large' ></ion-icon> -->
+          <!-- <ion-icon name="arrow-forward-outline" slot="icon-only" size='large'></ion-icon> -->
+          <!-- <ion-icon name="chevron-forward-circle-outline" slot="icon-only" size='large'></ion-icon> -->
+          <ion-icon name="enter-outline"  slot="icon-only" size='large'></ion-icon>
         </ion-button>
         <!-- 二维码扫描加入班课 -->
         <!-- <ion-button color="primary" [routerLink]="['/join-classes/join-class']" > -->
          
-          <ion-button color="primary"  (click)="brscanner()" >
-          <ion-icon name="scan-outline" slot="icon-only"></ion-icon>
+        <ion-button color="primary"   (click)="brscanner()" >
+          <!-- <ion-icon name="scan-outline" slot="icon-only"></ion-icon> -->
+          <ion-icon name="barcode-outline" size='large' slot="icon-only"></ion-icon>
         </ion-button>
 
       </ion-buttons>
@@ -30,23 +27,25 @@
 </ion-header>
 
 <ion-content padding>
-  <!-- 搜索 -->
-  <!-- <app-header></app-header> -->
+
+    <!-- 下拉刷新组件 -->
+    <ion-refresher slot="fixed" (ionRefresh)="loadCourseData($event)" >
+      <ion-refresher-content
+        pullingIcon="arrow-dropdown"
+        pullingText="下拉刷新"
+        refreshingSpinner="circles"
+        refreshingText="加载中...">
+      </ion-refresher-content>
+    </ion-refresher>
 
   <!-- 课程列表 -->
 
   <ion-list *ngIf="courses_length">
-    <!-- 列表头 -->
-    <!-- <ion-list-header lines='full' padding>
-      <ion-label></ion-label>
-      <ion-button></ion-button>
-    </ion-list-header> -->
-
 
     <ion-item button detail lines='full' *ngFor="let course of courses" routerLink="/join-classes/members"  [queryParams]="{courseId:course.courseId, courseName:course.courseName}" >
       <!-- 头像部分 -->
       <ion-thumbnail slot="start">
-        <div class="profile_icon">{{course.courseName[0]}}</div>
+        <div class="profile_icon_blue">{{course.courseName[0]}}</div>
       </ion-thumbnail>
 
       <!-- 内容部分 -->

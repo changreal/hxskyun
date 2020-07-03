@@ -3,13 +3,23 @@
     <ion-title>我创建的班课</ion-title>
     <ion-buttons slot="end">
       <ion-button color="primary" (click)="doCreateCourse()">
-        <ion-icon slot="start" name="add" ></ion-icon>创建班课
+        <ion-icon name="add-outline" size='large'></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+
+  <!-- 下拉刷新组件 -->
+  <ion-refresher slot="fixed" (ionRefresh)="loadCourseData($event)" mode='ios'>
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="下拉刷新"
+      refreshingSpinner="circles"
+      refreshingText="加载中...">
+    </ion-refresher-content>
+  </ion-refresher>
 
   <!-- 班课列表 -->
   <ion-list *ngIf="courses_length" >
@@ -25,8 +35,7 @@
     <ion-item button detail lines='full'  routerLink="/create-classes/members" *ngFor="let course of courses" [queryParams]="{courseId:course.courseId,courseName:course.courseName}">
       <!-- 头像部分 -->
       <ion-thumbnail slot="start">
-        <!-- <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw=="> -->
-        <div class="profile_icon">{{course.courseName[0]}}</div>
+        <div class="profile_icon_orange">{{course.courseName[0]}}</div>
       </ion-thumbnail>
 
       <!-- 内容部分 -->

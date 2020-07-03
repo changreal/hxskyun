@@ -20,18 +20,6 @@ export class SignInTeacherPage implements OnInit {
 
   // 签到列表
   historySignList:any[] = [
-    {
-      signId : '1',
-      createDate: new Date('2020-05-11'),
-      courseMembersCount: this.courseMembersCount,
-      signCount: '16'
-    },
-    {
-      signId : '2',
-      createDate: new Date('2020-04-11'),
-      courseMembersCount: this.courseMembersCount,
-      signCount: '7'
-    },
   ]
   constructor(private activatedRoute: ActivatedRoute,
     private zrServices: ZrServicesService,
@@ -46,7 +34,9 @@ export class SignInTeacherPage implements OnInit {
       this.courseMembersCount = result.courseMembersCount
     })
     this.loadHistorySignList()
+
   }
+
 
   // 获取历史签到记录列表
   loadHistorySignList(){
@@ -58,9 +48,9 @@ export class SignInTeacherPage implements OnInit {
         for(let r of result.data){
           let s = {
             signId : r.signId,
-            createDate : r.createDate,
+            createDate : r.endTime,
             courseMembersCount: this.courseMembersCount,
-            signCount : r.signCount
+            signCount : r.signedNumbers
           }
           this.historySignList.push(s)  // 重构每次签到列表
         }

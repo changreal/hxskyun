@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/tabs/create-classes"></ion-back-button>
+      <ion-back-button defaultHref="/create-classes/create-detail"></ion-back-button>
     </ion-buttons>
-    <ion-title>编辑班课基本信息</ion-title>
+    <ion-title>编辑课程信息</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,7 +15,7 @@
     <ion-list lines='full'>
 
       <ion-item-divider>
-        <ion-label color="dark">设置班课信息</ion-label>
+        <ion-label color="light">设置班课信息</ion-label>
       </ion-item-divider>
 
 
@@ -45,7 +45,7 @@
         </ion-text>
       </ion-item>
       
-      <ion-item >
+      <!-- <ion-item >
         <ion-label >学校</ion-label>
         <ion-input name='school' #school='ngModel' placeholder="请输入学校（如福州大学）" maxlength='20' required 
         [(ngModel)]="course_school" ></ion-input>
@@ -54,15 +54,43 @@
             请输入学校名称
           </p>
         </ion-text>
+      </ion-item> -->
+
+      <ion-item>
+        <ion-label>学校</ion-label>
+        <ion-select  name='school' [(ngModel)]="course_school" #school='ngModel' required placeholder='请选择学校' >
+          <ion-select-option *ngFor="let s of schools" [value]="s.name" >{{s.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="(school.invalid && school.touched) || submited" [hidden]="!school.errors?.required">
+        <ion-text  color="danger" >
+          <p class="tips ion-padding-start" >
+            请选择学校
+          </p>
+        </ion-text>
       </ion-item>
 
-      <ion-item >
+      <!-- <ion-item >
         <ion-label >院系</ion-label>
         <ion-input name='department' #department='ngModel' placeholder="请输入院系（如数计学院）" maxlength='20' required 
         [(ngModel)]="course_department" ></ion-input>
         <ion-text color="danger" *ngIf="(department.invalid && department.touched) || submited">
           <p class="tips ion-padding-start" [hidden]="!department.errors?.required">
             请输入院系名称
+          </p>
+        </ion-text>
+      </ion-item> -->
+
+      <ion-item>
+        <ion-label>学院</ion-label>
+        <ion-select  name='department' [(ngModel)]="course_department" #department='ngModel' required placeholder='请选择学院' >
+          <ion-select-option *ngFor="let s of departments" [value]="s.name" >{{s.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="(department.invalid && department.touched) || submited" [hidden]="!department.errors?.required">
+        <ion-text  color="danger" >
+          <p class="tips ion-padding-start" >
+            请选择学院
           </p>
         </ion-text>
       </ion-item>
@@ -77,6 +105,22 @@
           </p>
         </ion-text>
       </ion-item>
+
+
+      <!-- <ion-item>
+        <ion-label>班课状态</ion-label>
+        <ion-select  name='status' [(ngModel)]="course_status" #status='ngModel' required placeholder='请选择班课状态' >
+          <ion-select-option *ngFor="let s of courseStatus" [value]="s.name" >{{s.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="(status.invalid && status.touched) || submited" [hidden]="!status.errors?.required">
+        <ion-text  color="danger" >
+          <p class="tips ion-padding-start" >
+            请选择班课状态
+          </p>
+        </ion-text>
+      </ion-item> -->
+
       
       
       <ion-item>

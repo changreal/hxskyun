@@ -25,15 +25,15 @@
     <ion-item>
       <ion-toolbar>
         <ion-row class="ion-align-items-center"> 
-          <ion-col size='7'>
-            <ion-button shape='round'  color="primary" fill="solid" [routerLink]="['/create-classes/sign-in-teacher']"  [queryParams]="{courseId:courseId, courseMembersCount:members_count}" >
+          <ion-col size='7' *ngIf="courseStatus!='已结课'">
+            <ion-button  shape='round'  color="primary" fill="solid" [routerLink]="['/create-classes/sign-in-teacher']"  [queryParams]="{courseId:courseId, courseMembersCount:members_count}" >
               <ion-icon  name="star" size='small'></ion-icon>
                <ion-label>&nbsp;发起签到&nbsp;</ion-label>
             </ion-button>
           </ion-col>
 
           <ion-col size='5'>
-            <ion-button shape='round'  color="tertiary" fill="outline" [routerLink]="['/create-classes/class-detail']" [queryParams]="{courseId:courseId}">
+            <ion-button shape='round'  color="tertiary" fill="outline" [routerLink]="['/create-classes/class-detail']" [queryParams]="{courseId:courseId,courseName:courseName}">
               <ion-icon name="grid-outline"></ion-icon>
               <ion-label>&nbsp;班课详情&nbsp;</ion-label>
             </ion-button>
@@ -50,8 +50,8 @@
 
     <!-- 列表头 -->
     <ion-list-header lines='none' class="ion-padding-horizontal" >
-        <ion-button (click)="sort_flag=!sort_flag"  fill="clear">
-          <ion-label color="primary">切换为按学号/经验值显示（点击后下拉刷新）</ion-label>
+        <ion-button (click)="toggleShow()"  fill="clear">
+          <ion-label color="primary">切换为按学号/经验值显示</ion-label>
         </ion-button>
     </ion-list-header>
 
@@ -73,7 +73,7 @@
       <ion-label>
         <h3>{{member.studentName}}</h3>
         <p>{{member.studentId}} <span class="exp ion-float-right exp-color">{{member.studentExp}}&nbsp;经验值</span></p>
-        <p>签到<span>1</span>&nbsp;迟到<span>1</span>&nbsp;旷课<span>1</span></p>
+        <p>签到<span>{{member.signedNumbers}}</span>&nbsp;&nbsp; 缺勤<span>{{member.unSignedNumbers}}</span></p>
       </ion-label>
     </ion-item>
 

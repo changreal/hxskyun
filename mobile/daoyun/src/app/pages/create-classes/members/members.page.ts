@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ZrServicesService } from "../../../shared/services/zr-services.service";
 import { LocalStorageService } from "../../../shared/services/local-storage.service";
 import { ToastServiceProvider } from "../../../shared/services/toast-service.service";
+import { EventService } from "../../../shared/services/event.service";
 
 @Component({
   selector: 'app-members',
@@ -11,30 +12,75 @@ import { ToastServiceProvider } from "../../../shared/services/toast-service.ser
 })
 export class MembersPage implements OnInit {
 
-  courseId = '1'
-  courseName = '工程训练'
+  userId = ''
+  courseId = ''
+  courseName = ''
   
   members:any[];
   members_count = ''
   sort_flag = true // 默认按经验值绑定
+  courseStatus=''
   constructor(private activatedRoute: ActivatedRoute,
     private zrServices: ZrServicesService,
     private localStorageService: LocalStorageService,
     private toastService: ToastServiceProvider,
-    private router: Router) { }
+    private router: Router,
+    public eventService: EventService
+    ) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((result) => {
-      console.log('传入的参数：', result);
       this.courseId = result.courseId;
+      this.courseName = result.courseName
     })
-
+    this.loadCourseInfo()
     this.loadMembers(null)
 
   }
 
+  ionViewWillEnter(){
+    this.activatedRoute.queryParams.subscribe((result) => {
+      this.courseId = result.courseId;
+      this.courseName = result.courseName
+    })
+    this.eventService.event.on('memberupdate', () => {
+      this.loadCourseInfo();
+    this.loadMembers(null)
+
+    })
+
+  }
+
+  
+
+  
+
+  // ionViewWillEnter() {
+  //   this.activatedRoute.queryParams.subscribe((result) => {
+  //     this.courseId = result.courseId;
+  //     this.courseName = result.courseName
+  //   })
+  //   this.loadCourseInfo()
+  //   this.loadMembers(null) 
+  // }
+
+  // 获取课程信息
+  loadCourseInfo(){
+    // 根据id获取该班课的信息
+    this.zrServices.getCourseByCourseId(this.courseId).then(async (result:any) => {
+      console.log(result);
+      
+      if(result.code == '200'){
+        this.courseStatus = result.data.endClassStatus
+        console.log(this.courseStatus);
+        
+      }
+    }).catch((error) => {
+      console.log('查找班课信息失败', error);
+    })
+  }
+
   loadMembers(event){
-    this.courseId = '1'
     this.zrServices.getMembersByCourseId(this.courseId).then((result:any) => {
       console.log( '成员返回为：', result);
       this.members = result.data
@@ -51,6 +97,11 @@ export class MembersPage implements OnInit {
     })
 
   }
+  // 切换显示
+  toggleShow(){
+    this.sort_flag = !this.sort_flag
+    this.sortMembers()
+  }
 
   sortMembers(){
     if(this.sort_flag == true){
@@ -64,6 +115,9 @@ export class MembersPage implements OnInit {
     }
 
   }
+
+
+
 
 
 

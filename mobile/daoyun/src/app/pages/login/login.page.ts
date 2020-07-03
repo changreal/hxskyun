@@ -69,12 +69,14 @@ export class LoginPage extends BaseUI implements OnInit {
       // 验证登录账号与密码，不对的话给出错误提示
       super.showLoading(this.loadingController,"登录中。。。。")
       this.zrServices.login(params).then((result:any) => {
+        console.log('登录的result是：', result);
         if(result.code=='100'){
             this.localStorageService.set('Token',result["data"])
             console.log('uid'+result.extra.userRole.userId)
             this.localStorageService.set('uid',result.extra.userRole.userId)
+            this.localStorageService.set('roleId', result.extra.userRole.roleId)
             super.showToast(this.toastController,'登录成功')
-            this.router.navigateByUrl('/tabs') 
+            this.router.navigateByUrl('/tabs/join-classes') 
             console.log(result);   
        }else {
             console.log(result)

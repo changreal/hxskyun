@@ -25,6 +25,8 @@ export class ToastServiceProvider {
     console.log('Hello ToastServiceProvider Provider');
   }
 
+  refresh(){location.reload()}
+
 /**
  * toaset的部分
  */
@@ -127,8 +129,9 @@ export class ToastServiceProvider {
           text: '确认',
           handler: ()=>{
             this.router.navigate([url],{
-              queryParams:params
+              queryParams : params
             })
+            // location.replace(url)
           }
         }
       ]

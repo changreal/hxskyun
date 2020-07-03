@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/join-classes"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/join-classes/"></ion-back-button>
     </ion-buttons>
     <ion-title>加入班课</ion-title>
   </ion-toolbar>
@@ -9,7 +9,7 @@
 
 <ion-content>
 
-  <ion-card>
+  <ion-card *ngIf="hasThisClass">
 
     <!-- 班课头信息 -->
     <ion-card-header>
@@ -52,6 +52,12 @@
     </ion-card-content>
 
   </ion-card>
+
+  <!-- <ion-text *ngIf="!hasThisClass" [hidden]='hasThisClass'>
+    <p>
+      没有此门课程，请返回确认班课号。
+    </p>
+  </ion-text> -->
 
   
 </ion-content>

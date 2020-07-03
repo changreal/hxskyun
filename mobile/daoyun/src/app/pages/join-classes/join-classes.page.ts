@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-// import { PopoverComponent } from './components/popover/popover.component';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ZrServicesService } from "../../shared/services/zr-services.service";
-import { Router } from '@angular/router';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.service';
 import { EventService } from 'src/app/shared/services/event.service';
@@ -14,9 +13,12 @@ import { EventService } from 'src/app/shared/services/event.service';
 })
 export class JoinClassesPage implements OnInit {
 
-  userId:any  
+
+  userId:any = ''
+
   courseId:any
   role:any  // 身份
+  reload:false
 
 
   courses:any[];
@@ -45,6 +47,7 @@ export class JoinClassesPage implements OnInit {
     console.log(this.courses_length)
   }
 
+
   loadCourseData(){
     this.zrServices.getCourseById(this.userId).then((result:any) => {
       // console.log('根据用户号，获取该用户已加入的课程列表', result);
@@ -60,14 +63,6 @@ export class JoinClassesPage implements OnInit {
     
   }
 
-  // async presentPopover(ev: any) {
-  //   const popover = await this.popoverController.create({
-  //     component: PopoverComponent,
-  //     event: ev,
-  //     translucent: true
-  //   });
-  //   return await popover.present();
-  // }
 
   brscanner(){
 

@@ -8,6 +8,7 @@ import { ToastController,} from '@ionic/angular';
 
 import { NgForm } from '@angular/forms';
 declare var BMap;
+// declare var BMapLib;
 
 
 @Component({
@@ -26,7 +27,10 @@ export class SignInPage implements OnInit {
   userId = ''
   courseMembersCount=''
   signCount=0
-  coordinate:any
+  coordinate:any = {
+    latitude : '28',
+    longtitude : '20'
+  }
 
   // flag
   isStart:boolean = false
@@ -38,7 +42,6 @@ export class SignInPage implements OnInit {
   duration:number=3
   signInfo:any = {
     courseId:this.courseId,
-    duration:3,
   }
 
 
@@ -63,18 +66,51 @@ export class SignInPage implements OnInit {
   ionViewWillLeave(){
     if (this.timer) {
       console.log('clear timer');
-      
       clearInterval(this.timer);
     } 
   }
 
 
-  // 开始签到
-  async doStartSignIn(){
+  // 获取地址
+  getLocation() {
+    let geolocation = new BMap.Geolocation(); //新建地图对象
+    
+    return new Promise((reslove, reject) => {
+      geolocation.getCurrentPosition(function (r) {
+        console.log(this.getStatus())
+        if (this.getStatus() == 0) {
+          console.log('获取位置成功：', r.point.lat, r.point.lng);
+          reslove(r);
+        }
+        else {
+          console.log('获取位置失败:', this.getStatus());
+          reject(this.getStatus());
+        }
+      });
+    })
+  }
+
+
+  // 拆分了一下开始签到事件（获取地址）
+  doSignIn(){
 
     // 获取签到信息
-    this.coordinate = this.getLocation()
-    console.log(this.coordinate);
+    this.getLocation().then((result:any) => {
+      console.log(result);
+      
+      // this.coordinate.longtitude = result.lng
+      // this.coordinate.latitute = result.lat
+
+      this.doStartSignIn()
+      
+    }).catch((error) => {
+      console.log('显示错误');
+      
+    })
+  }
+
+  // 开始签到交互
+  async doStartSignIn(){
 
     // 提示框确认是否开始？
     const alert = await this.alertController.create({
@@ -93,12 +129,16 @@ export class SignInPage implements OnInit {
           handler: ()=>{
 
             // 发送签到请求
-            this.zrServices.startSignIn(this.courseId, this.coordinate.longitude, this.coordinate.latitude, this.duration).then((result:any) => {
+            this.zrServices.createSignIn(this.courseId, this.coordinate.longitude, this.coordinate.latitude, this.duration).then((result:any) => {
               console.log(result);
               if(result.code == '200'){
         
                 this.isStart = true // 是否开始签到
-                this.signId = result.signId // 接受返回的signid
+                this.signId = result.data.signId // 接受返回的signid
+                
+                console.log('当前签到id为：', this.signId);
+                this.localStorageService.setStore('signId', this.signId) //保存到缓存里
+                
 
                 // 刷新签到情况
                 this.doRefresh()
@@ -123,7 +163,8 @@ export class SignInPage implements OnInit {
 
     this.timer = setInterval(()=>{
       this.loadCurrentSignInfo()
-    },1000)
+      console.log('自动刷新了');
+    },5000)  // 每两秒查询一次
 
   }
 
@@ -131,59 +172,42 @@ export class SignInPage implements OnInit {
   loadCurrentSignInfo(){
     // 获取当前签到信息
     this.zrServices.getCurrentSignBySignId(this.signId).then((result:any) => {
-      if(result.code == '200'){
+      console.log('查询到签到信息为：', result);
+      
+      // 更新签到人头
+      this.signCount = result.data.signedNumbers
+      
+      // 查询到已经是结束状态了
+      if(result.data[0].endTimestamp < result.data[0].nowTimeStamp ){
 
-        // 更新签到人头
-        this.signCount = result.data.signCount
+        console.log('时间超过计时时间！');
         
-        // 如果监听到后端签到计时结束
-        if(result.data.signStatus == 'end'){
-          this.isStart = false;
-          this.isEnd = true
+        // 结束
+        this.isEnd = true
+        this.isStart = false;
 
-          // 结束timer
-          if (this.timer) {
-            clearInterval(this.timer);
-          }
-
-          // 提示
-          this.presentToast('结束签到！')
-          // 跳转回前一页
-          this.onBack()
+        // 结束timer
+        if (this.timer) {
+          clearInterval(this.timer);
         }
+
+        // 提示
+        this.presentToast('签到时间到，签到结束！')
+        // 跳转回前一页
+        this.onBackTo('/tabs/create-classes/sign-in-teacher')
+      }else{
+        // 签到没结束
+        console.log('时间没超时！',);
+        
       }
+
+
 
     }).catch((error) => {
       console.log('刷新签到情况错误');
-      // 结束timer
-      if (this.timer) {
-        clearInterval(this.timer);
-      }
     })
   }
-
-  // 获取地址
-  getLocation() {
-    let geolocation = new BMap.Geolocation(); //新建地图对象
-    return new Promise((reslove, reject) => {
-      geolocation.getCurrentPosition(function (r) {
-        console.log(this.getStatus())
-        if (this.getStatus() == 0) {
-          console.log('获取位置成功：', r.point.lat, r.point.lng);
-          reslove(r);
-        }
-        else {
-          console.log('获取位置失败:', this.getStatus());
-          reject(this.getStatus());
-        }
-      });
-    })
-    let coordinate:any = {
-      longitude:12,
-      latitude:23
-    }
-    return coordinate
-  }
+  
 
   // 放弃签到
   async doCancelSignIn(){
@@ -208,8 +232,12 @@ export class SignInPage implements OnInit {
             this.zrServices.cancelSignIn(this.signId).then((result:any) => {
 
               if(result.code == '200'){
+                console.log('放弃该次签到：', this.signId);
+                
                 // 放弃逻辑
                 this.isStart = false
+                // 提示
+                this.presentToast('放弃签到！','warning')
                 // 跳转回前一页
                 this.onBackTo('/tabs/create-classes/sign-in-teacher')
               }
@@ -252,10 +280,11 @@ export class SignInPage implements OnInit {
           text: '确认',
           handler: ()=>{
             // 发送结束签到请求
-            this.zrServices.cancelSignIn(this.signId).then((result:any) => {
+            this.zrServices.endSignIn(this.signId).then((result:any) => {
 
               if(result.code == '200'){
                 // 结束逻辑
+                this.isEnd = true
                 this.isStart = false
                 // 提示
                 this.presentToast('结束签到成功！')
@@ -266,9 +295,10 @@ export class SignInPage implements OnInit {
             }).catch((error) => {
               console.log('结束签到页错误');
               // 已经结束过了， 那错误逻辑在这里
+
               // 然后跳转
-              this.isStart = false;
-              this.onBack()
+              // this.isStart = false;
+              // this.onBack()
             })
             
           }
@@ -291,14 +321,14 @@ export class SignInPage implements OnInit {
   }
 
   // 跳出toast提示
-  async presentToast(message:any) {
+  async presentToast(message:any, color:any='success') {
     let toast = await this.toastController.create({
       message: message,
       duration: 2000,
       position: 'bottom',
       animated: true,
       mode: 'ios',
-      color:'success',
+      color: color,
       buttons: ['关闭']
     });
 

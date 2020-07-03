@@ -15,7 +15,8 @@ import { EventService } from 'src/app/shared/services/event.service';
 })
 export class ClassDetailPage extends BaseUI implements OnInit {
    // 临时变量
-   userId:any 
+  userId:any = ''
+
   courseId:string
   hasThisClass:boolean = false
   submited = false
@@ -77,14 +78,25 @@ export class ClassDetailPage extends BaseUI implements OnInit {
       console.log('resulet'+result.code)
      if(result.code=='200'){
         super.showToast(this.toastController,'退出班课成功')
-        this.router.navigateByUrl('/tabs/join-classes') 
-        console.log(result.code)
-        console.log('exit msg'+result.msg)
+        location.replace('/tabs/join-classes')
+        
+        // this.router.navigateByUrl('/tabs/join-classes') 
+        // console.log(result.code)
+        // console.log('exit msg'+result.msg)
     }
     }).catch((error) => {
       super.showToast(this.toastController,'退出班课失败')
     })
 
+  }
+  
+   onBack(){
+    this.router.navigateByUrl("/join-classes/members", {
+        queryParams: {
+          courseId:this.courseId
+      }
+
+    })
   }
 
 }

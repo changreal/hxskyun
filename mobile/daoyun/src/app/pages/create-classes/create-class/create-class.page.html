@@ -55,7 +55,7 @@
         </ion-text>
       </ion-item>
       
-      <ion-item >
+      <!-- <ion-item >
         <ion-label >学校</ion-label>
         <ion-input name='school' #school='ngModel' placeholder="请输入学校（如福州大学）" maxlength='20' required 
         [(ngModel)]="courseInfo.school" ></ion-input>
@@ -64,15 +64,43 @@
             请输入学校名称
           </p>
         </ion-text>
+      </ion-item> -->
+
+      <ion-item>
+        <ion-label>学校</ion-label>
+        <ion-select  name='school' [(ngModel)]="courseInfo.school" #school='ngModel' required placeholder='请选择学校' >
+          <ion-select-option *ngFor="let s of schools" [value]="s.name" >{{s.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="(school.invalid && school.touched) || courseInfo.submited" [hidden]="!school.errors?.required">
+        <ion-text  color="danger" >
+          <p class="tips ion-padding-start" >
+            请选择学校
+          </p>
+        </ion-text>
       </ion-item>
 
-      <ion-item >
+      <!-- <ion-item >
         <ion-label >院系</ion-label>
         <ion-input name='department' #department='ngModel' placeholder="请输入院系（如数计学院）" maxlength='20' required 
         [(ngModel)]="courseInfo.department" ></ion-input>
         <ion-text color="danger" *ngIf="(department.invalid && department.touched) || courseInfo.submited">
           <p class="tips ion-padding-start" [hidden]="!department.errors?.required">
             请输入院系名称
+          </p>
+        </ion-text>
+      </ion-item> -->
+
+      <ion-item>
+        <ion-label>学院</ion-label>
+        <ion-select  name='department' [(ngModel)]="courseInfo.department" #department='ngModel' required placeholder='请选择学院' >
+          <ion-select-option *ngFor="let s of departments" [value]="s.name" >{{s.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="(department.invalid && department.touched) || courseInfo.submited" [hidden]="!department.errors?.required">
+        <ion-text  color="danger" >
+          <p class="tips ion-padding-start" >
+            请选择学院
           </p>
         </ion-text>
       </ion-item>
@@ -94,9 +122,7 @@
         <ion-textarea name='courseDes' #courseDes='ngModel' placeholder="输入学习要求（不超过100字）" rows="2" maxlength='100'  [(ngModel)]="courseInfo.courseDes" class="ion-text-wrap"></ion-textarea>
       </ion-item>
       
-      
-      
-      {{courseInfo | json}}
+
 
 
     </ion-list>

@@ -24,30 +24,12 @@ export class ZrServicesService {
   constructor(public http: HttpClient,
     ) { }
 
-// 登录
-login(info:object){
-  let url = this.config.domain + '/Login/checkLogin' 
-  return new Promise((resolve, reject) => {
-
-    this.http.post(url, JSON.stringify(info),this.httpOptions).subscribe((response: any) => {
-      // 请求成功的回调函数
-      resolve(response)
-    }, (error:HttpErrorResponse) => {
-      // 请求错误的回调函数
-      console.log('service的错误：',error);
-      reject(error);
-      
-    })
-  })
-}
-  // 根据用户id查看用户信息
-  getUserByUserId(UserId){
-
-    let url = this.config.domain + '/User/selectUserById/' + UserId
-
+  // 登录
+  login(info:object){
+    let url = this.config.domain + '/Login/checkLogin' 
     return new Promise((resolve, reject) => {
-      
-      this.http.get(url).subscribe((response: any) => {
+
+      this.http.post(url, JSON.stringify(info),this.httpOptions).subscribe((response: any) => {
         // 请求成功的回调函数
         resolve(response)
       }, (error:HttpErrorResponse) => {
@@ -58,6 +40,78 @@ login(info:object){
       })
     })
   }
+
+  
+// 获取学期
+  getSemester(){
+
+    let url = this.config.domain + '/dictionary/List/courseSemeste'
+    return new Promise((resolve, reject) => {      
+      this.http.get(url).subscribe((response: any) => {
+        // 请求成功的回调函数
+        resolve(response)
+
+      }, (error:HttpErrorResponse) => {
+        // 请求错误的回调函数
+        console.log('service的错误：',error);
+        reject(error);
+        
+      })
+    })
+}
+
+  // 获取学校
+  getSchool(){
+    let url = this.config.domain + '/dictionary/List/schoolList'
+    return new Promise((resolve, reject) => {      
+      this.http.get(url).subscribe((response: any) => {
+        // 请求成功的回调函数
+        resolve(response)
+
+      }, (error:HttpErrorResponse) => {
+        // 请求错误的回调函数
+        console.log('service的错误：',error);
+        reject(error);
+        
+      })
+    })
+  }
+
+  // 获取学院
+  getDepartment(){
+    let url = this.config.domain + '/dictionary/List/departmentList'
+    return new Promise((resolve, reject) => {      
+      this.http.get(url).subscribe((response: any) => {
+        // 请求成功的回调函数
+        resolve(response)
+
+      }, (error:HttpErrorResponse) => {
+        // 请求错误的回调函数
+        console.log('service的错误：',error);
+        reject(error);
+        
+      })
+    })
+  }
+
+  // 根据用户id查看用户信息
+  getUserByUserId(UserId){
+    let url = this.config.domain + '/User/selectUserById/' + UserId
+    return new Promise((resolve, reject) => {      
+      this.http.get(url).subscribe((response: any) => {
+        // 请求成功的回调函数
+        resolve(response)
+
+      }, (error:HttpErrorResponse) => {
+        // 请求错误的回调函数
+        console.log('service的错误：',error);
+        reject(error);
+        
+      })
+    })
+  }
+
+
   //更新用户信息
   updateUserinfo(info:object){
     let url = this.config.domain + '/User/updateUser' 
@@ -186,11 +240,27 @@ login(info:object){
   }
 
 
-
+  // 查看我创建的课程列表
+    getCreatedCourseById(id){
+      let url = this.config.domain + '/course/teacherId/' + id
+      return new Promise((resolve, reject) => {
+        
+        this.http.get(url).subscribe((response: any) => {
+          // 请求成功的回调函数
+          resolve(response)
+  
+        }, (error:HttpErrorResponse) => {
+          // 请求错误的回调函数
+          console.log('service的错误：',error);
+          reject(error);
+          
+        })
+      })
+    }
 
   // 创建班课服务
   postNewCourse(data){
-    let url = this.config.domain + '/course/'
+    let url = this.config.domain + '/course/creatCourse'
     return new Promise((reslove, reject) => {
       this.http.post(url, JSON.stringify(data), this.httpOptions).subscribe((response) => {
         reslove(response);
@@ -203,11 +273,11 @@ login(info:object){
   }
 
   //修改班课信息
-  postEidtCourseByCourseId(courseId,data){
-    let url = this.config.domain + '/course/' + courseId
+  postEidtCourseByCourseId(data){
+    let url = this.config.domain + '/course/updateCourse/'
     console.log('发送修改班课信息：', data);
     return new Promise((reslove, reject) => {
-      this.http.put(url, JSON.stringify(data), this.httpOptions).subscribe((response) => {
+      this.http.post(url, JSON.stringify(data), this.httpOptions).subscribe((response) => {
         reslove(response);
       }, (error) => {
         reject(error);
@@ -222,7 +292,7 @@ login(info:object){
 
   //  获取某门课程的历史签到列表
   getSignByCourseId(courseId){
-    let url = this.config.domain + '/course/courseSignByCourseId/' + courseId
+    let url = this.config.domain + '/course/getAllCourseSign/' + courseId
   
     return new Promise((resolve, reject) => {
 
@@ -258,7 +328,7 @@ login(info:object){
 
   // 获取当前签到的信息
   getCurrentSignBySignId(signId){
-    let url = this.config.domain + '/currentSign/' + signId
+    let url = this.config.domain + '/course/CourseSignNumber/' + signId
   
     return new Promise((resolve, reject) => {
 
@@ -276,11 +346,14 @@ login(info:object){
   }
 
   // 开始签到
-  startSignIn(courseId, longitude, latitude, duration ){
-    let url = this.config.domain + '/startSignIn/'
+  createSignIn(courseId, longitude, latitude, duration ){
+    console.log('duration:', duration);
+    
+    let url = this.config.domain + '/course/sendCourseSign'
     let data = {
-      'longitude' : longitude,
-      'latitude' : latitude,
+      'courseId':courseId,
+      'sourceLongitude' : longitude,
+      'sourceLatitude' : latitude,
       'duration' : duration
     }
 
@@ -297,7 +370,7 @@ login(info:object){
 
   // 放弃签到
   cancelSignIn(signId){
-    let url = this.config.domain + '/cancelSignIn/' + signId
+    let url = this.config.domain + '/course/deleteCourseSign/' + signId
 
     return new Promise((reslove, reject) => {
       this.http.post(url, this.httpOptions).subscribe((response) => {
@@ -311,9 +384,9 @@ login(info:object){
   }
 
   // 结束签到
-  endSignIN(signId){
+  endSignIn(signId){
 
-    let url = this.config.domain + '/endSignIn/' + signId
+    let url = this.config.domain + '/course/endCourseSign/' + signId
 
     return new Promise((reslove, reject) => {
       this.http.post(url, this.httpOptions).subscribe((response) => {
@@ -325,6 +398,23 @@ login(info:object){
     })
     
   }
+
+  // 参加签到
+  attendSignIn(params){
+    let url = this.config.domain + '/course/joinCourseSign'
+
+    return new Promise((reslove, reject) => {
+      this.http.post(url, JSON.stringify(params),this.httpOptions).subscribe((response) => {
+        reslove(response);
+      }, (error:HttpErrorResponse) => {
+        console.log('参加签到异常错误：', error);
+        reject(error);
+      })
+    })
+
+  }
+
+
 
 
 

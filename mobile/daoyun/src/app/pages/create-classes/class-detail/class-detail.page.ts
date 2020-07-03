@@ -4,6 +4,8 @@ import { ZrServicesService } from "../../../shared/services/zr-services.service"
 import { LocalStorageService } from "../../../shared/services/local-storage.service";
 import { ToastServiceProvider } from "../../../shared/services/toast-service.service";
 
+import { EventService } from 'src/app/shared/services/event.service';
+
 @Component({
   selector: 'app-class-detail',
   templateUrl: './class-detail.page.html',
@@ -26,22 +28,41 @@ export class ClassDetailPage implements OnInit {
   courseDes=''          //学习要求
   courseDepartment=''        //学校院系
   courseTeacherName=''
+  courseStatus = ''
 
-  courseId = '1'
+  courseId = ''
+  userId = ''
   constructor(private activatedRoute: ActivatedRoute,
     private zrServices: ZrServicesService,
     private localStorageService: LocalStorageService,
     private toastService: ToastServiceProvider,
-    private router: Router) { }
+    private router: Router,
+    public eventService:EventService,
+    ) { }
 
   ngOnInit() {
     // 传入课程编号，从而编辑该门课程
-    this.activatedRoute.queryParams.subscribe((result) => {
+    this.activatedRoute.queryParams.subscribe((result:any) => {
       console.log(result);
       this.courseId = result.courseId;
+      this.courseName = result.courseName
     });
     this.getCourseInfo()
   }
+  
+
+  // ionViewWillEnter() {
+  //   this.activatedRoute.queryParams.subscribe((result:any) => {
+  //     this.courseId = result.courseId;
+  //   });
+  //   //这两个方法在将要进入界面的时候会触发,相当于是局部刷新,整个页面不会跟着刷新
+  //     this.getCourseInfo();   
+  // }
+
+  // ionViewDidLeave(){
+  //   console.log('createclass-detail leave')
+  //   this.eventService.event.emit('memberupdate');
+  // }
 
   // 查询班课信息
   getCourseInfo(){
@@ -57,6 +78,7 @@ export class ClassDetailPage implements OnInit {
         this.courseDepartment = result.data.department
         this.courseDes = result.data.classDes
         this.courseTeacherName = result.data.teacherName
+        this.courseStatus = result.data.endClassStatus
       }
     }).catch((error) => {
       console.log('查找班课信息失败', error);
@@ -66,6 +88,42 @@ export class ClassDetailPage implements OnInit {
   // 结束班课
   doSubmit(){
     // 结束班课相关接口
+
+
+    let theCourseInfo:any = {} // 新建课程信息
+    
+    theCourseInfo['teachId'] = this.localStorageService.getStore('uid','2')
+    theCourseInfo['courseId'] = this.courseId
+    theCourseInfo['courseSemester'] = this.courseSemester
+    theCourseInfo['major'] = this.courseMajor
+    theCourseInfo['courseName'] = this.courseName
+    theCourseInfo['classDes'] = this.courseDes
+    theCourseInfo['school'] = this.courseSchool
+    theCourseInfo['department'] = this.courseDepartment
+    theCourseInfo['endClassStatus'] = '已结课'
+    
+    // 提交到service更新
+    this.zrServices.postEidtCourseByCourseId(theCourseInfo).then(async(result:any) => {
+      console.log('课程的返回信息', result);
+      
+      // 请求返回状态
+      if(result.code == '200'){
+        // 跳出提示框提示修改成功！
+        let url = '/tabs/create-classes'
+        // let url = '/tabs/create-classes/class-detail'
+        let params = {
+          courseId : this.courseId
+        }
+        // this.toastService.presentAlertConfirm('修改班课成功！', url, params)  //回调函数跳转
+        this.toastService.presentAlertConfirm('结束'+this.courseName+'课程！', url)  //回调函数跳转
+      }else{
+        console.log(result.msg);
+      }
+      
+    }).catch((error) => {
+      console.log('结束课程失败', error);
+      
+    })
 
   }
 

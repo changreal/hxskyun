@@ -25,7 +25,7 @@
     <ion-item>
       <ion-label>签到分钟</ion-label>
       <!-- <ion-input type="text" placeholder="3" value="3"></ion-input> -->
-      <ion-input type='number' clearInput  [(ngModel)]="signInfo.duration"  name='duration' placeholder='请输入分钟数' required></ion-input>
+      <ion-input type='number' clearInput  [(ngModel)]="duration"  name='duration' placeholder='请输入分钟数' required></ion-input>
     </ion-item>
     
 
@@ -42,6 +42,9 @@
 
     <!-- <ion-label>Awesome Label</ion-label> -->
     <ion-text >
+      <h5 style="color: darkslateblue;">
+        每5秒更新一次
+      </h5>
       <p>已签到：<span>{{signCount}}</span>人</p>
       <p>总人数：<span>{{courseMembersCount}}</span>&nbsp;人</p>
     </ion-text>
@@ -49,11 +52,11 @@
   </ion-item>
 
   <!-- 局部刷新，不一定用哈 -->
-  <ion-fab horizontal="end" vertical="bottom" slot="fixed" mode='ios' [hidden]="isStrat">
+  <!-- <ion-fab horizontal="end" vertical="bottom" slot="fixed" mode='ios' [hidden]="isStrat">
     <ion-fab-button color="warning" (click)="doRefresh()">
       <ion-icon name="refresh-outline">点击刷新</ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab> -->
 
   
 

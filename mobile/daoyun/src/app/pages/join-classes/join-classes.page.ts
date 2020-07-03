@@ -86,5 +86,6 @@ export class JoinClassesPage extends BaseUI implements OnInit {
    });
     
   }
+  
     
 }

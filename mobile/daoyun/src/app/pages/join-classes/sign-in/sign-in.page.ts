@@ -5,7 +5,7 @@ import { LocalStorageService } from "../../../shared/services/local-storage.serv
 import { ToastServiceProvider } from "../../../shared/services/toast-service.service";
 import { AlertController } from '@ionic/angular';
 import { ToastController,} from '@ionic/angular';
-
+declare var BMap;
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.page.html',
@@ -72,7 +72,7 @@ export class SignInPage implements OnInit {
     let params = {
       courseId : this.courseId,
       studentId : this.userId,
-      targetLatitude:'28.45762255',
+      targetLatitude:'28.4576',
       targetLongitude:'117.95546388'
     }
     this.zrServices.attendSignIn(params).then((result:any) => {
@@ -102,4 +102,25 @@ export class SignInPage implements OnInit {
       
     })
   }
+    // 获取地址
+    qrscanner6(){
+      let geolocation = new BMap.Geolocation(); //新建地图对象
+      
+      return new Promise((reslove, reject) => {
+        geolocation.getCurrentPosition(function (r) {
+          console.log(this.getStatus())
+          if (this.getStatus() == '0') {
+            console.log('获取位置成功：', r.point.lat, r.point.lng);
+            alert('获取位置成功'+r.point.lat+r.point.lng)
+            reslove(r);
+          }
+          else {
+            console.log('获取位置失败:', this.getStatus());
+            reject(this.getStatus());
+            alert('获取位置失败'+this.getStatus())
+          }
+        },{enableHighAccuracy: true});
+      })
+
+    }
 }

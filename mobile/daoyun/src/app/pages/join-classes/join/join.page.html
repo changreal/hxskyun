@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-label *ngIf="!hasThisClass">不存在此班课，请重新输入</ion-label>
   <ion-card *ngIf="hasThisClass">
 
     <!-- 班课头信息 -->

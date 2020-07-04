@@ -80,11 +80,13 @@ export class SignInPage implements OnInit {
         console.log(this.getStatus())
         if (this.getStatus() == 0) {
           console.log('获取位置成功：', r.point.lat, r.point.lng);
+          alert('获取位置成功'+r.point.lat+r.point.lng)
           reslove(r);
         }
         else {
           console.log('获取位置失败:', this.getStatus());
           reject(this.getStatus());
+          alert('获取位置失败'+this.getStatus())
         }
       });
     })

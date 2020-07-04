@@ -5,6 +5,7 @@ import { BaseUI } from 'src/app/common/baseui';
 import { ToastController, } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { EventService } from 'src/app/shared/services/event.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-user-info',

@@ -85,4 +85,6 @@ public interface DictMapper {
     List<Dict> selectAlltype();
 
     List<Dict> selectAlldetail();
+
+    List<Dict> selectItemkeytByName(String name);
 }

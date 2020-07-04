@@ -2,6 +2,7 @@ package com.hxskyun.service.impl;
 
 import com.hxskyun.config.AccountValidatorUtil;
 
+
 import com.hxskyun.domain.User;
 import com.hxskyun.domain.UserRole;
 import com.hxskyun.exception.FriendException;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+
 
 
 @Transactional
@@ -34,18 +36,20 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User checkUser(User loginUser) {
 
-
-        if (loginUser.getPhone().isEmpty() && loginUser.getEmail().isEmpty()) {
-            throw new FriendException("登陆手机号或者邮箱不能为空", ResultCodeEnum.LoginError.getCode());
+//        loginUser.setPassword(AESencode(loginUser.getPassword(),getKey()));//密码加密 验证
+        if (loginUser.getPhone() == null && loginUser.getEmail() == null && loginUser.getUserId() == null) {
+            throw new FriendException("登陆手机号、用户Id或者邮箱不能为空", ResultCodeEnum.LoginError.getCode());
         }
         if (loginUser.getPassword() == null || loginUser.getPassword().equals("")) {
             throw new FriendException("密码不能为空", ResultCodeEnum.LoginError.getCode());
         }
 
         User userDetail = userMapper.checkUser(loginUser);
+
         if (userDetail == null) {
             throw new FriendException("用户名或密码错误", ResultCodeEnum.LoginError.getCode());
         }
+
         return userDetail;
     }
 
@@ -70,7 +74,7 @@ public class UserServiceImpl implements IUserService {
         }
 
         userRegister.setUserId(RandomUtil.getRandom(9));//生成10位的userID识别
-
+        userRegister.setPassword(userRegister.getPassword());//密码加密
         try {
             userMapper.userRegister(userRegister);
         } catch (Exception e) {
@@ -103,6 +107,26 @@ public class UserServiceImpl implements IUserService {
         return userList;
     }
 
+    @Override
+    public List<User> initUserRoleAll() {
+        List<User> userList = userMapper.selectAll();
+        for (User u : userList) {
+            if (userRoleMapper.selectRoleIdByUserId(u.getUserId()) == null) {
+
+                UserRole userRole = new UserRole();
+                userRole.setRoleId(3);
+                userRole.setUserId(u.getUserId());
+                userRoleMapper.insert(userRole);//如果用户角色表中为找到该用户的角色，则默认分配3 ：学生
+                u.setRoleId(3);
+
+            } else {
+                u.setRoleId(userRoleMapper.selectRoleIdByUserId(u.getUserId()));
+
+            }
+
+        }
+        return userList;
+    }
 
     @Override
     public void deleteUserByUserId(Long id) {
@@ -133,7 +157,7 @@ public class UserServiceImpl implements IUserService {
         }
 
         if (user.getPassword() != null) {
-            user1.setPassword(user.getPassword());//修改密码
+            user1.setPassword(user.getPassword());//修改密码 密码加密
         }
 
         if (user.getAge() != 0) {
@@ -149,6 +173,9 @@ public class UserServiceImpl implements IUserService {
         }
         if (user.getMajor() != null) {
             user1.setMajor(user.getMajor());//修改专业
+        }
+        if (user.getBirthDate() != null) {//修改生日
+            user1.setBirthDate(user.getBirthDate());
         }
 
         if (user.getRoleId() != 0) {//修改用户角色
@@ -174,100 +201,26 @@ public class UserServiceImpl implements IUserService {
         } catch (Exception e) {
             throw new FriendException("手机号已注册，或者邮箱已注册", ResultCodeEnum.PARAM_ERROR.getCode());
         }
-
+        user1.setPassword(user1.getPassword());//密码解密
 
         return user1;
 
     }
-//    @Override
-//    public User findById(Long id) {
-//
-//        return userMapper.selectByPrimaryKey(id);
-//    }
-//
-//    @Override
-//    public User findByName(String name) {
-//
-//        return userMapper.selectByName(name);
-//    }
-//
-//    @Override
-//    public User findByTel(String phone) {
-//
-//        return userMapper.selectByTel(phone);
-//    }
-//
-//    @Override
-//    public User findByPassportId(String id) {
-//        Passport passport = passportService.findByTel(id);
-//        User  user = this.findById(passport.getUserId());
-//        return user;
-//    }
-//
-//    @Override
-//    public User findByToken(String token) {
-//        Passport passport = passportService.findByToken(token);
-//        User user = this.findById(passport.getUserId());
-//        return user;
-//    }
-//
-//    @Transactional
-//    @Override
-//    public void saveUser(User user) {
-//        user = passwordHelper.encryptPassword(user);
-//        userMapper.insert(user);
-//    }
-//
+
+    @Override
+    public User selectUserById(Long uuid) {
+        User user = new User();
+
+        if (uuid != null) {
+            user = userMapper.selectByPrimaryKey(uuid);
+            user.setRoleId(userRoleMapper.selectRoleIdByUserId(uuid));
+            user.setPassword(user.getPassword());//密码解密
+        } else {
+            throw new FriendException("查询id不能为空", ResultCodeEnum.BAD_REQUEST.getCode());
+        }
+        return user;
+    }
 
 
-//
-//    @Override
-//    public void deleteUserByTel(String phone) {
-//
-//    }
-//
-//    @Transactional
-//    @Override
-//    public void deleteUserByName(String name) {
-//        userMapper.deleteByName(name);
-//    }
-//
-//    @Override
-//    public String GetPasswordByUserName(String name) {
-//       Passport passport =  passportService.findByUserName(name);
-//        return passport.getPassword();
-//    }
-//
-//    @Override
-//    public String GetPasswordByTel(String phone) {
-//        return null;
-//    }
-//
-//
-//    @Override
-//    public Set<String> queryRoles(String username) {
-//        Set<String> roleName = null;
-//        List<Role> roles = userRoleService.findRoleByUserName(username);
-//        for (Role role: roles
-//             ) {
-//            roleName.add(role.getRoleName());
-//        }
-//        return roleName;
-//    }
-//
-//    @Override
-//    public Set<String> queryPermissions(String username) {
-//        Set<String> permissionName = null;
-//        List<Role> roles = userRoleService.findRoleByUserName(username);
-//        for (Role role :roles
-//             ) {
-//            List<Permission> permissions = rolePermissionService.findRolePermissionByRoleId(role.getRoleId());
-//            for (Permission permission: permissions
-//                 ) {
-//                permissionName.add(permission.getName());
-//            }
-//        }
-//        return permissionName;
-//    }
 
 }

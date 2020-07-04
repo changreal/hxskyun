@@ -21,7 +21,7 @@ public class MyStartupRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         System.out.println("=====begin=====");
-        IUserService.findAll();//对未分配用户角色id的所有用户默认分配roleId 3学生
+        IUserService.initUserRoleAll();//对未分配用户角色id的所有用户默认分配roleId 3学生
         System.out.println("=====finish=====");
     }
 }

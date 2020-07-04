@@ -33,33 +33,13 @@
     </insert>
 
 
-    <!--    <delete id="deleteByPrimaryKey">-->
-    <!--        delete from role where roleId=#{RoleId};-->
-    <!--    </delete>-->
-    <!--    <insert id="insert" parameterType="com.hxskyun.domain.Role" useGeneratedKeys="true" keyProperty="roleId">-->
-    <!--         insert into role(Id,RoleId,RoleName,CreationDate,Creator,ModificationDate,Modificatier)-->
-    <!--     values (DEFAULT,#{roleId},#{roleName},#{creationDate},#{creator},#{ModificationDate},#{Modificatier});-->
-    <!--    </insert>-->
-
     <select id="selectUserroleByUserId" resultMap="UserRoleMap">
         select  * from userrole where UserId=#{id};
     </select>
 
     <select id="selectRoleIdByUserId" resultType="java.lang.Integer">
-        select RoleId from userrole where UserId=#{id}
+    select RoleId from userrole where UserId=#{id}
     </select>
-
-    <!--    <update id="updateByPrimaryKey">-->
-    <!--        update role-->
-    <!--        SET RoleName = #{roleName}-->
-    <!--        where RoleId = #{roleId}-->
-    <!--    </update>-->
-    <!--    <select id="selectAll" resultMap="RoleMap">-->
-    <!--        select * from role;-->
-    <!--    </select>-->
-    <!--    <select id="selectByRoleName" resultMap="RoleMap">-->
-    <!--        select * from role where RoleName=#{roleName};-->
-    <!--    </select>-->
 
 
 </mapper>

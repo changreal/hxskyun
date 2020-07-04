@@ -1,13 +1,14 @@
 package com.hxskyun.domain;
 
 import java.util.Date;
+import java.util.List;
 
-public class Role {
+public class  Role {
     private Integer roleId;
 
     private String roleName;
 
-    private String RoleDescription;
+    private String roleDescription;
 
     private Date creationdate;
 
@@ -16,6 +17,8 @@ public class Role {
     private String modifier;
 
     private Date modificationdate;
+
+    private List<String> rightList;
 
 
     public Integer getRoleId() {
@@ -67,10 +70,18 @@ public class Role {
     }
 
     public String getRoleDescription() {
-        return RoleDescription;
+        return roleDescription;
     }
 
     public void setRoleDescription(String roleDescription) {
-        RoleDescription = roleDescription;
+        this.roleDescription = roleDescription;
+    }
+
+    public List<String> getRightList() {
+        return rightList;
+    }
+
+    public void setRightList(List<String> rightList) {
+        this.rightList = rightList;
     }
 }

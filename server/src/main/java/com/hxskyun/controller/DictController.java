@@ -79,4 +79,11 @@ public class DictController {
     public Result selectAllDetail(){
         return Result.success().setMsg("查询所有详细表成功").setData(dictService.selectAllDetail());
     }
+
+    @GetMapping("/List/{name}")
+    public Result selectItemkeyList(@PathVariable String name){
+
+        return Result.success().setMsg("查询"+name+"详细列表成功").setData(dictService.selectItemkeyByName(name));
+    }
+
 }

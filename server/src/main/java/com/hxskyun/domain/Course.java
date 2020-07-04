@@ -3,10 +3,10 @@ package com.hxskyun.domain;
 
 public class Course {
 
-  private long courseId;
+  private Long courseId;
   private String courseName;
-  private long courseHour;
-  private long teachId;
+  private Long courseHour;
+  private Integer teachId;
   private String teacherName;
   private String classType;
   private String classDes;
@@ -17,12 +17,13 @@ public class Course {
   private String school;
   private String department;
   private String major;
+  private String endClassStatus;
 
-  public long getCourseId() {
+  public Long getCourseId() {
     return courseId;
   }
 
-  public void setCourseId(long courseId) {
+  public void setCourseId(Long courseId) {
     this.courseId = courseId;
   }
 
@@ -36,20 +37,20 @@ public class Course {
   }
 
 
-  public long getCourseHour() {
+  public Long getCourseHour() {
     return courseHour;
   }
 
-  public void setCourseHour(long courseHour) {
+  public void setCourseHour(Long courseHour) {
     this.courseHour = courseHour;
   }
 
 
-  public long getTeachId() {
+  public Integer getTeachId() {
     return teachId;
   }
 
-  public void setTeachId(long teachId) {
+  public void setTeachId(Integer teachId) {
     this.teachId = teachId;
   }
 
@@ -136,5 +137,13 @@ public class Course {
 
   public void setCourseSemester(String courseSemester) {
     this.courseSemester = courseSemester;
+  }
+
+  public String getEndClassStatus() {
+    return endClassStatus;
+  }
+
+  public void setEndClassStatus(String endClassStatus) {
+    this.endClassStatus = endClassStatus;
   }
 }

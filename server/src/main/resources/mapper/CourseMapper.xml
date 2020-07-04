@@ -12,6 +12,8 @@
         <result property="teachId" column="TeacherId"/>
         <result property="school" column="School"/>
         <result property="department" column="Department"/>
+        <result property="major" column="Major"/>
+        <result property="endClassStatus" column="EndClassStatus"/>
     </resultMap>
 
     <resultMap type="com.hxskyun.domain.CourseStudent" id="courseStudentResultMap">
@@ -27,6 +29,14 @@
         <result property="signTime" column="signTime"/>
         <result property="endTime" column="endTime"/>
         <result property="signStatus" column="signStatus"/>
+        <result property="signedNumbers" column="signedNumbers"/>
+        <result property="unSignedNumbers" column="unSignedNumbers"/>
+        <result property="signDistance" column="signDistance"/>
+        <result property="sourceLatitude" column="sourceLatitude"/>
+        <result property="sourceLongitude" column="sourceLongitude"/>
+        <result property="targetLatitude" column="targetLatitude"/>
+        <result property="targetLongitude" column="targetLongitude"/>
+        <result property="duration" column="duration"/>
     </resultMap>
 
     <insert id="insertCourseStudent" useGeneratedKeys="true">
@@ -35,19 +45,55 @@
     </insert>
 
     <insert id="sendCourseSign" useGeneratedKeys="true">
-        insert into CourseSign(Id,SignId,CourseId,studentId,endTime,signStatus)
-        values (DEFAULT,#{signId},#{courseId},#{studentId},#{endTime},#{signStatus});
+        insert into CourseSign(Id,SignId,CourseId,studentId,endTime,signStatus,duration,sourceLatitude,sourceLongitude)
+        values (DEFAULT,#{signId},#{courseId},#{studentId},#{endTime},#{signStatus},#{duration},#{sourceLatitude},#{sourceLongitude});
+    </insert>
+    <insert id="creatCourse" useGeneratedKeys="true">
+        insert into classschedule(Id,ClassId,ClassName,ClassDes,courseSemester,TeacherId,School,Department,Major,EndClassStatus)
+        values (DEFAULT,#{courseId},#{courseName},#{classDes},#{courseSemester},#{teachId},#{school},#{department},#{major},#{endClassStatus})
     </insert>
 
     <update id="joinCourseSign">
         update CourseSign
         SET signTime = #{signTime},
-            signStatus = #{signStatus}
+            signStatus = #{signStatus},
+            signDistance=#{signDistance},
+            targetLatitude=#{targetLatitude},
+            targetLongitude=#{targetLongitude}
         where CourseId = #{courseId} and studentId = #{studentId} and SignId=#{signId}
+    </update>
+    <update id="updateCourseStudent">
+        update CourseStudent
+        set studentExp= #{studentExp}
+        where ClassId = #{courseId} and studentId = #{studentId}
+    </update>
+    <update id="updateCourse">
+        update classschedule
+        set ClassName= #{courseName},
+        ClassDes= #{classDes},
+        courseSemester= #{courseSemester},
+        School= #{school},
+        Major= #{major},
+        EndClassStatus= #{endClassStatus},
+        Department= #{department}
+        where ClassId = #{courseId} and TeacherId=#{teachId}
+    </update>
+
+    <update id="endCourseSignBySignId">
+    update CourseSign
+    Set endTime=#{endTime}
+    where SignId=#{signId}
     </update>
 
     <delete id="exitCourseStudent">
         delete from CourseStudent where ClassId=#{courseId} and studentId=#{studentId};
+    </delete>
+
+    <delete id="deleteCourse">
+        delete from classschedule where ClassId=#{courseId} and TeacherId=#{teachId};
+    </delete>
+    <delete id="deleteCourseSign">
+        delete from CourseSign where SignId=#{uuid};
     </delete>
 
     <select id="getCourseByUserIdCourseId" resultMap="courseStudentResultMap">
@@ -61,6 +107,11 @@
         left join
         classschedule as a on c.ClassId=a.ClassId
     </select>
+
+    <select id="getCourseByTeachId" resultMap="courseResultMap">
+     select *  from classschedule  where TeacherId=#{uuid}
+    </select>
+
     <select id="getTeacherNameByTeacherId" resultType="String">
         select UserName from user where UserId=#{uuid}
     </select>
@@ -92,58 +143,38 @@ SELECT ranking from
 where s.ClassId=#{courseId} and s.studentId=#{studentId}
     </select>
     <select id="getEndTimeBySignIdUserId" resultMap="courseSignResultMap">
-        select * from CourseSign where SignId=#{signId} and studentId=#{studentId}
+        select * from CourseSign where CourseId=#{courseId} and studentId=#{studentId}
+    </select>
+    <select id="getAllCourseStudent" resultMap="courseStudentResultMap">
+        select * from CourseStudent;
+    </select>
+    <select id="getCourseSignFinshed" resultType="com.hxskyun.domain.CourseSign">
+        select * from CourseSign where studentId=#{studentId} and CourseId=#{courseId} and signStatus="已签到";
+    </select>
+    <select id="getCourseSignUnFinshed" resultType="com.hxskyun.domain.CourseSign">
+       select * from CourseSign where studentId=#{studentId} and CourseId=#{courseId} and signStatus="缺勤";
     </select>
 
-    <!--    <select id="getCourseByPage" resultMap="courseResultMap" parameterType="PaperPage">-->
-    <!--        SELECT c.CourseId,c.CourseName,c.CourseHour,c.TeachId,c.startTime,u.UserName,c.CoursePlace-->
-    <!--        FROM course as c,user as u-->
-    <!--        <if test="courseName == null">-->
-    <!--            WHERE c.TeachId=u.UserId-->
-    <!--        </if>-->
-    <!--        <if test="courseName!=null">-->
-    <!--            WHERE c.CourseName like concat('%',#{courseName},'%') and c.TeachId=u.UserId-->
-    <!--        </if>-->
-    <!--        ORDER BY CourseId ASC-->
-    <!--        limit #{beginPage},#{pageSize}-->
-    <!--    </select>-->
-    <!--    <select id="getCourseCount" resultType="java.lang.Integer">-->
-    <!--        SELECT count(*)-->
-    <!--        FROM course-->
-    <!--        <if test="courseName!=null">-->
-    <!--            WHERE CourseName=#{courseName}-->
-    <!--        </if>-->
-    <!--    </select>-->
+    <select id="getCourseById" resultMap="courseResultMap">
+        select * from classschedule where ClassId=#{uuid}
+    </select>
+    <select id="getCourseSignByCourseId" resultMap="courseSignResultMap">
+        select  SignId,endTime,sum(signStatus='已签到')as'signedNumbers',sum(signStatus='缺勤')as 'unSignedNumbers' from CourseSign where CourseId=#{uuid} GROUP BY SignId,endTime
+    </select>
 
-    <!--    <insert id="addCourse" parameterType="Course">-->
-    <!--        INSERT INTO course(CourseName,CourseHour,TeachId,StartTime,CoursePlace) VALUE (#{courseName}, #{courseHour}, (select UserId from user where UserName =#{userName}), #{startTime}, #{coursePlace})-->
-    <!--    </insert>-->
+    <select id="getCourseSignBySignId" resultMap="courseSignResultMap">
+        select  SignId,endTime,sum(signStatus='已签到')as'signedNumbers',sum(signStatus='缺勤')as 'unSignedNumbers' from CourseSign where SignId=#{signId} GROUP BY SignId,endTime
+    </select>
+    <select id="getCourseSignByCourseSign" resultMap="courseSignResultMap">
+        select * from CourseSign where  studentId=#{studentId} and CourseId=#{courseId} and SignId=#{signId}
+    </select>
+    <select id="selectOnceCourseSignResult" resultMap="courseSignResultMap">
+        select * from CourseSign where SignId=#{signId}
+    </select>
+    <select id="getStudentNameById" resultType="java.lang.String">
+     select UserName from user where UserId=#{uuid}
+    </select>
 
-    <!--    <delete id="deleteCourseById" parameterType="long">-->
-    <!--        DELETE FROM course WHERE CourseId=#{courseId}-->
-    <!--    </delete>-->
 
-    <!--    <delete id="deleteCourseBatchById" parameterType="java.util.List">-->
-    <!--        DELETE FROM course WHERE CourseId IN-->
-    <!--        <foreach collection="list" item="item" open="(" separator="," close=")">-->
-    <!--            #{item}-->
-    <!--        </foreach>-->
-    <!--    </delete>-->
-
-    <!--    <update id="updateCourse" parameterType="Course">-->
-    <!--        UPDATE course-->
-    <!--        SET CourseName = #{courseName}, StartTime = #{startTime}, CourseHour = #{courseHour},TeachId = (select UserId from user where UserName= #{userName}), CoursePlace = #{coursePlace}-->
-    <!--        WHERE  CourseId = #{courseId}-->
-    <!--    </update>-->
-
-    <!--    <select id="queryById" resultMap="courseResultMap" parameterType="long">-->
-    <!--        SELECT CourseId,CourseName,CourseHour,TeachId,CoursePlace-->
-    <!--        FROM course-->
-    <!--        WHERE CourseId=#{courseId}-->
-    <!--    </select>-->
-    <!--    <select id="queryAllPaper" resultMap="courseResultMap">-->
-    <!--        SELECT CourseId,CourseName,CourseHour,TeachId,CoursePlace-->
-    <!--        FROM course-->
-    <!--    </select>-->
 
 </mapper>

@@ -4,7 +4,7 @@ package com.hxskyun.controller;
 import com.hxskyun.service.IUserRoleService;
 import com.hxskyun.service.IUserService;
 import com.hxskyun.token.JWTUtils;
-import com.hxskyun.token.JedisUtils;
+
 import com.hxskyun.token.TokenUtils;
 import com.hxskyun.utils.Result;
 import com.hxskyun.domain.*;
@@ -34,6 +34,11 @@ public class LoginController {
         String token;
         User userDetail = IuserService.checkUser(loginUser);
         UserRole userRole= IUserRoleService.selectUserroleByUserId(userDetail.getUserId());
+        if(userRole==null)
+        {
+            IuserService.initUserRoleAll();//若该用户新注册，为分配角色id则初始化
+            userRole= IUserRoleService.selectUserroleByUserId(userDetail.getUserId());
+        }
         try {
             token = JWTUtils.createToken(userDetail);
           //  JedisUtils.setToken(String.valueOf(userDetail.getUserId()), token, 7);

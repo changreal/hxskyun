@@ -1,8 +1,12 @@
 package com.hxskyun.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.hxskyun.utils.UserDeserializer;
+
 import java.util.Date;
 
 
+@JsonDeserialize(using = UserDeserializer.class)
 public class User {
 
     private Long userId;
@@ -189,8 +193,9 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
     public String getPhone() {
-      return phone;
+        return phone;
     }
 
     public int getRoleId() {

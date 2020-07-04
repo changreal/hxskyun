@@ -23,7 +23,8 @@
     </insert>
     <update id="updateUser" parameterType="com.hxskyun.domain.User">
        UPDATE user
-        SET UserName=#{name},Gender=#{sex},Phone=#{phone},Age=#{age},Password=#{password},Email=#{email},School=#{school},Academy=#{academy},Major=#{major}
+       <if test="name!=null"></if>
+        SET UserName=#{name},Gender=#{sex},Phone=#{phone},Age=#{age},Password=#{password},Email=#{email},School=#{school},Academy=#{academy},Major=#{major},BirthDate=#{birthDate}
         where UserId = #{userId}
     </update>
 
@@ -33,17 +34,23 @@
     </delete>
 
     <select id="checkUser" resultMap="UserMap" parameterType="com.hxskyun.domain.User">
-        <!--        <if test="phone!=null">-->
-        SELECT *
-        FROM user
-        Where Phone=#{phone} and Password=#{password}
-        <!--        </if>-->
-        <!--        <if test="email!=null">-->
-        <!--            SELECT *-->
-        <!--            FROM user-->
-        <!--            Where Email=#{email} and Password=#{password}-->
-        <!--        </if>-->
+        <if test="phone!=null">
+            SELECT *
+            FROM user
+            Where Phone=#{phone} and Password=#{password};
+        </if>
+        <if test="email!=null">
+            SELECT *
+            FROM user
+            Where Email=#{email} and Password=#{password};
+        </if>
+        <if test="userId!=null">
+            SELECT *
+            FROM user
+            Where UserId=#{userId} and Password=#{password};
+        </if>
     </select>
+
     <select id="selectAll" resultMap="UserMap">
         select * from user
     </select>
@@ -51,56 +58,4 @@
         select * from user where UserId=#{userId}
     </select>
 
-    <!--    <select id="getTeacherByPage" resultMap="UserMap" parameterType="PaperPage">-->
-    <!--        SELECT u.UserId,UserName,PhoneNumber,Password,School,Academy,Major-->
-    <!--        FROM user as u, user_role as ur-->
-    <!--        <if test="userName == null">-->
-    <!--            WHERE ur.RoleId=2 and u.UserId=ur.UserId-->
-    <!--        </if>-->
-    <!--        <if test="userName!=null">-->
-    <!--            WHERE u.UserName like concat('%',#{userName},'%') and ur.RoleId=2 and u.UserId=ur.UserId-->
-    <!--        </if>-->
-    <!--        ORDER BY UserId ASC-->
-    <!--        limit #{beginPage},#{pageSize}-->
-    <!--    </select>-->
-
-    <!--    <select id="getStudentByPage" resultMap="UserMap" parameterType="PaperPage">-->
-    <!--        SELECT u.UserId,UserName,PhoneNumber,Password,School,Academy,Major-->
-    <!--        FROM user as u, user_role as ur-->
-    <!--        <if test="userName == null">-->
-    <!--            WHERE ur.RoleId=3 and u.UserId=ur.UserId-->
-    <!--        </if>-->
-    <!--        <if test="userName!=null">-->
-    <!--            WHERE u.UserName like concat('%',#{userName},'%') and ur.RoleId=3 and u.UserId=ur.UserId-->
-    <!--        </if>-->
-    <!--        ORDER BY UserId ASC-->
-    <!--        limit #{beginPage},#{pageSize}-->
-    <!--    </select>-->
-
-    <!--    <select id="getTeacherCount" resultType="java.lang.Integer">-->
-    <!--        SELECT count(*)-->
-    <!--        FROM user as u, user_role as ur-->
-    <!--        <if test="userName == null">-->
-    <!--            WHERE ur.RoleId=2 and u.UserId=ur.UserId-->
-    <!--        </if>-->
-    <!--        <if test="userName!=null">-->
-    <!--            WHERE UserName=#{userName} and ur.RoleId=2 and u.UserId=ur.UserId-->
-    <!--        </if>-->
-    <!--    </select>-->
-
-    <!--    <select id="getStudentCount" resultType="java.lang.Integer">-->
-    <!--        SELECT count(*)-->
-    <!--        FROM user as u, user_role as ur-->
-    <!--        <if test="userName == null">-->
-    <!--            WHERE ur.RoleId=3 and u.UserId=ur.UserId-->
-    <!--        </if>-->
-    <!--        <if test="userName!=null">-->
-    <!--            WHERE UserName=#{userName} and ur.RoleId=3 and u.UserId=ur.UserId-->
-    <!--        </if>-->
-    <!--    </select>-->
-
-
-    <!--    <insert id="addUser" parameterType="User">-->
-    <!--        INSERT INTO User(UserName,PhoneNumber,Password,School,Academy,Major) VALUE (#{userName}, #{phoneNumber}, #{password}, #{school}, #{academy},#{major})-->
-    <!--    </insert>-->
 </mapper>

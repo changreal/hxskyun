@@ -77,4 +77,6 @@ public interface IDictService {
      * @return
      */
     List<Dict> selectAllDetail();
+
+    List<Dict> selectItemkeyByName(String name);
 }

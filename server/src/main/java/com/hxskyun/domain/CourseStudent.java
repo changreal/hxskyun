@@ -9,6 +9,8 @@ public class CourseStudent {
   private String studentName;//用户姓名
   private long studentExp;
   private Integer ranking;//排名
+  private Integer SignedNumbers;
+  private Integer UnSignedNumbers;
 
 
   public long getId() {
@@ -60,5 +62,21 @@ public class CourseStudent {
 
   public void setRanking(Integer ranking) {
     this.ranking = ranking;
+  }
+
+  public Integer getSignedNumbers() {
+    return SignedNumbers;
+  }
+
+  public void setSignedNumbers(Integer signedNumbers) {
+    SignedNumbers = signedNumbers;
+  }
+
+  public Integer getUnSignedNumbers() {
+    return UnSignedNumbers;
+  }
+
+  public void setUnSignedNumbers(Integer unSignedNumbers) {
+    UnSignedNumbers = unSignedNumbers;
   }
 }

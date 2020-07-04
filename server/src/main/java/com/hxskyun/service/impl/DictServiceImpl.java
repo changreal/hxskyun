@@ -90,5 +90,11 @@ public class DictServiceImpl implements IDictService {
         return dictMapper.selectAlldetail();
     }
 
+    @Override
+    public List<Dict> selectItemkeyByName(String name) {
+
+        return dictMapper.selectItemkeytByName(name);
+    }
+
 
 }

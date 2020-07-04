@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class GatewayApplication {
-    @Value("${http.port}")
+    @Value("${server.http.port}")
     private Integer port;
 
     // 这是spring boot 2.0.X版本的 添加这个，上一个就不用添加了
@@ -24,6 +24,16 @@ public class GatewayApplication {
     private Connector createStandardConnector() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         connector.setPort(port);
+        return connector;
+    }
+
+    @Bean
+    public Connector connector() {
+        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+        connector.setScheme("http");
+        connector.setSecure(false);
+        connector.setPort(8082);
+        connector.setRedirectPort(8081);
         return connector;
     }
 }

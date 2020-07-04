@@ -21,25 +21,15 @@ public interface UserMapper {
 
     int updateUser(User user);
 
-    int insert(User record);
 
-    int insertSelective(User record);
 
     User selectByPrimaryKey(Long userId);
 
-    int updateByPrimaryKeySelective(User record);
 
 
 
-    User selectByName(String name);
-
-    User selectByTel(String phone);
 
     List<User> selectAll();
 
-    User selectByToken(String token);
 
-    void deleteByTel(String phone);
-
-    void deleteByName(String name);
 }

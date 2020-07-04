@@ -10,6 +10,8 @@ import java.util.Map;
 public interface ICourseService {
     List<Course> getCourseByUserId(Integer uuid);
 
+    List<Course> getCourseByTeachId(Integer uuid);
+
     Course getCourseByCourseId(Integer uuid);
 
     List<CourseStudent> getMembersByCourseId(Integer uuid);
@@ -22,22 +24,28 @@ public interface ICourseService {
 
     void exitCourseStudent(CourseStudent courseStudent);
 
-    void joinCourseSign(CourseSign courseSign);
+    CourseSign joinCourseSign(CourseSign courseSign);
 
     CourseSign sendCourseSign(CourseSign courseSign);
 
+    void deleteCourse(Course course);
 
-//    int getCourseCount(PaperPage paperPage);
-////
-////    int deletePaperBatchById(List<Long> paperIdList);
-////
-//    int addCourse(Course course);
-////
-////    int deletePaperById(long id);
-////
-//    int updateCourse(Course course);
-////
-//    Paper queryById(long id);
-//
-//    List<Paper> queryAllPaper();
+    void expInit();
+
+    void deleteCourseSign(Integer uuid);
+
+    Course creatCourse(Course course);
+
+    Course updateCourse(Course course);
+
+    List<CourseSign> getCourseSignByCourseId(Integer uuid);
+
+    List<CourseSign> CourseSignNumberBySignId(Integer signId);
+
+    void endCourseSign(CourseSign courseSign);
+
+    List<CourseSign> selectOnceCourseSignResult(Integer uuid);
+
+
+
 }

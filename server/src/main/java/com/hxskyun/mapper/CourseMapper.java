@@ -29,12 +29,16 @@ public interface CourseMapper {
      */
     List<Course> getCourseByUserId(Integer uuid);
 
+
+    List<Course> getCourseByTeachId(Integer uuid);
     /**
      * 根据用户Id查找所选课程
      */
     String getTeacherNameByTeacherId(Integer uuid);
 
     List<Course> getCourseByCourseId(Integer uuid);
+
+    Course getCourseById(Integer uuid);
 
     List<CourseStudent> getMembersByCourseId(Integer uuid);
 
@@ -58,5 +62,35 @@ public interface CourseMapper {
 
     void sendCourseSign(CourseSign courseSign);
 
-    CourseSign getEndTimeBySignIdUserId(CourseSign courseSign);
+    List<CourseSign> getEndTimeBySignIdUserId(CourseSign courseSign);
+
+    void deleteCourse(Course course);
+
+    List<CourseStudent> getAllCourseStudent();
+
+    void updateCourseStudent(CourseStudent courseStudent);
+
+    List<CourseSign> getCourseSignFinshed(CourseSign courseSign);
+
+    List<CourseSign> getCourseSignUnFinshed(CourseSign courseSign);
+
+    void deleteCourseSign(Integer uuid);
+
+    void creatCourse(Course course);
+
+
+    void updateCourse(Course course1);
+
+
+    List<CourseSign> getCourseSignByCourseId(Integer uuid);
+
+    List<CourseSign> getCourseSignBySignId(Integer signId);
+
+    CourseSign getCourseSignByCourseSign(CourseSign courseSign);
+
+    void endCourseSignBySignId(CourseSign courseSign);
+
+    List<CourseSign> selectOnceCourseSignResult(Integer uuid);
+
+    String getStudentNameById(long studentId);
 }

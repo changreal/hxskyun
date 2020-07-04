@@ -24,9 +24,21 @@
     <delete id="deleteByPrimaryKey">
         delete from role where roleId=#{RoleId};
     </delete>
+
+    <delete id="deleteRoleRightByRoleId">
+        delete from roleright where roleId=#{RoleId}
+    </delete>
     <insert id="insert" parameterType="com.hxskyun.domain.Role" useGeneratedKeys="true" keyProperty="roleId">
-         insert into role(Id,RoleId,RoleName,CreationDate,Creator,ModificationDate,Modificatier)
-     values (DEFAULT,#{roleId},#{roleName},#{creationDate},#{creator},#{ModificationDate},#{Modificatier});
+         insert into role(Id,RoleId,RoleName,RoleDescription)
+     values (DEFAULT,#{roleId},#{roleName},#{roleDescription});
+    </insert>
+
+    <insert id="insertorupdateRoleRight">
+        insert into roleright(RightId,RoleId)
+        values
+        <foreach collection="rightList" item="item" index="index" separator=",">
+            (#{item},#{roleId})
+        </foreach>
     </insert>
 
     <select id="selectRoleByPrimaryKey" resultMap="RoleMap">
@@ -36,8 +48,13 @@
 
     <update id="updateByPrimaryKey">
         update role
-        SET RoleName = #{roleName}
+        SET RoleName = #{roleName},RoleDescription=#{roleDescription}
         where RoleId = #{roleId}
+    </update>
+    <update id="updateRight">
+        update tright
+        SET PermissionName = #{permissionName},PermissionDescription=#{permissionDescription},useStatus=#{useStatus}
+        where PermissionId = #{permissionId}
     </update>
 
     <select id="selectAll" resultMap="RoleMap">
@@ -46,6 +63,21 @@
 
     <select id="selectByRoleName" resultMap="RoleMap">
         select * from role where RoleName=#{roleName};
+    </select>
+
+    <select id="selectRightListByRoleId" resultType="java.lang.String">
+        select RightId from roleright where RoleId=#{roleId}
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="RoleMap">
+        select * from role where RoleId=#{roleId}
+    </select>
+
+    <select id="selectRoleById" resultMap="RoleMap">
+    select * from role where RoleId=#{uuid}
+    </select>
+    <select id="selectRightById" resultType="com.hxskyun.domain.Right">
+        select * from tright where PermissionId=#{uuid}
     </select>
 
 

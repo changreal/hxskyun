@@ -104,4 +104,5 @@ public class Dict {
     public void setModifier(Integer modifier) {
         this.modifier = modifier;
     }
+
 }

@@ -71,22 +71,7 @@
         where Id=#{dictId};
     </update>
 
-    <!--    <select id="selectByPrimaryKey" resultType="com.hxskyun.domain.Dict">-->
-    <!--    select-->
-    <!--    d.Id,-->
-    <!--    d.ItemKey,-->
-    <!--    d.ItemValue,-->
-    <!--    t.`Name`,-->
-    <!--    d.SortNum,-->
-    <!--    d.IsDefault,-->
-    <!--    d.CreationDate,-->
-    <!--    d.Creator,-->
-    <!--    d.ModificationDate,-->
-    <!--    d.Modifier-->
-    <!--    from   dictionarydetail as d-->
-    <!--    left join dictionarytype as t on d.ItemKey=t.ItemKey-->
-    <!--    where d.Id=#{dictId}-->
-    <!--    </select>-->
+
 
     <select id="selectDetailByPrimaryKey" resultMap="DictMap">
         select Id,ItemKey,ItemValue,IsDefault,SortNum,CreationDate,Creator,ModificationDate,Modifier from dictionarydetail
@@ -102,6 +87,10 @@
     </select>
     <select id="selectAlldetail" resultMap="DictMap">
         select * from dictionarydetail
+    </select>
+
+    <select id="selectItemkeytByName" resultMap="DictMap">
+    select * from dictionarydetail where ItemKey like concat('%',#{name},'%')
     </select>
 
 

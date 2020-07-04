@@ -1,8 +1,10 @@
 package com.hxskyun.mapper;
 
 
+import com.hxskyun.domain.Right;
 import com.hxskyun.domain.Role;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
@@ -17,6 +19,13 @@ public interface RoleMapper {
      */
 
     int deleteByPrimaryKey(Integer roleId);
+
+
+
+    List<String> selectRightListByRoleId(Integer roleId);
+
+    Role selectRoleById(Integer uuid);
+
     /**
      * 插入
      *
@@ -25,30 +34,10 @@ public interface RoleMapper {
      */
 
     int insert(Role record);
-    /**
-     * 插入
-     *
-     * @param record
-     * @return
-     */
 
-    int insertSelective(Role record);
-    /**
-     * 根据主键查询
-     *
-     * @param roleId
-     * @return
-     */
 
     Role selectRoleByPrimaryKey(Integer roleId);
-    /**
-     * 根据Selective更新
-     *
-     * @param record
-     * @return
-     */
 
-    int updateByPrimaryKeySelective(Role record);
     /**
      * 根据主键更新
      *
@@ -73,5 +62,14 @@ public interface RoleMapper {
 
     Role selectByRoleName(String name);
 
-    Role selectByPrimaryKey(Integer id);
+    Role selectByPrimaryKey(Integer roleId);
+
+
+    void insertorupdateRoleRight(@Param("rightList") List<String> rightList, @Param("roleId") Integer roleId);
+
+    void deleteRoleRightByRoleId(Integer roleId);
+
+    Right selectRightById(Integer uuid);
+
+    void updateRight(Right rightOld);
 }

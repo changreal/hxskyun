@@ -1,9 +1,10 @@
 package com.hxskyun.service;
 
+import com.hxskyun.domain.Role;
 import com.hxskyun.domain.User;
 
 import java.util.List;
-import java.util.Set;
+
 
 public interface IUserService  {
 
@@ -14,34 +15,13 @@ public interface IUserService  {
 
      List<User> findAll();
 
+    List<User> initUserRoleAll();
      void deleteUserByUserId(Long id);
 
      User updateUser(User user);
 
-//    public User findById(Long id);
-//
-//    public User findByName(String name);
-//
-//    public User findByTel(String phone);
-//
-//    public User findByPassportId(String id);
-//
-//    public User findByToken(String token);
-//
-//    public void saveUser(User user);
-//
+    User selectUserById(Long uuid);
 
-//
-//    public void deleteUserByTel(String phone);
-//
-//    public void deleteUserByName(String name);
-//
-//    public String GetPasswordByUserName(String name);
-//
-//    public String GetPasswordByTel(String phone);
-//
-//    Set<String> queryRoles(String username);
-//
-//    Set<String> queryPermissions(String username);
+
 
 }

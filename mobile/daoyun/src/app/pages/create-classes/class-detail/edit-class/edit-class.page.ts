@@ -177,7 +177,8 @@ export class EditClassPage extends BaseUI implements OnInit {
         // let url = '/tabs/create-classes/class-detail?courseId=' + this.courseId
         let url = '/tabs/create-classes/class-detail'
         let params = {
-          courseId : this.courseId
+          courseId : this.courseId,
+          courseName:this.course_courseName
         }
 
         this.toastService.presentAlertConfirm('修改班课成功！', url, params)  //回调函数跳转

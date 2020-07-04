@@ -25,7 +25,7 @@ export class LoginPage extends BaseUI implements OnInit {
     phone: '',
     password:''
   }
-
+  loginType='phone'
   constructor(private alertController: AlertController,private toastController: ToastController,
     public modalCtrl :ModalController,public loadingController: LoadingController,public http:HttpClient,
     private localStorageService: MylocalstorageService,public router:Router,public common:CommonService,private zrServices: ZrServicesService
@@ -62,10 +62,28 @@ export class LoginPage extends BaseUI implements OnInit {
       alert.present();
 
     }else{
-      let params:object = {
+      let params:object
+      if(this.loginType=='phone'){
+         params = {
         "phone" : this.username,
         "password" : this.password
+        }
+      }else if(this.loginType=='email'){
+        params = {
+          "email" : this.username,
+          "password" : this.password
+          }
+
+      }else if(this.loginType=='userid'){
+        params = {
+          "userId" : this.username,
+          "password" : this.password
+          }
       }
+      // let params:object = {
+      //   "phone" : this.username,
+      //   "password" : this.password
+      // }
       // 验证登录账号与密码，不对的话给出错误提示
       super.showLoading(this.loadingController,"登录中")
       this.zrServices.login(params).then((result:any) => {
@@ -115,7 +133,9 @@ async presentToast(mes:string) {
 }
 
 
-
+getValue(){
+  console.log('登录方式'+this.loginType)
+}
 
 
 }

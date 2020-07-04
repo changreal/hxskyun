@@ -16,6 +16,15 @@
   <div padding-horizontal>
   <form #f="ngForm">
     <ion-list padding-right no-margin>
+      <ion-item mode='md' class="ion-no-padding margin-left">
+        <ion-label>请选择登录方式</ion-label>
+        <ion-select [ngModelOptions]="{standalone: true}" [(ngModel)]="loginType" value="phone" interface="action-sheet" (ionChange)='getValue()'>
+          <ion-select-option value="phone">手机</ion-select-option>
+          <ion-select-option value="email">邮箱</ion-select-option>
+          <ion-select-option value="userid">学号</ion-select-option>
+        </ion-select>
+      </ion-item> 
+
     <ion-item>
       <ion-icon name="person-outline"></ion-icon>
       <ion-label fixed>账号</ion-label>

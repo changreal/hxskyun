@@ -124,7 +124,7 @@ onSave(){
        console.log('userdetail：',result.data);
        console.log(result.msg)
    }else {
-       super.showToast(this.toastController,'用户信息更新失败')
+       super.showToast(this.toastController,result.msg)
    }
    }).catch((error) => {
      super.showToast(this.toastController,'用户信息更新失败')

@@ -34,14 +34,39 @@
     </ion-slide>
 
     <ion-slide> 
-      <form>
-        <ion-list>
-          <ion-item>
+      <form novalidate #information="ngForm" >
+        <ion-list *ngIf="title=='关联邮箱'" >
+            <!-- 邮箱地址 -->
+      <ion-item>
+        <ion-input name="{{property}}" type="text" placeholder="{{property}}" required
+                    pattern="\w+@([0-9a-zA-Z]+[-0-9a-zA-Z]*)(\.[0-9a-zA-Z]+[-0-9a-zA-Z]*)+"
+                    [(ngModel)]="value" #email="ngModel">
+        </ion-input>
+      </ion-item>
+      <ion-text text-left color="danger" *ngIf="email.invalid && email.touched">
+        <p [hidden]="!email.errors?.required" padding-start>请输入邮箱地址</p>
+        <p [hidden]="!email.errors?.pattern" padding-start>邮箱地址格式错误</p>
+      </ion-text>
+
+          <!-- <ion-item>
             <ion-input name="{{property}}" type="text" [(ngModel)]="value" required placeholder="{{property}}"></ion-input>
-          </ion-item>
+          </ion-item> -->
         </ion-list>
+         <!-- 手机号 -->
+      <ion-list *ngIf="title=='关联手机'">
+      <ion-item>
+        <ion-input name="{{property}}" type="number" placeholder="{{property}}" required
+               pattern="^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,3,5-9]))\d{8}$"
+               [(ngModel)]="value" #phone="ngModel">
+        </ion-input>
+    </ion-item>
+    <ion-text text-left color="danger" *ngIf="phone.invalid && phone.touched">
+        <p [hidden]="!phone.errors?.required" padding-start>请输入手机号码</p>
+        <p [hidden]="!phone.errors?.pattern" padding-start>您输入的手机号格式不正确</p>
+    </ion-text>
+  </ion-list>   
         <div padding-horizontal>
-          <ion-button expand="block" color="primary" (click)="onSave()">保存</ion-button>
+          <ion-button expand="block" color="primary" [disabled]="information.invalid"  (click)="onSave()">保存</ion-button>
         </div>
       </form>
  </ion-slide>

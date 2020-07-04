@@ -41,7 +41,7 @@ export class QrcodePage implements OnInit {
       image.src = this.logo;
       this.options.logo = {
         image,
-        size: 10 / 100
+        size: 20 / 100
       };
       image.onload = () => {
         const canvas = qrcanvas(this.options);

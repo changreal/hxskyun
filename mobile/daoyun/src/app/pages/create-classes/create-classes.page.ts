@@ -36,13 +36,22 @@ export class CreateClassesPage extends BaseUI  implements OnInit {
   ngOnInit() {
     super.showLoading( this.loadingController,'请等待',300)
 
+    // this.role = this.localStorageService.getStore('roleId','2')
+    // this.userId = this.localStorageService.getStore('uid', null)
+
+    // console.log('当前身份是：', this.role);
+    // console.log('当前用户id是：', this.userId);
+    
+
+    
+    
+  }
+
+  ionViewWillEnter() {
     this.role = this.localStorageService.getStore('roleId','2')
     this.userId = this.localStorageService.getStore('uid', null)
 
     console.log('当前身份是：', this.role);
-    // console.log('当前用户id是：', this.userId);
-    
-
     // 判断身份
     if(this.role == '2' || this.role=='1'){
       this.loadCourseData(null)
@@ -51,10 +60,6 @@ export class CreateClassesPage extends BaseUI  implements OnInit {
       this.courses_length = 0
       this.toastService.presentAlert('您没有此权限！')
     }
-    
-  }
-
-  ionViewWillEnter() {
   }
 
   

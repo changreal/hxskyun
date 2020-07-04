@@ -58,13 +58,14 @@ export class ClassDetailPage extends BaseUI implements OnInit {
   }
   
 
-  // ionViewWillEnter() {
-  //   this.activatedRoute.queryParams.subscribe((result:any) => {
-  //     this.courseId = result.courseId;
-  //   });
-  //   //这两个方法在将要进入界面的时候会触发,相当于是局部刷新,整个页面不会跟着刷新
-  //     this.getCourseInfo();   
-  // }
+  ionViewDidEnter() {
+   
+    // this.activatedRoute.queryParams.subscribe((result:any) => {
+    //   this.courseId = result.courseId;
+    // });
+    //这两个方法在将要进入界面的时候会触发,相当于是局部刷新,整个页面不会跟着刷新
+      // this.getCourseInfo();   
+  }
 
   // ionViewDidLeave(){
   //   console.log('createclass-detail leave')

@@ -15,6 +15,12 @@
     <!-- 班课头信息 -->
     <ion-card-header >
       <ion-item lines='full'>
+        <ion-note slot="end" class="ion-no-margin">
+          <ion-button  expand="block" fill="clear" shape="round" [routerLink]="['/create-classes/qrcode']"  [queryParams]="{courseId:courseId}">
+            <ion-icon name="qr-code-outline"  color="primary" slot="icon-only"></ion-icon>
+              <!-- <ion-icon name="scan-outline" slot="icon-only"></ion-icon> -->
+          </ion-button>
+        </ion-note>
         <ion-thumbnail slot="start">
           <!-- <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw=="> -->
           <div class="profile_icon_blue">{{courseName}}</div>

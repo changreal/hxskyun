@@ -26,7 +26,8 @@ new Vue({
 })
   router.beforeEach((to, from, next)=>{
     if (to.matched.some(record => record.meta.requireLogin)){  // 判断该路由是否需要登录权限
-      if (localStorage.getItem('token')) {  // 判断当前用户的登录信息loginInfo是否存在
+      if (localStorage.getItem('token')&&localStorage.getItem('token')!='false') {
+        // 判断当前用户的登录信息loginInfo是否存在
         next();
       } else {
         if(to.path == '/login'){

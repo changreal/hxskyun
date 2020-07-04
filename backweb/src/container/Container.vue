@@ -76,7 +76,7 @@
     name: 'Container',
     data() {
       return {
-        username: 'Teacher',
+        username: '',
         isCollapse: false,
         routeInf:[],
       }
@@ -115,13 +115,14 @@
         this.routeInf[j]=jsonRoute[index];
         j++;
       }
-    },
-
-    mounted: function () {
       let user = localStorage.getItem('user');
       if (user) {
         this.username = user;
       }
+    },
+
+    mounted: function () {
+
     },
   }
 </script>

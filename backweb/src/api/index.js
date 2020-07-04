@@ -1,5 +1,7 @@
 import request from '../utils/request'
 import dicManage from './DicManage'
+import userManage from './UserManage'
+import roleManage from './RoleManage'
 export default{
   login(username,password){
     return request({
@@ -16,6 +18,8 @@ export default{
     })
   },
   dicManage,
+  userManage,
+  roleManage,
   test(){
     return request({
       url:'/Login/hello',

@@ -44,7 +44,7 @@
       return {
         logining: false,
         ruleForm2: {
-          username: '88888888888',
+          username: '13107922919',
           password: '123456',
         },
         rules2: {
@@ -72,8 +72,15 @@
                 console.log(response);
                 localStorage.setItem('token',response.data.data);
                 localStorage.setItem('tokenTimeoutData',timeOutData.getFullYear()+'-'+m+'-'+timeOutData.getDate());
-                localStorage.setItem('user',userRole);
+                //localStorage.setItem('user',response.data.extra.userRole.id);
                 localStorage.setItem('defaultPassword',response.data.encodedPassword);
+//
+                this.$api.userManage.getUserById(response.data.extra.userRole.userId)
+                  .then(response=>{
+                    console.log(response);
+                    localStorage.setItem('user',response.data.data.name);
+                  });
+                localStorage.setItem('role',response.data.extra.userRole.roleId);
                 this.logining=false;
                 this.$router.push({path:'/index'}).catch(err=>{
                   console.log("跳转失败？")

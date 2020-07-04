@@ -5,10 +5,11 @@ import { LocalStorageService } from "../../../../shared/services/local-storage.s
 // import { ToastServiceProvider } from "../../../../shared/services/toast-service.service";
 import { AlertController } from '@ionic/angular';
 import { ToastController,} from '@ionic/angular';
+import { BaseUI } from 'src/app/common/baseui';
+import { LoadingController } from '@ionic/angular';
 
 import { NgForm } from '@angular/forms';
 declare var BMap;
-// declare var BMapLib;
 
 
 @Component({
@@ -16,20 +17,23 @@ declare var BMap;
   templateUrl: './sign-in.page.html',
   styleUrls: ['./sign-in.page.scss'],
 })
-export class SignInPage implements OnInit {
+export class SignInPage extends BaseUI implements OnInit {
 
   // @ViewChild('startButton', {static:true}) startButton:any
   // @ViewChild('cancelButton', {static:true}) cancelButton:any
   // @ViewChild('finishButton', {static:true}) finishButton:any
+  // @ViewChild('signCountShow', {static:true}) signCountShow:any
 
   signId = ''
   courseId = ''
+  courseName=''
   userId = ''
+  course
   courseMembersCount=''
-  signCount=0
+  signCount:string = ''
   coordinate:any = {
-    latitude : '28',
-    longtitude : '20'
+    latitude : '1',
+    longitude : '1'
   }
 
   // flag
@@ -52,12 +56,17 @@ export class SignInPage implements OnInit {
     // private toastService: ToastServiceProvider,
     public alertController:AlertController,
     public toastController:ToastController,
-    private router: Router,) { }
+    private router: Router,
+    public loadingController: LoadingController) { 
+      super() 
+  }
 
   ngOnInit() {
+    super.showLoading( this.loadingController,'请等待',300)
     this.activatedRoute.queryParams.subscribe((result) => {
-      console.log('传入的参数：', result);
+      // console.log('传入的参数：', result);
       this.courseId = result.courseId;
+      this.courseName = result.courseName
       this.courseMembersCount = result.courseMembersCount
     })
 
@@ -77,14 +86,14 @@ export class SignInPage implements OnInit {
     
     return new Promise((reslove, reject) => {
       geolocation.getCurrentPosition(function (r) {
-        console.log(this.getStatus())
+        
+
         if (this.getStatus() == 0) {
-          console.log('获取位置成功：', r.point.lat, r.point.lng);
-          alert('获取位置成功'+r.point.lat+r.point.lng)
-          reslove(r);
+          // console.log('获取位置成功：', r.point.lat, r.point.lng);
+          reslove(r.point);
         }
         else {
-          console.log('获取位置失败:', this.getStatus());
+          // console.log('获取位置失败:', this.getStatus());
           reject(this.getStatus());
           alert('获取位置失败'+this.getStatus())
         }
@@ -98,11 +107,11 @@ export class SignInPage implements OnInit {
 
     // 获取签到信息
     this.getLocation().then((result:any) => {
-      console.log(result);
-      
-      // this.coordinate.longtitude = result.lng
-      // this.coordinate.latitute = result.lat
 
+      this.coordinate.latitude = result.lat
+      this.coordinate.longitude = result.lng
+      // console.log('新的coordinate内容为：', this.coordinate);
+      
       this.doStartSignIn()
       
     }).catch((error) => {
@@ -123,33 +132,34 @@ export class SignInPage implements OnInit {
         {
           text: '取消',
           role: 'cancel',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
         }, {
           text: '确认',
           handler: ()=>{
 
             // 发送签到请求
             this.zrServices.createSignIn(this.courseId, this.coordinate.longitude, this.coordinate.latitude, this.duration).then((result:any) => {
-              console.log(result);
+              // console.log(result);
+
               if(result.code == '200'){
         
                 this.isStart = true // 是否开始签到
                 this.signId = result.data.signId // 接受返回的signid
-                
-                console.log('当前签到id为：', this.signId);
-                this.localStorageService.setStore('signId', this.signId) //保存到缓存里
-                
 
+                
+                // console.log('当前签到id为：', this.signId);
+                this.localStorageService.setStore('signId', this.signId) //保存到缓存里
+                this.presentToast('开始计时！','success')
+
+                
                 // 刷新签到情况
                 this.doRefresh()
         
+              }else{
+              this.presentToast(result.msg,'danger')
               }
               
             }).catch((error) => {
-              console.log('创建签到错误',error);
-              this.isStart = true // 是否开始签到，放这里仅为调试，记得删除
+              this.presentToast(error.message,'danger')
             })
           }
         }
@@ -174,15 +184,16 @@ export class SignInPage implements OnInit {
   loadCurrentSignInfo(){
     // 获取当前签到信息
     this.zrServices.getCurrentSignBySignId(this.signId).then((result:any) => {
-      console.log('查询到签到信息为：', result);
+      // console.log('查询到签到信息为：', result);
       
       // 更新签到人头
-      this.signCount = result.data.signedNumbers
+      this.signCount = result.data[0].signedNumbers
+      // this.signCountShow.nativeElement.value = result.data.signNumbers
       
       // 查询到已经是结束状态了
       if(result.data[0].endTimestamp < result.data[0].nowTimeStamp ){
 
-        console.log('时间超过计时时间！');
+        // console.log('时间超过计时时间！');
         
         // 结束
         this.isEnd = true
@@ -197,13 +208,7 @@ export class SignInPage implements OnInit {
         this.presentToast('签到时间到，签到结束！')
         // 跳转回前一页
         this.onBackTo('/tabs/create-classes/sign-in-teacher')
-      }else{
-        // 签到没结束
-        console.log('时间没超时！',);
-        
       }
-
-
 
     }).catch((error) => {
       console.log('刷新签到情况错误');
@@ -223,9 +228,6 @@ export class SignInPage implements OnInit {
         {
           text: '取消',
           role: 'cancel',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
         }, {
           text: '确认',
           handler: ()=>{
@@ -234,7 +236,6 @@ export class SignInPage implements OnInit {
             this.zrServices.cancelSignIn(this.signId).then((result:any) => {
 
               if(result.code == '200'){
-                console.log('放弃该次签到：', this.signId);
                 
                 // 放弃逻辑
                 this.isStart = false
@@ -242,11 +243,12 @@ export class SignInPage implements OnInit {
                 this.presentToast('放弃签到！','warning')
                 // 跳转回前一页
                 this.onBackTo('/tabs/create-classes/sign-in-teacher')
+              }else{
+              this.presentToast(result.msg,'danger')
               }
 
             }).catch((error) => {
-              console.log('放弃签到页错误');
-              // 已经结束签到了，错误逻辑放这里
+              this.presentToast(error.message,'danger')
               
               // 然后跳转
               this.isStart = false;
@@ -275,9 +277,7 @@ export class SignInPage implements OnInit {
         {
           text: '取消',
           role: 'cancel',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
+          
         }, {
           text: '确认',
           handler: ()=>{
@@ -292,10 +292,13 @@ export class SignInPage implements OnInit {
                 this.presentToast('结束签到成功！')
                 // 跳转回前一页
                 this.onBackTo('/tabs/create-classes/sign-in-teacher')
+              }else{
+              this.presentToast(result.msg,'danger')
               }
 
             }).catch((error) => {
-              console.log('结束签到页错误');
+              // console.log('结束签到页错误');
+              this.presentToast(error.message,'danger')
               // 已经结束过了， 那错误逻辑在这里
 
               // 然后跳转
@@ -339,16 +342,15 @@ export class SignInPage implements OnInit {
 
   // 导航点击返回跳转
   onBack(){
-    console.log('arrived here');
     
     if(this.isStart){
       // 开始了
-      console.log('A type');
+      // console.log('A type');
       
       this.doCancelSignIn()
     }else{
       // 还没开始
-      console.log('B type');
+      // console.log('B type');
       
       this.onBackTo('/tabs/create-classes/sign-in-teacher')
     }

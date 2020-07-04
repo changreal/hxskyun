@@ -17,7 +17,7 @@ export class JoinClassPage implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((result) => {
-      console.log('传入的参数');
+      // console.log('传入的参数');
       
     })
   }

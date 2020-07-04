@@ -6,7 +6,7 @@ import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.se
 import { UserInfoPage } from './user-info/user-info.page';
 import { Router } from '@angular/router';
 import { ZrServicesService } from 'src/app/shared/services/zr-services.service';
-import { UserInfo } from 'src/app/myClass/userinfo';
+// import { UserInfo } from 'src/app/shared/classes/userinfo';
 import { EventService } from 'src/app/shared/services/event.service';
 
 @Component({
@@ -52,15 +52,16 @@ export class MinePage implements OnInit {
 
   ionViewDidEnter() {
     this.userId=this.localStorageService.get('uid','')
-    console.log(this.userinfo)
+    // console.log(this.userinfo)
+
     this.loadUserInfo()
     this.eventService.event.on('userupdate', () => {
       this.loadUserInfo();
     })
 
     // this.loadUserInfo()
-    console.log('mine view in ')
-    console.log(this.userinfo.name)
+    // console.log('mine view in ')
+    // console.log(this.userinfo.name)
     // this.loadUserPage();
     // console.log(this.logined)
   }
@@ -80,12 +81,12 @@ export class MinePage implements OnInit {
    loadUserInfo(){
 
     this.zrServices.getUserByUserId(this.userId).then(async (result:any) => {
-      console.log('here:', result.data);
+      // console.log('here:', result.data);
       if(result.success){
         this.userinfo.name=result.data.name 
       }  
     }).catch((error) => {
-      console.log('获取用户信息失败', error)
+      // console.log('获取用户信息失败', error)
     })
   }
    logout() {

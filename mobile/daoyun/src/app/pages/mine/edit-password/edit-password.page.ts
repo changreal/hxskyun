@@ -32,7 +32,7 @@ export class EditPasswordPage extends BaseUI implements OnInit {
     }
     if ( this.isOldPassword && this.newPassword == this.checkPassword) {
       this.zrServices.updateUserinfo(params).then((result:any) => {
-        console.log('更新:', result.data.password);
+        // console.log('更新:', result.data.password);
         if(result.code=='200'){
            super.showToast(this.toastController,'更新成功,重新登录')
            this.router.navigateByUrl('/login') 
@@ -40,7 +40,7 @@ export class EditPasswordPage extends BaseUI implements OnInit {
            this.localStorageService.remove('uid');    
        }
        }).catch((error) => {
-        console.log('错了。。。。')
+        // console.log('错了。。。。')
          super.showToast(this.toastController,'密码更新失败')
        })
     }
@@ -59,9 +59,9 @@ export class EditPasswordPage extends BaseUI implements OnInit {
   loadUserInfo(){
 
     this.zrServices.getUserByUserId(this.userId).then(async (result:any) => {
-      console.log('here:', result.data);
+      // console.log('here:', result.data);
       if(result.code=='200'){
-          console.log('asgagaeegeagr'+result.data.roleId)   
+          // console.log('asgagaeegeagr'+result.data.roleId)   
           this.oldPass=result.data.password
       } else{
         // super.showToast(this.toastController,'获取信息失败')

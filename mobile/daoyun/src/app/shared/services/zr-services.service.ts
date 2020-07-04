@@ -308,9 +308,10 @@ export class ZrServicesService {
     })
   }
 
+
   // 某次历史签到结果详细信息
   getSignDetailBySignId(signId){
-    let url = this.config.domain + '/signDeital/' + signId
+    let url = this.config.domain + '/course/selectOnceCourseSignResult/' + signId
   
     return new Promise((resolve, reject) => {
 
@@ -347,7 +348,6 @@ export class ZrServicesService {
 
   // 开始签到
   createSignIn(courseId, longitude, latitude, duration ){
-    console.log('duration:', duration);
     
     let url = this.config.domain + '/course/sendCourseSign'
     let data = {
@@ -402,7 +402,7 @@ export class ZrServicesService {
   // 参加签到
   attendSignIn(params){
     let url = this.config.domain + '/course/joinCourseSign'
-
+    // console.log(params);
     return new Promise((reslove, reject) => {
       this.http.post(url, JSON.stringify(params),this.httpOptions).subscribe((response) => {
         reslove(response);

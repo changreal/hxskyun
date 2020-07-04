@@ -67,7 +67,7 @@ export class LoginPage extends BaseUI implements OnInit {
         "password" : this.password
       }
       // 验证登录账号与密码，不对的话给出错误提示
-      super.showLoading(this.loadingController,"登录中。。。。")
+      super.showLoading(this.loadingController,"登录中")
       this.zrServices.login(params).then((result:any) => {
         console.log('登录的result是：', result);
         if(result.code=='100'){

@@ -3,13 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/join-classes"></ion-back-button>
     </ion-buttons>
-    <ion-title>签到</ion-title>
+    <ion-title>{{courseName}}签到</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-    <ion-item lines='none'  class="ion-margin" button (click)="doSignIn()">
+    <ion-item lines='none'  class="ion-margin" button (click)="doSignIn()" [disabled]="hasSigned">
       <ion-label class="ion-padding-vertical"  color="primary">
         <!-- <ion-button  expand="block" fill="clear" size='large' shape="round"> -->
           <ion-avatar class="ion-padding-vertical sign-in-avatar ion-text-center"   >
@@ -26,7 +26,7 @@
 
     <!-- 列表头 -->
     <ion-list-header lines='full' class="ion-padding-horizontal">
-      <ion-label>历史签到记录</ion-label>
+      <ion-label>{{courseName}}历史签到记录</ion-label>
       <ion-label class="ion-text-right" color="primary">{{signCount}}次</ion-label>
     </ion-list-header>
 
@@ -38,10 +38,6 @@
       </ion-label>
     </ion-item>
 
-  </ion-list>
-  
-  <ion-list>
-    <ion-button  (click)="qrscanner6()" >测试百度地图</ion-button>
   </ion-list>
 
 </ion-content>

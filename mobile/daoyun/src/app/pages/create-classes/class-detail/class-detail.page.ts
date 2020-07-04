@@ -3,6 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ZrServicesService } from "../../../shared/services/zr-services.service";
 import { LocalStorageService } from "../../../shared/services/local-storage.service";
 import { ToastServiceProvider } from "../../../shared/services/toast-service.service";
+import { BaseUI } from 'src/app/common/baseui';
+import { LoadingController } from '@ionic/angular';
+
 
 import { EventService } from 'src/app/shared/services/event.service';
 
@@ -11,7 +14,7 @@ import { EventService } from 'src/app/shared/services/event.service';
   templateUrl: './class-detail.page.html',
   styleUrls: ['./class-detail.page.scss'],
 })
-export class ClassDetailPage implements OnInit {
+export class ClassDetailPage extends BaseUI implements OnInit {
 
   semesters:any[]=[ //学期
     {id:'1', name:'2019-2020-1'},
@@ -38,12 +41,16 @@ export class ClassDetailPage implements OnInit {
     private toastService: ToastServiceProvider,
     private router: Router,
     public eventService:EventService,
-    ) { }
+    public loadingController: LoadingController
+
+    ) {
+      super()
+     }
 
   ngOnInit() {
+    super.showLoading( this.loadingController,'请等待',800)
     // 传入课程编号，从而编辑该门课程
     this.activatedRoute.queryParams.subscribe((result:any) => {
-      console.log(result);
       this.courseId = result.courseId;
       this.courseName = result.courseName
     });
@@ -64,11 +71,11 @@ export class ClassDetailPage implements OnInit {
   //   this.eventService.event.emit('memberupdate');
   // }
 
-  // 查询班课信息
+  // 查询班课信息ke
   getCourseInfo(){
     // 根据id获取该班课的信息
     this.zrServices.getCourseByCourseId(this.courseId).then(async (result:any) => {
-      console.log(result);
+      // console.log(result);
       
       if(result.code == '200'){
         this.courseName = result.data.courseName
@@ -81,7 +88,8 @@ export class ClassDetailPage implements OnInit {
         this.courseStatus = result.data.endClassStatus
       }
     }).catch((error) => {
-      console.log('查找班课信息失败', error);
+      this.toastService.errorToast('查找班课信息失败')
+      // console.log('查找班课信息失败', error);
     })
   }
 
@@ -102,6 +110,8 @@ export class ClassDetailPage implements OnInit {
     theCourseInfo['department'] = this.courseDepartment
     theCourseInfo['endClassStatus'] = '已结课'
     
+    super.showLoading( this.loadingController,'请等待',1000)
+
     // 提交到service更新
     this.zrServices.postEidtCourseByCourseId(theCourseInfo).then(async(result:any) => {
       console.log('课程的返回信息', result);
@@ -115,7 +125,7 @@ export class ClassDetailPage implements OnInit {
           courseId : this.courseId
         }
         // this.toastService.presentAlertConfirm('修改班课成功！', url, params)  //回调函数跳转
-        this.toastService.presentAlertConfirm('结束'+this.courseName+'课程！', url)  //回调函数跳转
+        this.toastService.presentAlertConfirm('确定要结束'+this.courseName+'课程吗？', url)  //回调函数跳转
       }else{
         console.log(result.msg);
       }

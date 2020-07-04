@@ -4,6 +4,8 @@ import { ZrServicesService } from "../../../../shared/services/zr-services.servi
 import { LocalStorageService } from "../../../../shared/services/local-storage.service";
 import { ToastServiceProvider } from "../../../../shared/services/toast-service.service";
 import { NgForm } from '@angular/forms';
+import { BaseUI } from 'src/app/common/baseui';
+import { LoadingController } from '@ionic/angular';
 
 
 @Component({
@@ -11,7 +13,7 @@ import { NgForm } from '@angular/forms';
   templateUrl: './edit-class.page.html',
   styleUrls: ['./edit-class.page.scss'],
 })
-export class EditClassPage implements OnInit {
+export class EditClassPage extends BaseUI implements OnInit {
 
   submited:boolean = false
   semesters:any[]= []
@@ -48,9 +50,16 @@ export class EditClassPage implements OnInit {
     private zrServices: ZrServicesService,
     private localStorageService: LocalStorageService,
     private toastService: ToastServiceProvider,
-    private router: Router) { }
+    private router: Router,
+    public loadingController: LoadingController
+    ) { 
+      super()
+
+    }
 
   ngOnInit() {
+    super.showLoading( this.loadingController,'请等待',1000)
+
     this.userId = this.localStorageService.getStore('uid', '2')
     // 传入课程编号，从而编辑该门课程
     this.activatedRoute.queryParams.subscribe((result) => {
@@ -132,16 +141,31 @@ export class EditClassPage implements OnInit {
   // 保存表单项
   onCourseSave(){
     let theCourseInfo:any = {} // 新建课程信息
+
+    theCourseInfo = {
+      'teachId' : this.userId,
+      'courseId' : this.courseId,
+      'courseSemester' : this.course_semester,
+      'major' : this.course_major,
+      'courseName' : this.course_name,
+      'classDes' : this.course_des,
+      'school' : this.course_school,
+      'department' : this.course_department,
+      'endClassStatus' : this.course_status
+    }
     
-    theCourseInfo['teachId'] = this.userId
-    theCourseInfo['courseId'] = this.courseId
-    theCourseInfo['courseSemester'] = this.course_semester
-    theCourseInfo['major'] = this.course_major
-    theCourseInfo['courseName'] = this.course_name
-    theCourseInfo['classDes'] = this.course_des
-    theCourseInfo['school'] = this.course_school
-    theCourseInfo['department'] = this.course_department
-    theCourseInfo['endClassStatus'] = this.course_status
+    // theCourseInfo['teachId'] = this.userId
+    // theCourseInfo['courseId'] = this.courseId
+    // theCourseInfo['courseSemester'] = this.course_semester
+    // theCourseInfo['major'] = this.course_major
+    // theCourseInfo['courseName'] = this.course_name
+    // theCourseInfo['classDes'] = this.course_des
+    // theCourseInfo['school'] = this.course_school
+    // theCourseInfo['department'] = this.course_department
+    // theCourseInfo['endClassStatus'] = this.course_status
+
+
+    super.showLoading( this.loadingController,'请等待',2000)
     
     // 提交到service更新
     this.zrServices.postEidtCourseByCourseId(theCourseInfo).then(async(result:any) => {
@@ -155,6 +179,7 @@ export class EditClassPage implements OnInit {
         let params = {
           courseId : this.courseId
         }
+
         this.toastService.presentAlertConfirm('修改班课成功！', url, params)  //回调函数跳转
         // this.toastService.presentAlertConfirm('修改班课成功！', url)  //回调函数跳转
       }else{

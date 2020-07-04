@@ -26,11 +26,11 @@ export class EditAccountPage implements OnInit {
 loadUserInfo(){
 
   this.zrServices.getUserByUserId(this.userId).then(async (result:any) => {
-    console.log('here:', result.data);
+    // console.log('here:', result.data);
     if(result.success){
         this.shop.phone=result.data.phone
         this.shop.email=result.data.email
-        console.log('asgagaeegeagr'+result.data.roleId)
+        // console.log('asgagaeegeagr'+result.data.roleId)
         
     }
   

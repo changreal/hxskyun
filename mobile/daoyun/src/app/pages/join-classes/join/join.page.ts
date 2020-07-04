@@ -6,6 +6,7 @@ import { ToastController } from '@ionic/angular';
 import { Route } from '@angular/compiler/src/core';
 import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.service';
 import { EventService } from 'src/app/shared/services/event.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-join',
@@ -17,6 +18,7 @@ export class JoinPage extends BaseUI implements OnInit  {
   hasThisClass:boolean = false
    // 临时变量
    userId:any
+   informText:''
   // 班课信息
   courseMajor:string;
   courseName:string
@@ -24,21 +26,23 @@ export class JoinPage extends BaseUI implements OnInit  {
   courseSchool:string
   courseTeacherName:string
   constructor(private activatedRoute: ActivatedRoute, private zrServices: ZrServicesService,public eventService:EventService,
-    private toastController: ToastController,private router:Router, private localStorageService: MylocalstorageService
+    private toastController: ToastController,private router:Router, private localStorageService: MylocalstorageService,
+    public loadingController: LoadingController
     ) {
     super()
     activatedRoute.queryParams.subscribe(queryParams => {
       this.courseId= queryParams.cId;
-      console.log('getcid'+this.courseId)
+      // console.log('getcid'+this.courseId)
     });
    }
 
   ngOnInit() {
+    super.showLoading( this.loadingController,'请等待',900)
     this.userId=this.localStorageService.get('uid','')
     this.loadCourseInfo()
   }
   ionViewDidLeave(){
-    console.log('joinclass leave')
+    // console.log('joinclass leave')
     this.eventService.event.emit('classupdate');
   }
   loadCourseInfo(){
@@ -53,17 +57,23 @@ export class JoinPage extends BaseUI implements OnInit  {
         this.courseTeacherName = result.data.teacherName
         this.courseDepartment = result.data.department
       }
+      if(result.code !='200'){
+        this.informText = result.msg
+      }
     
     }).catch((error) => {
       console.log('获取课程信息失败', error)
+      this.informText = error.message
     })
   }
+
   joinClass(){
     console.log('joinclass work')
     let params:object = {
       "courseId" : this.courseId,
       "studentId" : this.userId
     }
+    super.showLoading( this.loadingController,'请等待',1200)
     this.zrServices.joinClass(params).then((result:any) => {
      if(result.code=='200'){
         super.showToast(this.toastController,'加入班课成功')

@@ -1,8 +1,11 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/mine/user-info"></ion-back-button>
+    </ion-buttons>
     <ion-title>学校选择</ion-title>
   </ion-toolbar>
-  <ion-searchbar placeholder="请输入学校拼音或汉字" (ionInput)="getItems($event)"></ion-searchbar>
+  <!-- <ion-searchbar placeholder="请输入学校拼音或汉字" (ionInput)="getItems($event)"></ion-searchbar> -->
 </ion-header>
 
 <ion-content>

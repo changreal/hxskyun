@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button routerLink="/tabs/mine"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/mine"></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">用户信息</ion-title>
+    <ion-title class="ion-text-start">用户信息</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content >
     <!-- <ion-list >
       <ion-item button detail  routerLink="/mine/headfaces">
         <ion-avatar item-start>
@@ -32,7 +32,7 @@
       </ion-item>
     </ion-list>
 
-    <ion-list >
+    <ion-list  lines='full' >
       <ion-item button detail  routerLink="/edit-school">
         <ion-label>
           <ion-text color="primary">
@@ -45,7 +45,7 @@
       </ion-item>
     </ion-list>
 
-    <ion-list>
+    <ion-list  lines='full'>
       <ion-list-header>
         选择性别
       </ion-list-header>
@@ -61,7 +61,7 @@
     </ion-radio-group>
     </ion-list>
 
-    <ion-list>
+    <ion-list  lines='full'>
       <ion-list-header >
         选择身份
       </ion-list-header>
@@ -81,15 +81,15 @@
     </ion-radio-group>
     </ion-list>
 
-  <ion-list>
+  <ion-list  lines='full'>
     <ion-item>
       <ion-label>学号/工号:</ion-label>  
       <!-- <ion-input type="text" [(ngModel)]="userDetail.userId"></ion-input> -->
-      <ion-note slot="end" color='primary'>{{userDetail.userId}}</ion-note>
+      <ion-text slot="end" color='primary'>{{userDetail.userId}}</ion-text>
     </ion-item>
   </ion-list>
 
-    <div style="text-align: center;">
-      <ion-button expand="full" color="primary" (click)="onSave()">保存</ion-button>
+    <div style="text-align: center;" class="ion-padding">
+      <ion-button expand="full" color="primary" (click)="onSave()" shape='round'>保存</ion-button>
   </div>
 </ion-content>

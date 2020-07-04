@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-text-center">我的</ion-title>
+    <ion-title >我的</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -18,9 +18,10 @@
   <div  >
     <ion-list class="top-list"  >
       <ion-item button detail  routerLink="/mine/user-info" >
-        <!-- <ion-avatar item-start>
-          <img src="{{headface}}" />
-        </ion-avatar> -->
+        <ion-avatar item-start>
+          <!-- <img src="{{headface}}" /> -->
+          <div class="profile_icon_blue2">{{userinfo.name[0]}}</div>
+        </ion-avatar>
       <ion-label>
         <ion-text color="primary">
           <h2>&nbsp;&nbsp;&nbsp;{{userinfo.name}}</h2>
@@ -111,7 +112,7 @@
     </ion-list>
 
     <div style="text-align: center;" class="ion-padding" >
-      <ion-button expand="full" color="danger" (click)="logout()">退出当前账号</ion-button>
+      <ion-button expand="full" shape='round' fill='outline' color="danger" (click)="logout()">退出当前账号</ion-button>
     </div>
 
   </div>

@@ -34,12 +34,13 @@ export class UserInfoPage  extends BaseUI implements OnInit {
 
   ngOnInit() {
     this.userId=this.localStorageService.get('uid','')
+    this.userDetail.roleId =this.localStorageService.get('roldId','')
     this.loadUserInfo()
   }
   
   ionViewDidEnter(){
     
-    console.log("view enter")
+    // console.log("view enter")
     
     let temp=this.localStorageService.get('schooAandmajor','')
     if (temp){
@@ -47,12 +48,12 @@ export class UserInfoPage  extends BaseUI implements OnInit {
       this.userDetail.major=temp.major
       this.localStorageService.remove('schooAandmajor')
     }
-    console.log('111111111'+this.userDetail.major+this.userDetail.roleId)
+    // console.log('111111111'+this.userDetail.major+this.userDetail.roleId)
   }
    loadUserInfo(){
 
     this.zrServices.getUserByUserId(this.userId).then(async (result:any) => {
-      console.log('here:', result.data);
+      // console.log('here:', result.data);
       if(result.success){
           this.userDetail.school=result.data.school
           this.userDetail.major=result.data.major
@@ -61,7 +62,7 @@ export class UserInfoPage  extends BaseUI implements OnInit {
           this.userDetail.name=result.data.name
           this.userDetail.userId=result.data.userId
           this.userDetail.roleId=String(result.data.roleId)
-          console.log('asgagaeegeagr'+result.data.roleId)
+          // console.log('asgagaeegeagr'+result.data.roleId)
           
       }
     
@@ -72,25 +73,27 @@ export class UserInfoPage  extends BaseUI implements OnInit {
   }
 
   getValue(){
-    console.log('我选中的是', this.userDetail.roleId)
+    // console.log('我选中的是', this.userDetail.roleId)
   }
   ionViewDidLeave(){
-    console.log('userinfo leave')
+    // console.log('userinfo leave')
     this.eventService.event.emit('userupdate');
   }
   onSave(){
    
     
-    console.log(this.userDetail.roleId)
+    // console.log(this.userDetail.roleId)
+    
     this.zrServices.updateUserinfo(this.userDetail).then((result:any) => {
-      console.log('更新:', result.data);
+      // console.log('更新:', result.data);
       if(result.code=='200'){
+        this.localStorageService.set('roleId', this.userDetail.roleId)
          super.showToast(this.toastController,'用户信息更新成功')
          this.router.navigateByUrl('/tabs/mine') 
         // this.router.navigateByUrl('/tabs/mine').then(()=>{location.reload();});
-         console.log(result.code)
+        //  console.log(result.code)
          console.log('userdetail：',result.data);
-         console.log(result.msg)
+        //  console.log(result.msg)
      }else {
          super.showToast(this.toastController,'用户信息更新失败')
      }

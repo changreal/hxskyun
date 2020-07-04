@@ -5,7 +5,7 @@ import { ToastController } from '@ionic/angular';
 import { BaseUI } from 'src/app/common/baseui';
 import { MylocalstorageService } from 'src/app/shared/services/mylocalstorage.service';
 import { EventService } from 'src/app/shared/services/event.service';
-
+import { LoadingController } from '@ionic/angular';
 
 
 @Component({
@@ -29,20 +29,22 @@ export class ClassDetailPage extends BaseUI implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,private localStorageService: MylocalstorageService,
               private zrServices: ZrServicesService,private toastController: ToastController,private router:Router,
-              public eventService:EventService) {
+              public eventService:EventService,
+              public loadingController: LoadingController
+    ) {
     super()
 
   }
 
   ngOnInit() {
     // this.userId=this.localStorageService.get('uid','')
+    super.showLoading( this.loadingController,'请等待',800)
     this.activatedRoute.queryParams.subscribe((result:any)=>{
       this.courseId = result.courseId
-      
     })
   }
   ionViewDidLeave(){
-    console.log('joinclass leave')
+    // console.log('joinclass leave')
     this.eventService.event.emit('classupdate');
   }
   ionViewWillEnter() {
@@ -52,7 +54,7 @@ export class ClassDetailPage extends BaseUI implements OnInit {
   loadCourseInfo(){
 
     this.zrServices.getCourseByCourseId(this.courseId).then(async (result:any) => {
-      console.log('here:', result.data);
+      // console.log('here:', result.data);
       if(result.success){
         this.hasThisClass = true
         this.courseName = result.data.courseName
@@ -69,20 +71,18 @@ export class ClassDetailPage extends BaseUI implements OnInit {
     
   }
   exitClass(){
-    console.log('exitclass work')
+    // console.log('exitclass work')
     let params:object = {
       "courseId" : this.courseId,
       "studentId" : this.userId
     }
+    super.showLoading( this.loadingController,'请等待',800)
     this.zrServices.exitClass(params).then((result:any) => {
-      console.log('resulet'+result.code)
+      // console.log('resulet'+result.code)
      if(result.code=='200'){
         super.showToast(this.toastController,'退出班课成功')
         location.replace('/tabs/join-classes')
-        
         // this.router.navigateByUrl('/tabs/join-classes') 
-        // console.log(result.code)
-        // console.log('exit msg'+result.msg)
     }
     }).catch((error) => {
       super.showToast(this.toastController,'退出班课失败')

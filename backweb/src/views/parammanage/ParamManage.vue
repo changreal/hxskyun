@@ -1,31 +1,30 @@
 <template>
   <div>
-    <el-table :data="params" style="width: 100%" row-key="id" lazy
-              :tree-props="{children:'children',hasChildren:'hasChildren'}" highlight-current-row max-height="500px">
-      <el-table-column fixed prop="id" label="编号"></el-table-column>
+    <el-table :data="classInf" style="width: 100%"
+              stripe highlight-current-row>
+      <el-table-column fixed prop="courseId" label="班课编码"></el-table-column>
       <!--      <el-table-column fixed label="班课号" prop="classNum"></el-table-column>-->
-      <el-table-column fixed label="班课名" prop="className"></el-table-column>
-      <el-table-column fixed label="参数名" prop="paramName"></el-table-column>
-      <el-table-column fixed label="参数值" prop="value"></el-table-column>
-      <el-table-column fixed label="备注" prop="note"></el-table-column>
-      <el-table-column align="center" label="操作">
+      <el-table-column fixed label="班课名" prop="courseName"></el-table-column>
+      <el-table-column fixed label="课程学期" prop="courseSemester"></el-table-column>
+      <el-table-column fixed label="课程状态" prop="endClassStatus"></el-table-column>
+      <el-table-column fixed label="课程描述" prop="classDes"></el-table-column>
+      <el-table-column fixed label="教师编号" prop="teachId"></el-table-column>
+      <el-table-column fixed label="教师名" prop="teacherName"></el-table-column>
+      <el-table-column align="center" label="课程管理">
         <template slot-scope="scope">
-          <el-button v-show="!isEdit&&scope.row.className!=null" type="warning" size="mini" @click="editParam(scope.$index,scope.row)">编辑</el-button>
-          <el-button v-show="isEdit&&scope.row.className!=null" type="success" size="mini"  @click="saveParam(scope.$index,scope.row)">保存</el-button>
+          <el-button type="warning" size="small" @click="editClassStatus(scope.$index,scope.row)">更改课程状态</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog :visible="dialogVisible" width="400px">
-      <h3>{{className}}</h3>
-      <el-form align="center">
-        <el-form-item label="签到得分" label-width="formLabelWidth">
-          <el-input v-model="param1Value" size="small" style="width: 200px"></el-input>
-        </el-form-item>
-        <el-form-item label="签到距离" label-width="formLabelWidth">
-          <el-input v-model="param2Value" style="width: 200px"></el-input>
-        </el-form-item>
-        <el-form-item label="作业得分" label-width="formLabelWidth">
-          <el-input v-model="param3Value" style="width: 200px"></el-input>
+    <el-dialog :visible.sync="dialogVisible"  width="400px">
+      <h3>{{editClass.courseName}}课程状态</h3>
+      <el-form>
+        <el-form-item align="center">
+          <template>
+            <el-radio v-model="editClass.endClassStatus" label="未开始"></el-radio>
+            <el-radio v-model="editClass.endClassStatus" label="进行中"></el-radio>
+            <el-radio v-model="editClass.endClassStatus" label="已结课"></el-radio>
+          </template>
         </el-form-item>
         <el-form-item align="center">
           <el-button type="success" size="small" @click="saveParam">保存</el-button>
@@ -42,63 +41,34 @@
     data(){
       return{
         isEdit:false,
-        params:[
-          {
-            id:'1000',className: '工程实训',children:[{
-              id:'10001',paramName:'签到得分',value:'2',note:'签到一次所得积分',
-            },{
-              id:'10002',paramName:'签到距离',value:'1',note:'签到距离范围（km）',
-            },{
-              id:'10003',paramName:'作业得分',value:'10',note:'一次作业最高得分',
-            }]
-          },
-          {
-            id:'1001',className: '人工智能',children:[{
-              id:'10011',paramName:'签到得分',value:'2',note:'签到一次所得积分',
-            },{
-              id:'10012',paramName:'签到距离',value:'1',note:'签到距离范围（km）',
-            },{
-              id:'10013',paramName:'作业得分',value:'10',note:'一次作业最高得分',
-            }]
-          },
-          {
-            id:'1002',className: '大数据分析',children:[{
-              id:'10021',paramName:'签到得分',value:'2',note:'签到一次所得积分',
-            },{
-              id:'10022',paramName:'签到距离',value:'1',note:'签到距离范围（km）',
-            },{
-              id:'10023',paramName:'作业得分',value:'10',note:'一次作业最高得分',
-            }]
-          },
-        ],
+        classInf:[],
         formLabelWidth: '100px',
         dialogVisible:false,
+        editClass:[],
         className:'',
         classId:'',
-        param1Value:'',
-        param2Value:'',
-        param3Value:'',
+        classStatus:''
       }
     },
     methods:{
-      editParam(index,row){
+      editClassStatus(index,row){
+        this.editClass=row;
         this.dialogVisible=true;
-        this.className=row.className;
-        this.classId=row.id
-        this.param1Value=row.children[0].value;
-        this.param2Value=row.children[1].value;
-        this.param3Value=row.children[2].value;
       },
       saveParam(){
-        for(let i in this.params){
-          if(this.params[i].id==this.classId){
-            this.params[i].children[0].value=this.param1Value;
-            this.params[i].children[1].value=this.param2Value;
-            this.params[i].children[2].value=this.param3Value;
-          }
-        }
+        this.$api.classManage.editClassById(this.editClass)
+        .then(response=>{})
         this.dialogVisible=false;
       }
+    },
+    created() {
+      this.$api.classManage.getClassAll()
+      .then(response=>{
+        console.log(response);
+        for(let i=0;i<response.data.data.length;i++){
+          this.classInf.push(response.data.data[i]);
+        }
+      })
     }
   }
 </script>

@@ -2,20 +2,20 @@
   <div>
     <el-form :inline="true" class="demo-form-inline">
       <el-form-item>
-        <el-input size="mini" placeholder="请输入菜单名"></el-input>
+        <el-input placeholder="请输入菜单名"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button size="mini" type="success">查询</el-button>
+        <el-button type="success">查询</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button size="mini" type="primary">新增</el-button>
+        <el-button type="primary">新增</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="routeInf" style="width: 100%;margin-bottom: 20px;" row-key="id" lazy :default-expand-all="true"
                :tree-props="{children:'children',hasChildren:'hasChildren'}">
       <el-table-column prop="name" label="菜单标题" sortable width="180"></el-table-column>
       <el-table-column prop="path" label="路由地址" sortable width="180"></el-table-column>
-      <el-table-column prop="permission" label="权限等级" sortable width="180"></el-table-column>
+      <el-table-column prop="roleDescribe" label="权限描述" sortable width="180"></el-table-column>
       <el-table-column label="状态" sortable width="180">
         <template slot-scope="scope">
           <span v-show="scope.row.isShow">启用</span>
@@ -24,8 +24,8 @@
       </el-table-column>
       <el-table-column label="操作" sortable>
         <template slot-scope="scope">
-          <el-button type="primary" v-show="scope.row.id>=10" size="small" @click="editMenuItem(scope.$index,scope.row)">编辑</el-button>
-          <el-button type="danger" v-show="scope.row.id>=10" size="small">删除</el-button>
+          <el-button v-show="scope.row.id>=10" type="primary" size="small" @click="editMenuItem(scope.$index,scope.row)">编辑</el-button>
+<!--          <el-button type="danger" v-show="scope.row.id>=10" size="small">删除</el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -100,6 +100,15 @@
         },
         saveMenuItem(){
           console.log(this.menuIsShow);
+          let menuStatus;
+          if(this.menuIsShow==true){
+            menuStatus=1;
+          }else if(this.menuIsShow==false){
+            menuStatus=0;
+          }else {
+            menuStatus=-1;
+          }
+
           for(let i in this.routeInf){
             if(this.routeInf[i].id==this.menuId){
               this.routeInf[i].name=this.menuName;
@@ -110,6 +119,11 @@
                 if(this.routeInf[i].children[j].id==this.menuId){
                   this.routeInf[i].children[j].name=this.menuName;
                   this.routeInf[i].children[j].isShow=this.menuIsShow;
+                  this.$api.menuManage.editMenuAuth(
+                    this.menuId-10,menuStatus,this.menuName,this.routeInf[i].children[i].roleDescribe)
+                    .then(response=>{
+                      console.log(response);
+                    })
                 }
               }
             }
@@ -125,8 +139,10 @@
       this.routeInf=[];
       let j=0;
       for(let index in jsonRoute){
-        this.routeInf[j]=jsonRoute[index];
-        j++;
+        if(jsonRoute[index].children){
+          this.routeInf[j]=jsonRoute[index];
+          j++;
+        }
       }
       let route;
 

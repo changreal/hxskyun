@@ -228,7 +228,9 @@ import AbnormalView from "./AbnormalView";
         },
       },
     created() {
+      for(let i=0;i<6;i++){
 
+      }
     }
 
     }

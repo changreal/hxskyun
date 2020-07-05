@@ -6,6 +6,12 @@ export default {
       method:'get'
     })
   },
+  getRoleById(roleId){
+    return request({
+      url:'/Role/selectRoleById/'+roleId,
+      method:'get',
+    })
+  },
   newRole(roleId,roleName,roleDescription){
     return request({
       url:'/Role/insertRole',

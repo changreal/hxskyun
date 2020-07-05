@@ -11,7 +11,12 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-
+      '/api': {
+        target: 'http://175.24.16.48:8082',
+        pathRewrite: {
+          '^/api': '/static/mock'
+        }
+      }
     },
 
     // Various Dev Server settings
@@ -52,13 +57,13 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',//原为/
 
     /**
      * Source Maps
      */
 
-    productionSourceMap: true,
+    productionSourceMap: false,//原为true
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 

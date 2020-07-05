@@ -2,6 +2,8 @@ import request from '../utils/request'
 import dicManage from './DicManage'
 import userManage from './UserManage'
 import roleManage from './RoleManage'
+import menuManage from './MenuManage'
+import classManage from './classManage'
 export default{
   login(username,password){
     return request({
@@ -20,6 +22,8 @@ export default{
   dicManage,
   userManage,
   roleManage,
+  menuManage,
+  classManage,
   test(){
     return request({
       url:'/Login/hello',

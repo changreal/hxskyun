@@ -49,7 +49,7 @@
       </el-form>
       <el-form>
         <el-form-item align="center">
-          <el-button type="primary" size="small" @click="saveUser">保存</el-button>
+          <el-button type="primary" size="small"  @click="saveUser">保存</el-button>
           <el-button type="warning" size="small" @click="dialogVisible=false">取消</el-button>
 <!--          <el-button type="warning" size="small" @click="getNewUserTableInfo">测试</el-button>-->
         </el-form-item>
@@ -170,17 +170,24 @@
           this.dialogVisible=false;
         },
         deleteUser(index,row){
-          // console.log(row.userId);
-          let userId;
-          console.log(typeof(row.userId));
-          userId=row.userId.toString();
-          console.log(typeof(userId));
-          this.$api.userManage.deleteUser(userId)
+          console.log(row.userId);
+          this.$api.userManage.deleteUser(row.userId)
           .then(response=>{
             console.log(response);
-          }).catch(error=>{
-            console.log(error);
-          });
+          })
+          // console.log(row.userId);
+          // let userId;
+          //
+          // console.log(typeof(row.userId));
+          // userId=row.userId.toString();
+          // console.log(userId);
+          // console.log(typeof(userId));
+          // this.$api.userManage.deleteUser(userId)
+          // .then(response=>{
+          //   console.log(response);
+          // }).catch(error=>{
+          //   console.log(error);
+          // });
         },
       },
       created() {

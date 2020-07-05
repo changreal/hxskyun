@@ -9,21 +9,19 @@
                height="60" />
         </div>
         <div>
-          <!-- 我是样例菜单 -->
+
           <el-menu default-active="defaultActive"
                    router
                    class="el-menu-vertical-demo"
                    active-text-color="#409EFF"
                    :collapse="isCollapse">
-            <template v-for="route in routeInf" v-if="route.children && route.children.length">
-              <template v-for="item in route.children">
-                <el-menu-item  v-show="item.isShow"
-                  :key= "route.path + '/' +item.path"
-                  :index= "item.path">
+            <template v-for="route in showMenu">
+                <el-menu-item v-show="route.isShow"
+                  :key= "route.path"
+                  :index= "route.path">
                   <i class="el-menu-item"></i>
-                  <span slot="title">{{item.name}}</span>
+                  <span slot="title">{{route.name}}</span>
                 </el-menu-item>
-              </template>
             </template>
           </el-menu>
         </div>
@@ -78,11 +76,46 @@
       return {
         username: '',
         isCollapse: false,
+        userRole:'',
         routeInf:[],
+        menuAuth:[{
+            name:'角色管理',
+            id:1,
+            isShow:true,
+            path: '/index/role',
+          },{
+            name:'用户管理',
+            id:2,
+            isShow:true,
+            path: '/index/user',
+          },{
+            name:'菜单管理',
+            id:3,
+            isShow:true,
+            path: '/index/menu',
+          },{
+            name:'字典管理',
+            id:4,
+            isShow:true,
+            path: '/index/dictionary',
+          },{
+            name:'班课管理',
+            id:5,
+            isShow:true,
+            path: '/index/param',
+          },
+            {
+            name:'组织管理',
+            id:6,
+            isShow:true,
+            path: '/index/organize',
+          }
+      ],
+        showMenu:[],
       }
     },
     components: {
-      StandardEdit
+      // StandardEdit
     },
     methods: {
       toggleSideBar() {
@@ -107,18 +140,70 @@
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
       },
+      updateRouteStatus(){
+        this.routeInf.sort((a,b)=>a.permissionId-b.permissionId);
+        for(let i=0;i<this.routeInf.length;i++){
+            if(this.routeInf[i].useStatus==1){
+              this.menuAuth[i].isShow=true;
+            }else if(this.routeInf[i].useStatus==0){
+              this.menuAuth[i].isShow=false;
+            }
+            this.menuAuth[i].name=this.routeInf[i].permissionName;
+          }
+        let routeAuth;
+        this.$api.roleManage.getRoleById(this.userRole)
+        .then(response=>{
+          // console.log(response);
+          routeAuth=response.data.data.rightList;
+          for(let i=0;i<routeAuth.length;i++){
+                this.showMenu.push(this.menuAuth[routeAuth[i]-1]);
+          }
+        // let user = localStorage.getItem('user');
+        // if (user) {
+        //   this.username = user;
+        // }
+        })
+      },
     },
     created() {
-      let jsonRoute=JSON.parse(localStorage.getItem('routeInf'));
-      let j=0;
-      for(let index in jsonRoute){
-        this.routeInf[j]=jsonRoute[index];
-        j++;
+      this.userRole=localStorage.getItem('role');
+      let routeAuth;
+      for(let i=0;i<this.menuAuth.length;i++){
+        this.$api.menuManage.selectMenuAuth(i+1)
+        .then(response=>{
+          this.routeInf.push(response.data.data);
+        })
       }
-      let user = localStorage.getItem('user');
-      if (user) {
-        this.username = user;
-      }
+      setTimeout(this.updateRouteStatus,300);
+      // for(let i=0;i<this.routeInf.length;i++){
+      //   if(this.routeInf[i].useStatus==1){
+      //     this.menuAuth[i].isShow=true;
+      //   }else if(this.routeInf[i].useStatus==0){
+      //     this.menuAuth[i].isShow=false;
+      //   }
+      //   this.menuAuth[i].name=this.routeInf[i].permissionName;
+      // }
+      // this.$api.roleManage.getRoleById(userRole)
+      // .then(response=>{
+      //   // console.log(response);
+      //   routeAuth=response.data.data.rightList;
+      //   console.log(routeAuth);
+      //   for(let i=0;i<routeAuth.length;i++){
+      //         this.showMenu.push(this.menuAuth[routeAuth[i]-1]);
+      //   }
+        let user = localStorage.getItem('user');
+        if (user) {
+          this.username = user;
+        }
+      // })
+
+      // let jsonRoute=JSON.parse(localStorage.getItem('routeInf'));
+      // let j=0;
+      // for(let index in jsonRoute){
+      //   this.routeInf[j]=jsonRoute[index];
+      //   j++;
+      // }
+
     },
 
     mounted: function () {

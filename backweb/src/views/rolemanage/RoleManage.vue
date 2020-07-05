@@ -65,7 +65,7 @@
       </el-form>
       <el-form>
         <el-form-item align="center">
-          <el-button type="success" size="small" @click="saveRole">保存</el-button>
+          <el-button type="success" size="small" :disabled="!editRoleTable.roleName" @click="saveRole">保存</el-button>
           <el-button type="primary" size="small" @click="dialogVisible=false">取消</el-button>
         </el-form-item>
       </el-form>
@@ -121,6 +121,7 @@
               children: 'children',
               label: 'name'
             },
+            saveDisable:true,
       }
       },
 

@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/join-classes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>加入班课</ion-title>
+    <ion-buttons slot="primary" [hidden]='!courseId' >
+      <ion-button color="primary"  routerLink="/join-classes/join" [queryParams]="{cId:courseId}">
+        下一步
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  
+
+  
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+    <ion-label position="fixed">输入班课号</ion-label>
+    <ion-input type="number" placeholder="输入班课号"  [(ngModel)]="courseId"></ion-input>
+  </ion-item>
+
+
+</ion-content>

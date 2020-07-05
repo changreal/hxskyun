@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/join-classes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{courseName}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  >
+
+  <ion-refresher slot="fixed" (ionRefresh)="loadMembers($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="下拉刷新"
+      refreshingSpinner="circles"
+      refreshingText="加载中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  
+  <!-- 信息操作栏 -->
+  <ion-card>
+    <!-- <ion-card-header class="ion-text-center" *ngIf="myInfo">
+      <ion-card-title>当前获得 <span>{{myInfo.exp}}</span> 经验</ion-card-title>
+      <ion-card-subtitle>第 <span>{{myInfo.ranking}}</span> 名</ion-card-subtitle>
+    </ion-card-header> -->
+    
+    <!-- 点击部分 -->
+    <ion-item>
+      <ion-toolbar>
+        <ion-row class="ion-align-items-center"> 
+          <ion-col size='7'>
+            <ion-button  shape='round'  color="primary"  fill="solid" [routerLink]="['/join-classes/sign-in']" [queryParams]='{courseId:courseId,courseName:courseName}'  >
+              <!-- <ion-icon  name="star" size='small'></ion-icon> -->
+              <ion-icon name="hand-left-outline" ></ion-icon>
+               <ion-label color="light">&nbsp;我要签到&nbsp;</ion-label>
+            </ion-button>
+          </ion-col>
+
+          <ion-col size='5'>
+            <ion-button  shape='round'  color="warning" fill="solid" [routerLink]="['/join-classes/class-detail']"   [queryParams]="{courseId:courseId}"  >
+              <ion-icon name="grid-outline"></ion-icon>
+              <ion-label >&nbsp;班课详情&nbsp;</ion-label>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-toolbar>
+    </ion-item>
+
+  </ion-card>
+
+
+  <!-- 成员列表 -->
+  <ion-list lines='full'>
+
+    <!-- 列表头 -->
+    <ion-list-header lines='full' class="ion-padding-horizontal">
+      <ion-label>成员总数</ion-label>
+      <ion-label class="ion-text-right"> {{members_count}}</ion-label>
+    </ion-list-header>
+
+    <!-- 成员信息部分 -->
+
+    <ion-item button  class="member-item" *ngFor="let member of members;let i=index">
+      <!-- 头像部分 -->
+      <ion-note slot="start" class="ion-no-margin ion-margin-vertical">{{member.ranking}}</ion-note>
+      <ion-thumbnail slot="start" class="mythumbnail">
+        <div class="profile_icon_blue">{{member.studentName[0]}}</div>
+      </ion-thumbnail>
+      <!-- 内容部分 -->
+      <ion-label >
+        <h3>{{member.studentName}}</h3>
+        <p>{{member.studentId}} <span class="exp ion-float-right">{{member.studentExp}}&nbsp;经验值</span> </p>
+      </ion-label>
+    </ion-item>
+
+
+  </ion-list>
+
+
+
+  
+</ion-content>

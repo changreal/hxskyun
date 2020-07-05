@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" color="primary"></ion-back-button>
+    </ion-buttons>
+    
+    <ion-title >选择院系</ion-title> 
+    <ion-buttons slot="end" color="primary" (click)='chooseSuc()'>完成</ion-buttons>
+  </ion-toolbar>
+  <!-- <ion-searchbar placeholder="输入院系名称搜索" (ionInput)="getItems($event)"></ion-searchbar> -->
+</ion-header>
+
+<ion-content>
+  
+  <ion-item-sliding *ngFor="let c of filteryx">
+    <ion-item >
+      <ion-label>{{c}}</ion-label>
+      <ion-radio mode='ios' slot="end" value={{c}}></ion-radio>
+    </ion-item>
+  </ion-item-sliding>
+  
+  <ion-radio-group [(ngModel)]="user.value" (ionChange)='getValue()'>
+    <ion-item *ngFor="let c of yx">
+      <ion-label>{{c}}</ion-label>
+      <ion-radio mode='ios' slot="end" value={{c}}></ion-radio>    
+    </ion-item>
+  </ion-radio-group>
+</ion-content>

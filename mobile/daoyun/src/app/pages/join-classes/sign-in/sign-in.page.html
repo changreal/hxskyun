@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/join-classes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{courseName}}签到</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-item lines='none'  class="ion-margin" button (click)="doSignIn()" [disabled]="hasSigned">
+      <ion-label class="ion-padding-vertical"  color="primary">
+        <!-- <ion-button  expand="block" fill="clear" size='large' shape="round"> -->
+          <ion-avatar class="ion-padding-vertical sign-in-avatar ion-text-center"   >
+            <ion-icon name="checkbox-outline" size='large'></ion-icon>
+            <h5>签到</h5>
+          </ion-avatar>
+        <!-- </ion-button> -->
+      </ion-label>
+    </ion-item>
+
+    
+  <!-- 签到列表 -->
+  <ion-list lines='full'>
+
+    <!-- 列表头 -->
+    <ion-list-header lines='full' class="ion-padding-horizontal">
+      <ion-label>{{courseName}}历史签到记录</ion-label>
+      <ion-label class="ion-text-right" color="primary">{{signCount}}次</ion-label>
+    </ion-list-header>
+
+    <!-- 内容部分 -->
+    <ion-item *ngFor="let item of myInfo">
+      <ion-label >
+        <h4><time>{{item.endTime | date:'yyyy-MM-dd'}}</time>&nbsp;签到 </h4>
+        <p><time> {{item.endTime | date:'HH:mm:ss'}} </time> <span class="exp ion-float-right">{{item.signStatus}}</span> </p>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

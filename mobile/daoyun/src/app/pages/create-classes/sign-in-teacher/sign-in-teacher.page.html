@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/create-classes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>发起签到</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+    <ion-item lines='none'  class="ion-margin" button (click)="doSignIn()" >
+      <ion-label class="ion-padding-vertical"  color="primary">
+        <ion-avatar class="ion-padding-vertical sign-in-avatar ion-text-center"  >
+          <ion-icon name="checkbox-outline" size='large'></ion-icon>
+          <h5>签到</h5>
+        </ion-avatar>
+      </ion-label>
+    </ion-item>
+
+
+    <!-- 列表头 -->
+    <ion-list-header lines='full' class="ion-padding-horizontal">
+      <ion-label color="medium">{{courseName}}&nbsp;历史签到记录</ion-label>
+      <ion-label class="ion-text-right">考勤次数：<a class="primary" >{{signCount}}</a></ion-label>
+    </ion-list-header>
+ 
+    
+  <!-- 签到列表 -->
+  <ion-list lines='full' *ngIf="signCount!='0'">
+
+    <!-- 内容部分 -->
+    <ion-item detail button [routerLink]="['/create-classes/sign-in-teacher/sign-in-result']" [queryParams]='{signId:sign.signId}'
+     *ngFor="let sign of historySignList"  >
+      <ion-label >
+        <h4><time>{{sign.createDate | date:'yyyy-MM-dd'}}</time>&nbsp;签到 <span class="ion-float-right sign-in-people ">{{sign.signCount}}人/{{courseMembersCount}}人</span></h4>
+        <p><time>{{sign.createDate | date:'HH:mm:ss'}}</time></p>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+
+
+</ion-content>

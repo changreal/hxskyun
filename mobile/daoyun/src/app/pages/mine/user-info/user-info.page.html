@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/mine"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-start">用户信息</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+    <!-- <ion-list >
+      <ion-item button detail  routerLink="/mine/headfaces">
+        <ion-avatar item-start>
+          <img src="{{headface}}" />
+        </ion-avatar>
+        <ion-label>修改头像</ion-label>
+      </ion-item>
+    </ion-list> -->
+
+    <ion-list >
+      <ion-item>
+        <ion-label>姓名:</ion-label>  
+        <ion-input  type="text" item-end [(ngModel)]="userDetail.name" ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>昵称:</ion-label>  
+        <ion-input type="text" [(ngModel)]="userDetail.name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>出生年份:</ion-label>  
+        <ion-input type="text" [(ngModel)]="userDetail.birthDate"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-list  lines='full' >
+      <ion-item button detail  routerLink="/edit-school">
+        <ion-label>
+          <ion-text color="primary">
+            <h2>你所在的学校及院系</h2>
+          </ion-text>
+          <ion-text>
+            <p>{{userDetail.school}}&nbsp;&nbsp;&nbsp;{{userDetail.major}}</p>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-list  lines='full'>
+      <ion-list-header>
+        选择性别
+      </ion-list-header>
+      <ion-radio-group  [(ngModel)]="userDetail.sex"  (ionChange)='getValue()'>
+      <ion-item>
+        <ion-label>男</ion-label>
+        <ion-radio slot="end" value="男"></ion-radio>    
+      </ion-item>
+      <ion-item>
+        <ion-label>女</ion-label>
+        <ion-radio slot="end" value="女"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+    </ion-list>
+
+    <ion-list  lines='full'>
+      <ion-list-header >
+        选择身份
+      </ion-list-header>
+      <ion-radio-group [(ngModel)]="userDetail.roleId" (ionChange)='getValue()'>
+      <ion-item>
+        <ion-label>我是学生</ion-label>
+        <ion-radio slot="end" value="3"></ion-radio>    
+      </ion-item>
+      <ion-item>
+        <ion-label>我是老师</ion-label>
+        <ion-radio slot="end" value="2"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>其他</ion-label>
+        <ion-radio slot="end" value="1"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+    </ion-list>
+
+  <ion-list  lines='full'>
+    <ion-item>
+      <ion-label>学号/工号:</ion-label>  
+      <!-- <ion-input type="text" [(ngModel)]="userDetail.userId"></ion-input> -->
+      <ion-text slot="end" color='primary'>{{userDetail.userId}}</ion-text>
+    </ion-item>
+  </ion-list>
+
+    <div style="text-align: center;" class="ion-padding">
+      <ion-button expand="full" color="primary" (click)="onSave()" shape='round'>保存</ion-button>
+  </div>
+</ion-content>

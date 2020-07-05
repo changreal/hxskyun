@@ -7,6 +7,7 @@ import { retry, catchError } from 'rxjs/operators'; // 添加
 // 引入environemnts
 import { environment } from "../../../environments/environment";
 import { AjaxResult } from '../classes/ajax-result';
+import { MylocalstorageService } from './mylocalstorage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class CommonService {
       'Accept': 'application/json',
       'Access-Control-Allow-Headers': 'Content-Type, X-Access-Token,Contet-Length, Authorization, Accept, X-Request-With',
       'Access-Control-Allow-Origin': '*',
+      'token':''
       }),
   }
   
@@ -46,15 +48,19 @@ export class CommonService {
     503: '服务不可用，服务器暂时过载或维护。',
     504: '网关超时。',
   };
-  constructor(public http: HttpClient,) {
+  constructor(public http: HttpClient,private localStorageService: MylocalstorageService,) {
     
    }
 
-
   /** get请求promise异步 */
   ajaxGet(url: string, myparams?:any):Promise<AjaxResult> {
-    
+    let token=this.localStorageService.get('Token','')
+    if (token){
+      this.httpOptions.headers=this.httpOptions.headers.set('token',token)
+    }
+    console.log('header token  ',this.httpOptions.headers.get('token'))
     var api=this.config.domain + url;  
+
     return new Promise((resolve, reject) => {
       
       this.http.get(api,{headers: this.httpOptions.headers} ).subscribe((response: any) => {
@@ -71,12 +77,19 @@ export class CommonService {
   
   /** jsonp post请求promise异步 */
   ajaxPost(url: String, json: Object):any {
-
-    console.log(json);
+    let token=this.localStorageService.get('Token','')
+    console.log(token)
+    if (token!=null){
+      
+      this.httpOptions.headers=this.httpOptions.headers.set('token',token)
+    }
+    console.log('header token  ',this.httpOptions.headers.get('token'))
+    console.log('heder',this.httpOptions.headers)
+   
     var api = this.config.domain + url;
 
     return new Promise((resolve, reject) => {
-      this.http.post(api, json).subscribe((response: any) => {
+      this.http.post(api, json,{headers: this.httpOptions.headers}).subscribe((response: any) => {
         resolve(this.handleSuccess(response))
       }, (error) => {
         reject(this.handleError(error));

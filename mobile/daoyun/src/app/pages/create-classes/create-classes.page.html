@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>我创建的班课</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="doCreateCourse()">
+        <ion-icon name="add-outline" size='large'></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <!-- 下拉刷新组件 -->
+  <ion-refresher slot="fixed" (ionRefresh)="loadCourseData($event)" mode='ios'>
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="下拉刷新"
+      refreshingSpinner="circles"
+      refreshingText="加载中...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <!-- 班课列表 -->
+  <ion-list *ngIf="courses_length && role=='2'" >
+
+    <!-- 列表头 -->
+    <!-- <ion-item-divider>
+      <ion-label>
+        班课列表
+      </ion-label>
+    </ion-item-divider> -->
+
+    <!-- 班课部分 -->
+    <ion-item button detail lines='full'  routerLink="/create-classes/members" *ngFor="let course of courses" [queryParams]="{courseId:course.courseId,courseName:course.courseName}">
+      <!-- 头像部分 -->
+      <ion-thumbnail slot="start">
+        <div class="profile_icon_orange">{{course.courseName[0]}}</div>
+      </ion-thumbnail>
+
+      <!-- 内容部分 -->
+      <ion-label>
+        <!-- 文字部分 -->
+        <ion-text color="primary">
+          <h3>{{course.courseName}}&nbsp;&nbsp;&nbsp;<span class="Tint-gray">{{course.endClassStatus}}</span></h3>
+        </ion-text>
+        <ion-text >
+          <p>{{course.major}}</p>
+        </ion-text>
+
+        <!-- 按钮部分 -->
+        <div>
+          <p><span >{{course.courseSemester}}</span><span class="ion-margin-start " >课程码：<i class="Tint">{{course.courseId}}</i> </span></p>
+          <!-- <ion-buttons slot="secondary" >
+            <ion-button slot="end" size="small" > 
+              <ion-icon name="hand-right-outline" slot="start" size="small"  color="medium" ></ion-icon>
+              发起签到
+            </ion-button>
+          </ion-buttons> -->
+        </div>
+      </ion-label>
+      <!-- 内容部分结束 -->
+    </ion-item>
+    <!-- 班课部分结束 -->
+
+
+
+  </ion-list>
+
+
+</ion-content>

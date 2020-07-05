@@ -1,155 +1,83 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>register</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" color="primary"></ion-back-button>
+    </ion-buttons>
+    <ion-title class='ion-text-center'>注册</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content no-padding>
-  <!-- <div text-center>
-    <img src="assets/imgs/register.jpg" alt="">
-  </div> -->
-  <!-- <ion-grid>
-    <ion-row>
-      <ion-col>
-        <img src="assets/imgs/registered_one_one.png" alt="">
-      </ion-col>
-      <ion-col align-self-center>
-        <hr class="line">
-      </ion-col>
-      <ion-col>
-        <img src="assets/imgs/registered_two.png" alt="">
-      </ion-col>
-      <ion-col align-self-center>
-        <hr class="line">
-      </ion-col>
-      <ion-col>
-        <img src="assets/imgs/registered_three.png" alt="">
-      </ion-col>
-      <ion-col align-self-center>
-        <hr class="line">
-      </ion-col>
-      <ion-col>
-        <img src="assets/imgs/register_four.png" alt="">
-      </ion-col>
-    </ion-row>
-  </ion-grid> -->
-  <div>
-    <ion-slides #registerSlides>
-      <ion-slide>
-        <!-- <h1>账号密码及验证</h1> -->
-        <form #registerForm1="ngForm">
-          <ion-list>
-            <ion-row>
-              <ion-item>
-              <ion-input name="email" type="text" placeholder="请输入您的电子邮箱" required pattern="^\\d{5,11}$" [(ngModel)]="register.email" #email="ngModel"></ion-input>
-              <!-- <h2 item-end>@qq.com</h2> -->
-              </ion-item>
-            </ion-row>
-              <ion-item *ngIf="email.invalid && email.touched">
-                <p [hidden]="!email.errors?.required">请输入电子邮箱</p>
-                <p [hidden]="!email.errors?.pattern">您输入的电子邮箱格式不正确</p>
-              </ion-item>
-            <ion-item>
-              <ion-input name="password" type="password" placeholder="请输入登录密码" required pattern="^(?=.{6,16})[0-9A-Za-z]*[^0-9A-Za-z][0-9A-Za-z]*$" [(ngModel)]="register.password" #password="ngModel"></ion-input>
-            </ion-item>
-              <ion-item *ngIf="password.invalid && password.touched">
-              <p [hidden]="!password.errors?.required">请输入登录密码</p>
-              <p [hidden]="!password.errors?.pattern">密码长度6至16位，且包含数字、英文、符号</p>
-            </ion-item>
-            <ion-item>
-            <ion-input name="confirmPassword" type="password" placeholder="请输入确认密码" required [(ngModel)]="register.confirmPassword" #confirmPassword="ngModel"></ion-input>
-            </ion-item>
-              <ion-item *ngIf="confirmPassword.invalid && confirmPassword.touched">
-              <p [hidden]="!confirmPassword.errors?.required">请输入确认密码</p>
-              <p [hidden]="password!=confirmPassword">两次输入的密码不一致</p>
-            </ion-item>
-          </ion-list>
-          <ion-grid>
-            <ion-row>
-              <ion-input name="code" type="number" placeholder="请输入收到的验证码" required pattern="^\\d{6}$" [(ngModel)]="register.code" #code="ngModel"></ion-input>
-              <button type="submit" ion-button color="primary" [disabled]="sent" (click)="send()">{{button}}
-              </button>
-            </ion-row>
-          </ion-grid>
-          <ion-item *ngIf="code.invalid && code.touched">
-            <p [hidden]="!code.errors?.required">请输入验证码</p>
-            <p [hidden]="!code.errors?.pattern">您输入的验证码格式不正确</p>
-          </ion-item>
-          <div padding>
-            <button type="submit" ion-button block color="primary" (click)="validateCode()" [disabled]="registerForm1.invalid">注册并填写详细信息</button>
-          </div>
-        </form>
-      </ion-slide>
-      <ion-slide>
-        <h1>步骤2</h1>
-        <form #registerForm2="ngForm">
-          <ion-list>
-            <ion-item>
-              <ion-label>请选择用户类型</ion-label>
-              <ion-select [(ngModel)]="register.usertype" name="usertype" #usertype="ngModel" interface="popover">
-                <ion-select-option value="教师">教师</ion-select-option>
-                <ion-select-option value="学生">学生</ion-select-option>
-              </ion-select>
-            </ion-item>
-            <ion-input type="number" [(ngModel)]="register.id" placeholder="请输入工号或学号" name="id" required #id="ngModel"></ion-input>
-            <ion-item *ngIf="id.invalid && id.touched">
-              <p [hidden]="!id.errors?.required">请输入工号或学号</p>
-            </ion-item>
-          </ion-list>
-          <div padding>
-            <button type="submit" ion-button block color="primary" (click)="previous()">上一步</button>
-            <button type="submit" ion-button block color="primary" (click)="next()" [disabled]="registerForm2.invalid">下一步</button>
-          </div>
-        </form>
-      </ion-slide>
-      <ion-slide>
-        <h1>步骤3</h1>
-        <form #registerForm3="ngForm">
-          <ion-input name="userName" type="text" placeholder="请输入姓名" required pattern="^[\u4e00-\u9fff|0-9A-Za-z|]{1,8}$" [(ngModel)]="register.userName" #userName="ngModel"></ion-input>
-          <ion-item *ngIf="userName.invalid && userName.touched">
-            <p [hidden]="!userName.errors?.required">请输入姓名</p>
-            <p [hidden]="!userName.errors?.pattern">姓名不超过8个字</p>
-          </ion-item>
-          <ion-input type="number" [(ngModel)]="register.phone" placeholder="请输入手机号码" name="phone" required pattern="^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,2,3,5-9]))\\d{8}$" #phone="ngModel"></ion-input>
-          <ion-item *ngIf="phone.invalid && phone.touched">
-            <p [hidden]="!phone.errors?.required">请输入手机号</p>
-            <p [hidden]="!phone.errors?.pattern">您输入的手机号格式不正确</p>
-          </ion-item>
-            <ion-item>
-              <ion-label>请选择学校</ion-label>
-              <ion-select [(ngModel)]="register.university" name="university" #university="ngModel" interface="popover">
-                <ion-select-option value="福州大学">福州大学</ion-select-option>
-                <ion-select-option value="福建医科大学">福建医科大学</ion-select-option>
-                <ion-select-option value="福建师范大学">福建师范大学</ion-select-option>
-                <ion-select-option value="福建中医药大学">福建中医药大学</ion-select-option>
-                <ion-select-option value="福建农林大学">福建农林大学</ion-select-option>
-                <ion-select-option value="闽江学院">闽江学院</ion-select-option>
-                <ion-select-option value="福建江夏学院">福建江夏学院</ion-select-option>
-              </ion-select>
-            </ion-item>
-          <ion-input type="text" [(ngModel)]="register.college" placeholder="请输入学院" name="college" required #college="ngModel"></ion-input>
-          <ion-input type="text" [(ngModel)]="register.major" placeholder="请输入专业" name="major" required #major="ngModel"></ion-input>
-            <ion-item>
-              <ion-label>请选择性别</ion-label>
-              <ion-select [(ngModel)]="register.gender" name="gender" #gender="ngModel" interface="popover">
-                <ion-select-option value="男">男</ion-select-option>
-                <ion-select-option value="女">女</ion-select-option>
-              </ion-select>
-            </ion-item>
-          <div padding>
-            <button type="submit" ion-button block color="primary" (click)="previous()">上一步</button>
-            <button type="submit" ion-button block color="primary" (click)="next()">跳过</button>
-            <button type="submit" ion-button block color="primary" (click)="next()" [disabled]="registerForm3.invalid">完成</button>
-          </div>
-        </form>
-      </ion-slide>
-      <ion-slide>
-        <h1>注册成功</h1>
-        <form #registerForm4="ngForm">
-          <button type="submit" ion-button block color="primary" (click)="gotoLogin()">登录</button>
-        </form>
-      </ion-slide>
-    </ion-slides>
-  </div>
+  <form novalidate #information="ngForm" >
+    <ion-list>
+      <!--姓名-->
+      <ion-item>
+        <ion-input name="name" type="text" placeholder="输入姓名" required
+                    [(ngModel)]="register.name" #name="ngModel">
+        </ion-input>
+      </ion-item>
+      <ion-text text-left color="danger" *ngIf="name.invalid && name.touched">
+        <p [hidden]="!name.errors?.required" padding-start>请输入姓名</p>
+      </ion-text>
+      <!-- 邮箱地址 -->
+      <ion-item>
+        <ion-input name="email" type="text" placeholder="输入邮箱地址" required
+                    pattern="\w+@([0-9a-zA-Z]+[-0-9a-zA-Z]*)(\.[0-9a-zA-Z]+[-0-9a-zA-Z]*)+"
+                    [(ngModel)]="register.email" #email="ngModel">
+        </ion-input>
+      </ion-item>
+      <ion-text text-left color="danger" *ngIf="email.invalid && email.touched">
+        <p [hidden]="!email.errors?.required" padding-start>请输入邮箱地址</p>
+        <p [hidden]="!email.errors?.pattern" padding-start>邮箱地址格式错误</p>
+      </ion-text>
+      <!-- 手机号 -->
+      <ion-item>
+        <ion-input name="phone" type="number" placeholder="输入手机号码" required
+               pattern="^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,3,5-9]))\d{8}$"
+               [(ngModel)]="register.phone" #phone="ngModel">
+        </ion-input>
+    </ion-item>
+    <ion-text text-left color="danger" *ngIf="phone.invalid && phone.touched">
+        <p [hidden]="!phone.errors?.required" padding-start>请输入手机号码</p>
+        <p [hidden]="!phone.errors?.pattern" padding-start>您输入的手机号格式不正确</p>
+    </ion-text>
+      <!-- 登录密码 -->
+      <ion-item>
+        <ion-input type="password" placeholder="请输入登录密码 "required [(ngModel)]="register.password" name="newpass" #newpass="ngModel"
+                   pattern="[0-9a-zA-Z]{6,16}"></ion-input>
+      </ion-item>
+      <ion-text [hidden]="!newpass.errors?.pattern" padding-start color="danger" *ngIf="newpass.invalid && newpass.touched">
+        密码格式为6至16位的数字字母
+      </ion-text>
+      <!-- 再次新密码 -->
+      <ion-item>
+        <ion-input type="password" placeholder="请输入确认密码" required [(ngModel)]="register.confirmPassword" name="checkpass" #checkpass="ngModel"></ion-input>
+      </ion-item>
+      <ion-text [hidden]="register.password== register.confirmPassword" padding-start color="danger">两次密码不一致</ion-text>
+      <!-- <ion-item>
+        <ion-input name="password" type="password" placeholder="请输入登录密码" required pattern="^(?=.{6,16})[0-9A-Za-z]*[^0-9A-Za-z][0-9A-Za-z]*$" [(ngModel)]="register.password" #password="ngModel"></ion-input>
+      </ion-item>
+        <ion-item *ngIf="password.invalid && password.touched">
+        <p [hidden]="!password.errors?.required">请输入登录密码</p>
+        <p [hidden]="!password.errors?.pattern">密码长度6至16位，且包含数字、英文、符号</p>
+      </ion-item>
+      <ion-item>
+      <ion-input name="confirmPassword" type="password" placeholder="请输入确认密码" required [(ngModel)]="register.confirmPassword" #confirmPassword="ngModel"></ion-input>
+      </ion-item>
+        <ion-item *ngIf="confirmPassword.invalid && confirmPassword.touched">
+        <p [hidden]="!confirmPassword.errors?.required">请输入确认密码</p>
+        <p [hidden]="password===confirmPassword">两次输入的密码不一致</p>
+        </ion-item> -->
+    </ion-list> 
+
+    <!-- 确定注册-->
+    <div padding-horizontal>
+      <ion-button expand="full" color="primary" [disabled]="information.invalid"
+        (click)="onRegister()" >
+        确定注册
+      </ion-button>
+    </div>
+
+  </form>
+
 </ion-content>
 

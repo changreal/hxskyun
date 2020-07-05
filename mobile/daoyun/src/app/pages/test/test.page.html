@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>test</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+ 
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">输入数字1</ion-label>
+        <ion-input required [(ngModel)]="oldpassword" name="oldpass" #oldpass="ngModel"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">输入数字2</ion-label>
+        <ion-input required [(ngModel)]="newPassword" name="newPassword" #oldpass="ngModel"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">输入数字3</ion-label>
+        <ion-input required [(ngModel)]="checkPassword" name="checkPassword" #oldpass="ngModel"></ion-input>
+      </ion-item>
+    </ion-list> 
+     
+  <ion-list>
+    <ion-button expand="full" color="primary" (click)="onLogin()">检查</ion-button>
+  </ion-list>
+
+</ion-content>

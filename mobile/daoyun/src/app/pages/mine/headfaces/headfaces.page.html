@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>headfaces</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color='light'>
+  <img src="" style="width:100%"/>
+  <h3>请选择一个图片。</h3>
+</ion-content>
+<ion-footer color="primary">
+  <ion-toolbar color="primary">
+    <ion-buttons>
+      <button ion-button icon-left (click)="selectActionSheet()">
+        <ion-icon name="camera"></ion-icon>选择...
+      </button>
+      <button ion-button icon-left (click)="uploadImage()" >
+        <ion-icon name="cloud-upload"></ion-icon>上传
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
+
+

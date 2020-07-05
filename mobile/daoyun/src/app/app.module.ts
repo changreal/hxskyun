@@ -13,10 +13,11 @@ import { AppComponent } from './app.component';
 import {HttpClientModule,HttpClientJsonpModule } from "@angular/common/http"
 // 引用服务
 import { CommonService } from "./shared/services/common.service";
-
+// 公用module
 import { LoginPage } from './pages/login/login.page';
 import { LoginPageModule } from './pages/login/login.module';
-import {HttpClientModule} from "@angular/common/http"
+import { pipe } from 'rxjs';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @NgModule({
   declarations: [AppComponent,
@@ -26,12 +27,15 @@ import {HttpClientModule} from "@angular/common/http"
   imports: [BrowserModule, IonicModule.forRoot(), 
     AppRoutingModule,
     HttpClientModule,
-    HttpClientJsonpModule
+    HttpClientJsonpModule,
+    
+
   ],
 
   providers: [
     StatusBar,
     SplashScreen,
+    BarcodeScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     CommonService
   ],

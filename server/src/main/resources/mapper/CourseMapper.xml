@@ -174,7 +174,9 @@ where s.ClassId=#{courseId} and s.studentId=#{studentId}
     <select id="getStudentNameById" resultType="java.lang.String">
      select UserName from user where UserId=#{uuid}
     </select>
-
+    <select id="getAllCourse" resultMap="courseResultMap">
+        select * from classschedule
+    </select>
 
 
 </mapper>

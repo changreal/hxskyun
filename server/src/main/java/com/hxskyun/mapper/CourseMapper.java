@@ -93,4 +93,6 @@ public interface CourseMapper {
     List<CourseSign> selectOnceCourseSignResult(Integer uuid);
 
     String getStudentNameById(long studentId);
+
+    List<Course> getAllCourse();
 }

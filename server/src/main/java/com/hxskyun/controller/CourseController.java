@@ -53,6 +53,19 @@ public class CourseController {
     }
 
     @ResponseBody
+    @GetMapping("/getAllCourse")
+    public Result getCourseByCourseId() {
+        int Count;
+        List<Course> courseList=courseService.getAllCourse();
+        Count=courseList.size();
+        return Result
+                .success()
+                .setData(courseList).setCount(Count)
+                .setMsg("查询所有课程成功")
+                .setCode(ResultCodeEnum.OK.getCode());
+    }
+
+    @ResponseBody
     @GetMapping("/members/{uuid}")
     public Result getMemberByCourseId(@PathVariable Integer uuid) {
         int count = courseService.getMembersCountByCourseId(uuid);

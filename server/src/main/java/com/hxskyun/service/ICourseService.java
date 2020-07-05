@@ -47,5 +47,5 @@ public interface ICourseService {
     List<CourseSign> selectOnceCourseSignResult(Integer uuid);
 
 
-
+    List<Course> getAllCourse();
 }

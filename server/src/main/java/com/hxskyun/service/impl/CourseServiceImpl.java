@@ -345,6 +345,17 @@ public class CourseServiceImpl implements ICourseService {
         return courseSignList;
     }
 
+    @Override
+    public List<Course> getAllCourse() {
+
+        List<Course> courseList = courseMapper.getAllCourse();
+        for (Course c : courseList
+        ) {
+            c.setTeacherName(courseMapper.getTeacherNameByTeacherId(c.getTeachId()));
+
+        }
+        return courseList;
+    }
 
 
 }

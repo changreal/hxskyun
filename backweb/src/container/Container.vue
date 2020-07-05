@@ -132,13 +132,13 @@
           .catch(() => { });
       },
       handleOpen(key, keyPath) {
-        console.log(key, keyPath);
+        // console.log(key, keyPath);
       },
       handleClose(key, keyPath) {
-        console.log(key, keyPath);
+        // console.log(key, keyPath);
       },
       handleSelect(key, keyPath) {
-        console.log(key, keyPath);
+        // console.log(key, keyPath);
       },
       updateRouteStatus(){
         this.routeInf.sort((a,b)=>a.permissionId-b.permissionId);
@@ -166,6 +166,10 @@
       },
     },
     created() {
+      let user = localStorage.getItem('user');
+      if (user) {
+        this.username = user;
+      }
       this.userRole=localStorage.getItem('role');
       let routeAuth;
       for(let i=0;i<this.menuAuth.length;i++){
@@ -191,10 +195,7 @@
       //   for(let i=0;i<routeAuth.length;i++){
       //         this.showMenu.push(this.menuAuth[routeAuth[i]-1]);
       //   }
-        let user = localStorage.getItem('user');
-        if (user) {
-          this.username = user;
-        }
+
       // })
 
       // let jsonRoute=JSON.parse(localStorage.getItem('routeInf'));

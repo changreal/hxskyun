@@ -64,7 +64,7 @@
     created() {
       this.$api.classManage.getClassAll()
       .then(response=>{
-        console.log(response);
+        // console.log(response);
         for(let i=0;i<response.data.data.length;i++){
           this.classInf.push(response.data.data[i]);
         }

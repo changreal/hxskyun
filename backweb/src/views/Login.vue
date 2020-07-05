@@ -44,8 +44,8 @@
       return {
         logining: false,
         ruleForm2: {
-          username: '13107922919',
-          password: '123456',
+          username: '',
+          password: '',
         },
         rules2: {
           username: [{required: true, message: '请输入您的账号', trigger: 'blur'}],
@@ -81,6 +81,7 @@
                     localStorage.setItem('user',response.data.data.name);
                   });
                 localStorage.setItem('role',response.data.extra.userRole.roleId);
+                localStorage.setItem('username',this.username);
                 this.logining=false;
                 this.$router.push({path:'/index'}).catch(err=>{
                   console.log("跳转失败？")
@@ -107,6 +108,13 @@
       // },
       forgetPassword(){
         this.$router.push({path:'/forgetPassword'});
+      }
+    },
+    created() {
+      if(localStorage.getItem('username')){
+        this.username=localStorage.getItem('username')
+      }else {
+        this.username='';
       }
     }
   };

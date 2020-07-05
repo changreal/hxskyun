@@ -1,16 +1,5 @@
 <template>
   <div>
-    <el-form :inline="true" class="demo-form-inline">
-      <el-form-item>
-        <el-input placeholder="请输入菜单名"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="success">查询</el-button>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary">新增</el-button>
-      </el-form-item>
-    </el-form>
     <el-table :data="routeInf" style="width: 100%;margin-bottom: 20px;" row-key="id" lazy :default-expand-all="true"
                :tree-props="{children:'children',hasChildren:'hasChildren'}">
       <el-table-column prop="name" label="菜单标题" sortable width="180"></el-table-column>
@@ -79,7 +68,7 @@
       },
       methods:{
         handleNodeClick(data) {
-          console.log(data);
+          // console.log(data);
         },
         editMenuItem(index,row){
           //console.log(row.id);
@@ -91,7 +80,7 @@
         },
         deleteMenuItem(index,row){
           let i;
-          console.log(typeof (this.routeInf));
+          // console.log(typeof (this.routeInf));
           for(i in this.routeInf){
             if(this.routeInf[i].id==row.id){
               console.log(i);
@@ -99,7 +88,7 @@
           }
         },
         saveMenuItem(){
-          console.log(this.menuIsShow);
+          // console.log(this.menuIsShow);
           let menuStatus;
           if(this.menuIsShow==true){
             menuStatus=1;
@@ -122,13 +111,13 @@
                   this.$api.menuManage.editMenuAuth(
                     this.menuId-10,menuStatus,this.menuName,this.routeInf[i].children[i].roleDescribe)
                     .then(response=>{
-                      console.log(response);
+                      // console.log(response);
                     })
                 }
               }
             }
           }
-          console.log(this.routeInf);
+          // console.log(this.routeInf);
           localStorage.setItem('routeInf',JSON.stringify(this.routeInf));
           this.dialogVisible=false;
         }
@@ -154,7 +143,7 @@
           }
         }
       }
-      console.log(this.routeInf);
+      // console.log(this.routeInf);
     }
     }
 

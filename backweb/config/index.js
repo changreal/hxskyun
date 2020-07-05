@@ -11,8 +11,9 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+      //原无内容
       '/api': {
-        target: 'http://175.24.16.48:8082',
+        target: 'http://172.17.0.10:8080',
         pathRewrite: {
           '^/api': '/static/mock'
         }
@@ -20,7 +21,8 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    //原为localhost
+    host: '175.24.16.48', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

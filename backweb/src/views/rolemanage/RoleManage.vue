@@ -195,7 +195,7 @@
         selectRole(row,event,column){
           // this.$refs.tree.setCheckedKeys(0);
           this.$refs.tree.setCheckedKeys(row.rightList);
-          console.log(row.rightList);
+          // console.log(row.rightList);
         },
         newRole(){
           this.editOrAdd='add';
@@ -210,7 +210,7 @@
           this.editRoleId=row.roleId;
           this.rightMenuList.splice(0);
           this.editRoleTable={roleName:row.roleName,roleDescribe:row.roleDescribe,rightList:row.rightList};
-          console.log(row.rightList);
+          // console.log(row.rightList);
           for(let i=0;i<row.rightList.length;i++){
             this.rightMenuList.push(this.menuTrf[row.rightList[i]]);
           }
@@ -292,7 +292,7 @@
           }).then(()=>{
             this.$api.roleManage.deleteRole(row.roleId)
             .then(response=>{
-              console.log(response);
+              // console.log(response);
               // this.roleTable.splice(row.roleId,1);
               // console.log(index);
               this.roleTable.splice(index,1);

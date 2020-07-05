@@ -77,7 +77,7 @@
         selectUser(){
 
           this.userTable.splice(0);
-          console.log(this.search);
+          // console.log(this.search);
           if(this.search==''||this.search==null){
             for(let i=0;i<this.userTableForSelect.length;i++){
               this.userTable.push(this.userTableForSelect[i]);
@@ -91,9 +91,9 @@
           }
         },
         getNewUserTableInfo(){
-          console.log(this.newUserTable);
+          // console.log(this.newUserTable);
           this.newUserTable.userId='1234566';
-          console.log(this.newUserTable);
+          // console.log(this.newUserTable);
         },
         newUser(){
           this.dialogVisible=true;
@@ -123,12 +123,12 @@
           this.$api.userManage.newUser(this.newUserTable.userName,'123456',
             this.newUserTable.phoneNum,this.newUserTable.emailNum)
           .then(response=>{
-            console.log(response);
+            // console.log(response);
             this.newUserTable.userId=response.data.data.userId;
             this.$api.userManage.editUserRole(this.newUserTable.userId,this.newUserTable.userRole)
             .then(response=>{
-              console.log('进行角色信息录入');
-              console.log(response);
+              // console.log('进行角色信息录入');
+              // console.log(response);
             });
             this.userTable.push({
               userId:response.data.data.userId,
@@ -156,7 +156,7 @@
           this.$api.userManage.editUser(this.newUserTable.userId, this.newUserTable.userName,
             this.newUserTable.phoneNum,this.newUserTable.emailNum,editRoleId)
           .then(response=>{
-            console.log(response);
+            // console.log(response);
           });
                       //this.roleTable[this.newUserTable.userRole-1].roleName
           this.userTable[this.editIndex].userName=this.newUserTable.userName;
@@ -170,10 +170,10 @@
           this.dialogVisible=false;
         },
         deleteUser(index,row){
-          console.log(row.userId);
+          // console.log(row.userId);
           this.$api.userManage.deleteUser(row.userId)
           .then(response=>{
-            console.log(response);
+            // console.log(response);
           })
           // console.log(row.userId);
           // let userId;
